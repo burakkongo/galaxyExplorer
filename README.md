@@ -1,1 +1,1 @@
-# galaxyExplorer
+# GalaxyExplorer
