@@ -1,10 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxy Explorer</title>
+    <link rel="stylesheet" href="dashboard_styling/dashboard.css">
+
 </head>
 <body>
 
+<div id="header">
+    <h1>Hello, User XY!</h1>
+    <p>Discover a flash card set you want to learn.</p>
+</div>
+
+<div id="card-container">
+    <!-- Cards -->
+    <div class="card" onclick="navigateTo('biology')">
+        <h2>Biology</h2>
+        <p>33 Flashcards</p>
+    </div>
+    <div class="card" onclick="navigateTo('chemistry')">
+        <h2>Chemistry</h2>
+        <p>12 Flashcards</p>
+    </div>
+    <div class="card" onclick="navigateTo('geography')">
+        <h2>Geography</h2>
+        <p>5 Flashcards</p>
+    </div>
+    <div class="card" onclick="navigateTo('history')">
+        <h2>History</h2>
+        <p>25 Flashcards</p>
+    </div>
+    <div class="card" onclick="navigateTo('mathematics')">
+        <h2>Mathematics</h2>
+        <p>41 Flashcards</p>
+    </div>
+    <div class="card" onclick="navigateTo('programming')">
+        <h2>Programming</h2>
+        <p>19 Flashcards</p>
+    </div>
+</div>
+
+<button id="map-button" onclick="navigateTo('map')">
+    MAP
+</button>
+<script src="dashboard_scripts/dashboard.js"></script>
 </body>
 </html>

@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background: #34264f;
+    color: white;
+}
+
+#header {
+    padding: 20px;
+    background: transparent;
+    color: white;
+    text-align: left;
+}
+
+#header h1 {
+    font-weight: 600;
+    margin: 0 0 10px;
+}
+
+#header p {
+    font-weight: 400;
+}
+
+#card-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 20px 20px 0;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 20px 20px 20px; /* Adjusted padding for top, right/left, bottom */
+    width: calc(33.333% - 20px); /* Adjusted width for larger cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #333;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card h2 {
+    margin: 0 0 5px 0; /* Added margin to the bottom of the subtitle */
+    font-weight: 600;
+}
+
+.card p {
+    margin: 0; /* Removed margin for the paragraph */
+    font-weight: 400;
+}
+
+#map-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #5a2d82;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+    .card {
+        width: calc(50% - 20px); /* Larger cards on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 100%; /* Full width cards on small screens */
+        margin: 10px 0; /* Only vertical margin for stacking */
+    }
+}
