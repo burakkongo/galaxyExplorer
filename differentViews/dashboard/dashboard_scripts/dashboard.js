@@ -9,7 +9,6 @@ document.addEventListener('visibilitychange', function() {
     }
 });
 
-
 function navigateTo(category) {
     if (category === 'map') {
         // Navigate to the map page if 'map' is the category

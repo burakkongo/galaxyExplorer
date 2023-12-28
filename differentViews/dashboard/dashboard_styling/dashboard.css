@@ -82,8 +82,8 @@ body, html {
 
 @media (max-width: 768px) {
     .card {
-        width: 100%; /* Full width cards on small screens */
-        margin: 10px 0; /* Only vertical margin for stacking */
+        width: 100%;
+        margin: 10px 0;
     }
 }
 
@@ -99,23 +99,23 @@ body, html {
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    display: inline-block; /* To allow margin to work */
+    display: inline-block;
 }
 
 #import-flashcards-btn:hover {
-    background-color: #5e497a; /* A slightly darker shade for hover */
+    background-color: #5e497a;
 }
 
 #import-flashcards-btn:active {
-    background-color: #53416a; /* An even darker shade for active state */
+    background-color: #53416a;
 }
 
 
 /* Modal styling */
 .modal {
-    display: none; /* Changed to block to make it visible */
+    display: none;
     position: fixed;
-    z-index: 1000; /* High z-index to ensure it's on top */
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -131,7 +131,7 @@ body, html {
     padding: 20px;
     border-radius: 10px;
     width: 90%;
-    max-width: 500px; /* Adjust the width as necessary */
+    max-width: 500px;
     text-align: center; /* Center the text */
     color: #000000; /* Text color changed to black */
 }
@@ -211,7 +211,7 @@ body, html {
 }
 
 #delete-all-flashcards-btn:active {
-    background-color: #c03c3c; /* Even darker shade for active state */
+    background-color: #c03c3c;
 }
 
 /* Style adjustments for the modal buttons */
@@ -231,7 +231,7 @@ body, html {
 }
 
 #cancelDelete {
-    background-color: #6c5490; /* Consistent with import button */
+    background-color: #6c5490;
     color: white;
     margin-left: 10px;
 }

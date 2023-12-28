@@ -6,10 +6,10 @@ const port = 3000;
 
 app.use(express.static('differentViews'));
 
-// Use express.json() to parse JSON-encoded bodies
+
 app.use(express.json());
 
-// Set up your database connection
+// Database connection
 const db = mysql.createConnection({
     host: 'sql11.freesqldatabase.com',
     user: 'sql11672895',
@@ -35,7 +35,7 @@ app.get('/dashboard', (req, res) => {
 app.post('/addFlashcard', (req, res) => {
     const { category, title, answer, userID } = req.body;
 
-    // First, check if a flashcard with the same title and category already exists
+
     const checkQuery = 'SELECT * FROM flashcards WHERE Category = ? AND Title = ?';
 
     db.query(checkQuery, [category, title], (err, results) => {
@@ -50,7 +50,6 @@ app.post('/addFlashcard', (req, res) => {
             return;
         }
 
-        // If no existing flashcard is found, proceed to insert the new one
         const insertQuery = `INSERT INTO flashcards (Category, Title, Answer, UserID) VALUES (?, ?, ?, ?)`;
         db.query(insertQuery, [category, title, answer, userID], (insertErr, insertResults) => {
             if (insertErr) {
@@ -153,26 +152,26 @@ app.delete('/deleteAllFlashcards', (req, res) => {
     });
 });
 
-// In your app.js
+
 app.post('/importFlashcards', (req, res) => {
     const flashcards = req.body.flashcards;
-    // Start a transaction
+
     db.beginTransaction(err => {
         if (err) { throw err; }
-        // Use a loop or a bulk insert query to add flashcards
+
         flashcards.forEach(flashcard => {
             const { category, title, answer } = flashcard;
             const insertQuery = `INSERT INTO flashcards (Category, Title, Answer) VALUES (?, ?, ?)`;
             db.query(insertQuery, [category, title, answer], (insertErr, insertResults) => {
                 if (insertErr) {
-                    // If an error occurs, we will roll back the transaction
+
                     return db.rollback(() => {
                         throw insertErr;
                     });
                 }
             });
         });
-        // If we reach this point without errors, commit the transaction
+
         db.commit(commitErr => {
             if (commitErr) {
                 return db.rollback(() => {
@@ -199,7 +198,6 @@ app.delete('/deleteAllFlashcardsAllCategories', (req, res) => {
 });
 
 
-// Start the server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

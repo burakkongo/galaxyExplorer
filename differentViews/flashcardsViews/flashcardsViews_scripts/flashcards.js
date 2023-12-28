@@ -157,7 +157,7 @@ function submitQuestion() {
     if (isDuplicateTitle(tempQuestion, editBool ? editingFlashcardId : null)) {
         errorMessage.textContent = 'A flashcard with this title already exists.';
         errorMessage.classList.remove("hide");
-        return; // Stop the function if a duplicate title is found
+        return;
     }
 
     // Construct flashcard data
@@ -165,10 +165,10 @@ function submitQuestion() {
         category: currentCategory,
         title: tempQuestion,
         answer: tempAnswer,
-        userID: tempUserID // Replace tempUserID with the actual user ID
+        userID: tempUserID
     };
 
-    // Decide whether to add a new flashcard or update an existing one
+
     let url = editBool ? `/updateFlashcard/${editingFlashcardId}` : '/addFlashcard';
     let method = editBool ? 'PUT' : 'POST';
     let headers = {
@@ -202,7 +202,7 @@ function submitQuestion() {
         });
 }
 
-// Call this function when the 'Save' or 'Update' button is clicked
+
 cardButton.addEventListener("click", submitQuestion);
 
 // Helper function to update a flashcard in the UI
@@ -236,9 +236,9 @@ function createViewForFlashcard(flashcard) {
     var div = document.createElement("div");
     div.classList.add("card");
 
-    // The property names must match exactly how they are in your database response
-    var questionText = flashcard.Title; // Now using Title instead of title
-    var answerText = flashcard.Answer;  // Now using Answer instead of answer
+
+    var questionText = flashcard.Title;
+    var answerText = flashcard.Answer;
 
     div.dataset.id = flashcard.FlashcardID;
 
@@ -292,50 +292,50 @@ function isDuplicateTitle(title, excludeId) {
 }
 
 
-let editingFlashcardId = null; // This should be defined in the global scope
+let editingFlashcardId = null;
 
 function editFlashcard(flashcardDiv) {
     var questionText = flashcardDiv.querySelector(".question-div").textContent;
     var answerText = flashcardDiv.querySelector(".answer-div").textContent;
-    editingFlashcardId = flashcardDiv.dataset.id; // Make sure to set this ID from the flashcardDiv
+    editingFlashcardId = flashcardDiv.dataset.id;
 
-    // Fill the form with the flashcard info and show it
+
     question.value = questionText;
     answer.value = answerText;
     editBool = true; // Set edit mode to true
     addQuestionCard.classList.remove("hide");
     container.classList.add("hide");
-    cardButton.textContent = 'Update Flashcard'; // Change the button text to indicate updating
+    cardButton.textContent = 'Update Flashcard';
 
-    // Update the submit function reference to handle the update operation
+
     submitEdit = function() {
-        submitQuestion(true); // Pass true to indicate this is an edit operation
+        submitQuestion(true);
     };
-    cardButton.removeEventListener('click', submitQuestion); // Remove the event listener for adding
-    cardButton.addEventListener('click', submitEdit); // Add the new event listener for editing
+    cardButton.removeEventListener('click', submitQuestion);
+    cardButton.addEventListener('click', submitEdit);
 }
 
 function deleteFlashcard(flashcardId) {
-    // Get the modal
+
     var modal = document.getElementById("deleteModal");
     var confirmDelete = document.getElementById("confirmDelete");
     var cancelDelete = document.getElementById("cancelDelete");
     var span = document.getElementsByClassName("close")[0];
 
-    // Open the modal
+
     modal.style.display = "block";
 
-    // When the user clicks on <span> (x), close the modal
+
     span.onclick = function() {
         modal.style.display = "none";
     }
 
-    // When the user clicks on "No", close the modal
+
     cancelDelete.onclick = function() {
         modal.style.display = "none";
     }
 
-    // When the user clicks on "Yes", delete the flashcard
+
     confirmDelete.onclick = function() {
         fetch('/deleteFlashcard/' + flashcardId, { method: 'DELETE' })
             .then(response => response.json())
@@ -343,7 +343,7 @@ function deleteFlashcard(flashcardId) {
                 if (data.success) {
                     document.querySelector(`div[data-id="${flashcardId}"]`)?.remove();
                     localStorage.setItem('updateCounts', 'true');
-                    modal.style.display = "none"; // Close modal on success
+                    modal.style.display = "none";
                 } else {
                     console.error('Error deleting flashcard:', data.error);
                 }
@@ -353,7 +353,6 @@ function deleteFlashcard(flashcardId) {
             });
     }
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
@@ -364,17 +363,17 @@ function deleteFlashcard(flashcardId) {
 // Function to add a flashcard to the UI after it's created
 function addFlashcardToUI(flashcardData) {
     const cardElement = createViewForFlashcard(flashcardData);
-    flashcardContainer.appendChild(cardElement); // Append the new card to the container
+    flashcardContainer.appendChild(cardElement);
 }
 
 
 // Fetch and display flashcards for the current category
 function fetchAndDisplayFlashcards() {
-    fetch(`/getFlashcards?category=${encodeURIComponent(currentCategory)}`) // Use ?category= instead of /category
+    fetch(`/getFlashcards?category=${encodeURIComponent(currentCategory)}`)
         .then(response => response.json())
         .then(flashcards => {
             console.log(flashcards);
-            flashcardContainer.innerHTML = ''; // Clear existing flashcards
+            flashcardContainer.innerHTML = '';
             flashcards.forEach(flashcard => {
                 const cardElement = createViewForFlashcard(flashcard);
                 flashcardContainer.appendChild(cardElement);
@@ -395,29 +394,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-//--------------------------------------------------------------
-
 document.getElementById('delete-all-flashcards').addEventListener('click', () => {
-    // Get the delete all modal
+
     var deleteAllModal = document.getElementById("deleteAllModal");
     var confirmDeleteAll = document.getElementById("confirmDeleteAll");
     var cancelDeleteAll = document.getElementById("cancelDeleteAll");
     var spanDeleteAllClose = document.querySelector(".delete-all-close");
 
-    // Open the modal
+
     deleteAllModal.style.display = "block";
 
-    // When the user clicks on <span> (x), close the modal
+
     spanDeleteAllClose.onclick = function() {
         deleteAllModal.style.display = "none";
     }
 
-    // When the user clicks on "No", close the modal
+
     cancelDeleteAll.onclick = function() {
         deleteAllModal.style.display = "none";
     }
 
-    // When the user clicks on "Yes", delete all flashcards
     confirmDeleteAll.onclick = function() {
         fetch(`/deleteAllFlashcards?category=${encodeURIComponent(currentCategory)}`, { method: 'DELETE' })
             .then(response => response.json())
@@ -437,7 +433,6 @@ document.getElementById('delete-all-flashcards').addEventListener('click', () =>
             });
     }
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == deleteAllModal) {
             deleteAllModal.style.display = "none";
