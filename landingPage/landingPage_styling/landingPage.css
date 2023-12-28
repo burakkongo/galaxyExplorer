@@ -1,0 +1,23 @@
+/* index.html */
+#backgroundContainer_Index {
+    position: relative;
+    width: 100%; /* Adjust if needed */
+    height: 100vh; /* Adjust if needed */
+    background-image: url("index.png");
+    background-size: cover;
+}
+
+#loginButtonContainer_Index {
+    position: absolute;
+    top: 75%; /* Adjust this to align with the login button */
+    left: 72%; /* Adjust this to align with the login button */
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    z-index: 1;
+}
+
+#loginButtonContainer_Index:hover{
+    background-color: red;
+    transition: transform 3s ease-in-out;
+}
