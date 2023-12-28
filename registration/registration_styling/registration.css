@@ -1,0 +1,41 @@
+/* register.html */
+
+#background-container-register{
+    position: relative;
+    width: 100%; /* Adjust if needed */
+    height: 100vh; /* Adjust if needed */
+    background-image: url("register.png");
+    background-size: cover;
+}
+
+#username_Register{
+    background-color: blue;
+    position: absolute; /* or 'relative' depending on your layout needs */
+    top: 53%;
+    left: 75%;
+    display: block; /* or 'inline-block' */
+}
+
+#password_Register {
+    background-color: red;
+    position: absolute; /* or 'relative' depending on your layout needs */
+    top: 67%;
+    left: 75%;
+    display: block; /* or 'inline-block' */
+}
+
+#register_Register {
+    background-color: purple;
+    position: absolute; /* or 'relative' depending on your layout needs */
+    top: 80%;
+    left: 80%;
+    display: block; /* or 'inline-block' */
+}
+
+#alreadyRegistered_Register{
+    background-color: yellow;
+    position: absolute; /* or 'relative' depending on your layout needs */
+    top: 90%;
+    left: 80%;
+    display: block; /* or 'inline-block' */
+}

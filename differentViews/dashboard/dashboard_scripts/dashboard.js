@@ -1,3 +1,5 @@
+
+
 function navigateTo(subject) {
 
     // Basispfad zu den Flashcard-Views
