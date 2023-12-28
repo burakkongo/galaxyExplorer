@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>User Login</title>
+    <link rel="stylesheet" href="login_styling/login.css">
 </head>
 <body>
-
+    <div id="backgroundContainer_Login">
+        <form action="/login" method="post">
+            <!-- <label for="username">Username:</label><br> -->
+            <input type="text" id="username_Login" name="username" required><br>
+            <!-- <label for="password">Password:</label><br> -->
+            <input type="password" id="password_Login" name="password" required><br><br>
+            <input type="submit" id="submit_Login" value="Login">
+            <button id="goToRegister_Login" onclick="location.href='/register'"> Register Now</button>
+        </form>
+    </div>
+    <script src="login/login.js"></script>
 </body>
 </html>

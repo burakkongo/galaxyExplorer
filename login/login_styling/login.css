@@ -1,0 +1,40 @@
+/* login.html */
+#backgroundContainer_Login{
+    position: relative;
+    width: 100%; /* Adjust if needed */
+    height: 100vh; /* Adjust if needed */
+    background-image: url("login.png");
+    background-size: cover;
+}
+
+#username_Login{
+    background-color: red;
+    position: absolute; /* or 'relative' depending on your layout needs */
+    top: 43%;
+    left: 70%;
+    display: block; /* or 'inline-block' */
+}
+
+#password_Login{
+    background-color: green;
+    position: absolute; /* or 'relative' depending on your layout needs */
+    top: 58%;
+    left: 70%;
+    display: block; /* or 'inline-block' */
+}
+
+#submit_Login{
+    background-color: yellow;
+    position: absolute; /* or 'relative' depending on your layout needs */
+    top: 70%;
+    left: 70%;
+    display: block; /* or 'inline-block' */
+}
+
+#goToRegister_Login{
+    background-color: blue;
+    position: absolute; /* or 'relative' depending on your layout needs */
+    top: 86%;
+    left: 85%;
+    display: block; /* or 'inline-block' */
+}
