@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxy Explorer</title>
-    <link rel="stylesheet" href="dashboard_styling/dashboard.css">
-
+    <link rel="stylesheet" href="../dashboard/dashboard_styling/dashboard.css">
 </head>
 <body>
 
@@ -18,33 +17,50 @@
     <!-- Cards -->
     <div class="card" onclick="navigateTo('biology')">
         <h2>Biology</h2>
-        <p>33 Flashcards</p>
+        <p id="biology-count">Loading...</p>
     </div>
     <div class="card" onclick="navigateTo('chemistry')">
         <h2>Chemistry</h2>
-        <p>12 Flashcards</p>
+        <p id="chemistry-count">Loading...</p>
     </div>
     <div class="card" onclick="navigateTo('geography')">
         <h2>Geography</h2>
-        <p>5 Flashcards</p>
+        <p id="geography-count">Loading...</p>
     </div>
     <div class="card" onclick="navigateTo('history')">
         <h2>History</h2>
-        <p>25 Flashcards</p>
+        <p id="history-count">Loading...</p>
     </div>
     <div class="card" onclick="navigateTo('mathematics')">
         <h2>Mathematics</h2>
-        <p>41 Flashcards</p>
+        <p id="mathematics-count">Loading...</p>
     </div>
     <div class="card" onclick="navigateTo('programming')">
         <h2>Programming</h2>
-        <p>19 Flashcards</p>
+        <p id="programming-count">Loading...</p>
     </div>
 </div>
 
 <button id="map-button" onclick="navigateTo('map')">
     MAP
 </button>
-<script src="dashboard_scripts/dashboard.js"></script>
+
+
+<button id="import-flashcards-btn">Import Flashcards (CSV)</button>
+<input type="file" id="flashcards-file-input" accept=".csv" style="display: none;">
+
+<button id="delete-all-flashcards-btn">Delete All Flashcards</button>
+
+<!-- Confirmation Modal -->
+<div id="confirmDeleteModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="confirmDeleteModalClose">&times;</span>
+        <p>Are you sure you want to delete all flashcards?</p>
+        <button id="confirmDelete">Yes, Delete All</button>
+        <button id="cancelDelete">Cancel</button>
+    </div>
+</div>
+
+<script src="../dashboard/dashboard_scripts/dashboard.js"></script>
 </body>
 </html>

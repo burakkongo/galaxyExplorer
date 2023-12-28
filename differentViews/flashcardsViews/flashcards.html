@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcard App</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" />
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="flashcardsViews_styling/flashcards_view.css" />
+</head>
+<body>
+<div id="header">
+  <h1 id="category-title">Category</h1>
+  <p>Add, edit or delete your flashcards.</p>
+  <hr>
+  <br>
+  <div class="add-flashcard-con">
+    <button id="add-flashcard">Add Flashcard</button>
+  </div>
+  <div class="delete-all-flashcard-con">
+    <button id="delete-all-flashcards">Delete All</button>
+  </div>
+</div>
+<div class="container">
+  <!-- Display Card of Question And Answers Here -->
+  <div id="card-con">
+    <div class="card-list-container"></div>
+  </div>
+</div>
+
+<!-- Input form for users to fill question and answer -->
+<div class="question-container hide" id="add-question-card">
+  <h2>Add Flashcard</h2>
+  <div class="wrapper">
+    <!-- Error message -->
+    <div class="error-con">
+      <span class="hide" id="error">Input fields cannot be empty!</span>
+    </div>
+    <!-- Close Button -->
+    <i class="fa-solid fa-xmark" id="close-btn"></i>
+  </div>
+
+  <label for="question">Question:</label>
+  <textarea class="input" id="question" placeholder="Type the question here..." rows="2"></textarea>
+  <label for="answer">Answer:</label>
+  <textarea class="input" id="answer" rows="4" placeholder="Type the answer here..."></textarea>
+  <button id="save-btn">Save</button>
+</div>
+
+<!-- Script -->
+<script src="flashcardsViews_scripts/flashcards.js"></script> <!-- Update the path if necessary -->
+<script>
+  // Script to set the category title based on URL parameter
+  document.addEventListener('DOMContentLoaded', function() {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get('category');
+    const categoryTitleElement = document.getElementById('category-title');
+    if (categoryTitleElement && category) {
+      categoryTitleElement.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+    }
+  });
+</script>
+
+<!-- The Modal -->
+<div id="deleteModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <p>Are you sure you want to delete this Flashcard?</p>
+    <button id="confirmDelete">Yes</button>
+    <button id="cancelDelete">No</button>
+  </div>
+</div>
+
+<!-- Delete All Modal -->
+<div id="deleteAllModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close delete-all-close">&times;</span>
+    <p>Are you sure you want to delete ALL flashcards in this category?</p>
+    <button id="confirmDeleteAll">Yes</button>
+    <button id="cancelDeleteAll">No</button>
+  </div>
+</div>
+
+
+</body>
+</html>

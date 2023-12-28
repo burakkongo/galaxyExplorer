@@ -1,0 +1,450 @@
+const container = document.querySelector(".container");
+const addQuestionCard = document.getElementById("add-question-card");
+const cardButton = document.getElementById("save-btn");
+const question = document.getElementById("question");
+const answer = document.getElementById("answer");
+const errorMessage = document.getElementById("error");
+const addQuestion = document.getElementById("add-flashcard");
+const closeBtn = document.getElementById("close-btn");
+const flashcardContainer = document.querySelector('.card-list-container');
+let editBool = false;
+let currentCategory = getCategoryFromUrl();
+let submitEdit;
+
+function getCategoryFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('category');
+}
+
+// Update UI to reflect current category
+document.querySelector('#category-title').textContent = currentCategory;
+
+
+//Add question when user clicks 'Add Flashcard' button
+addQuestion.addEventListener("click", () => {
+    container.classList.add("hide");
+    question.value = "";
+    answer.value = "";
+    addQuestionCard.classList.remove("hide");
+    errorMessage.textContent = ''; // Clear any error message
+    errorMessage.classList.add("hide");
+});
+
+//Hide Create flashcard Card
+closeBtn.addEventListener("click", () => {
+    container.classList.remove("hide");
+    addQuestionCard.classList.add("hide");
+    errorMessage.textContent = ''; // Clear any error message
+    errorMessage.classList.add("hide");
+    if (editBool) {
+        editBool = false;
+        submitQuestion();
+    }
+});
+
+cardButton.addEventListener("click", () => {
+    let tempQuestion = question.value.trim();
+    let tempAnswer = answer.value.trim();
+
+    if (!tempQuestion || !tempAnswer) {
+        errorMessage.textContent = 'Input fields cannot be empty!';
+        errorMessage.classList.remove("hide");
+        return; // Stop the function if fields are empty
+    }
+
+    if (editBool && editingFlashcardId) {
+        // Editing an existing flashcard
+        let flashcardData = {
+            category: currentCategory,
+            title: tempQuestion,
+            answer: tempAnswer
+        };
+
+        fetch(`/updateFlashcard/${editingFlashcardId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(flashcardData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Find the flashcard in the DOM and update its content
+                    let flashcardDiv = document.querySelector(`div[data-id="${editingFlashcardId}"]`);
+                    if (flashcardDiv) {
+                        flashcardDiv.querySelector(".question-div").textContent = tempQuestion;
+                        flashcardDiv.querySelector(".answer-div").textContent = tempAnswer;
+                    }
+                    resetEditState();
+                } else {
+                    errorMessage.textContent = "Error updating flashcard. Please try again.";
+                    errorMessage.classList.remove("hide");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                errorMessage.textContent = "Error updating flashcard. Please try again.";
+                errorMessage.classList.remove("hide");
+            });
+
+    } else {
+        // Adding a new flashcard
+        let tempUserID = Math.floor(Math.random() * 10000) + 1;
+        let flashcardData = {
+            category: currentCategory,
+            title: tempQuestion,
+            answer: tempAnswer,
+            userID: tempUserID
+        };
+
+        fetch('/addFlashcard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(flashcardData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    addFlashcardToUI(data.flashcard);
+                    localStorage.setItem('updateCounts', 'true');
+                    resetEditState();
+                } else {
+                    errorMessage.textContent = data.error || "Error saving flashcard. Please try again.";
+                    errorMessage.classList.remove("hide");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                errorMessage.textContent = "Error saving flashcard. Please try again.";
+                errorMessage.classList.remove("hide");
+            });
+    }
+});
+
+function resetEditState() {
+    // Reset the form and hide the add/edit card UI
+    question.value = "";
+    answer.value = "";
+    errorMessage.textContent = '';
+    errorMessage.classList.add("hide");
+    addQuestionCard.classList.add("hide");
+    container.classList.remove("hide");
+    // Reset editing flags
+    editBool = false;
+    editingFlashcardId = null;
+    // Update the button text back to 'Save'
+    cardButton.textContent = 'Save';
+    // Reattach the original event listener for adding new flashcards
+    cardButton.onclick = submitQuestion;
+}
+
+
+function submitQuestion() {
+    let tempQuestion = question.value.trim();
+    let tempAnswer = answer.value.trim();
+
+    if (!tempQuestion || !tempAnswer) {
+        // If fields are empty
+        errorMessage.textContent = 'Input fields cannot be empty!';
+        errorMessage.classList.remove("hide");
+        return;
+    }
+
+    // Check for duplicate titles only when adding a new flashcard
+    if (isDuplicateTitle(tempQuestion, editBool ? editingFlashcardId : null)) {
+        errorMessage.textContent = 'A flashcard with this title already exists.';
+        errorMessage.classList.remove("hide");
+        return; // Stop the function if a duplicate title is found
+    }
+
+    // Construct flashcard data
+    let flashcardData = {
+        category: currentCategory,
+        title: tempQuestion,
+        answer: tempAnswer,
+        userID: tempUserID // Replace tempUserID with the actual user ID
+    };
+
+    // Decide whether to add a new flashcard or update an existing one
+    let url = editBool ? `/updateFlashcard/${editingFlashcardId}` : '/addFlashcard';
+    let method = editBool ? 'PUT' : 'POST';
+    let headers = {
+        'Content-Type': 'application/json',
+    };
+    let body = JSON.stringify(flashcardData);
+
+    fetch(url, { method, headers, body })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (editBool) {
+                    // Update the flashcard in the UI
+                    updateFlashcardUI(editingFlashcardId, tempQuestion, tempAnswer);
+                } else {
+                    // Add the new flashcard to the UI
+                    addFlashcardToUI(data.flashcard);
+                }
+                resetEditState(); // Reset the form state
+                errorMessage.classList.add("hide");
+            } else {
+                // Handle errors like duplicate titles from the backend
+                errorMessage.textContent = data.error || "Error saving flashcard. Please try again.";
+                errorMessage.classList.remove("hide");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            errorMessage.textContent = "Error saving flashcard. Please try again.";
+            errorMessage.classList.remove("hide");
+        });
+}
+
+// Call this function when the 'Save' or 'Update' button is clicked
+cardButton.addEventListener("click", submitQuestion);
+
+// Helper function to update a flashcard in the UI
+function updateFlashcardUI(id, question, answer) {
+    let flashcardDiv = document.querySelector(`div[data-id="${id}"]`);
+    if (flashcardDiv) {
+        flashcardDiv.querySelector(".question-div").textContent = question;
+        flashcardDiv.querySelector(".answer-div").textContent = answer;
+    }
+}
+
+
+// Clear error message when the user starts typing in the question or answer fields
+question.addEventListener('input', () => {
+    if (errorMessage.textContent !== '') {
+        errorMessage.textContent = '';
+        errorMessage.classList.add("hide");
+    }
+});
+
+answer.addEventListener('input', () => {
+    if (errorMessage.textContent !== '') {
+        errorMessage.textContent = '';
+        errorMessage.classList.add("hide");
+    }
+});
+
+
+
+function createViewForFlashcard(flashcard) {
+    var div = document.createElement("div");
+    div.classList.add("card");
+
+    // The property names must match exactly how they are in your database response
+    var questionText = flashcard.Title; // Now using Title instead of title
+    var answerText = flashcard.Answer;  // Now using Answer instead of answer
+
+    div.dataset.id = flashcard.FlashcardID;
+
+    div.innerHTML = `
+        <div class="question-div">${questionText}</div>
+        <p class="answer-div hide">${answerText}</p>
+        <a href="#" class="show-hide-btn">Show answer / Hide answer</a>
+        <div class="card-buttons">
+            <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+    `;
+
+
+    var link = div.querySelector(".show-hide-btn");
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
+        div.querySelector(".answer-div").classList.toggle("hide");
+    });
+
+    var editButton = div.querySelector(".edit-btn");
+    editButton.addEventListener("click", () => {
+        editFlashcard(div);
+    });
+
+    var deleteButton = div.querySelector(".delete-btn");
+    deleteButton.addEventListener("click", () => {
+        deleteFlashcard(div.dataset.id);
+    });
+
+    return div;
+}
+
+
+// Function to validate if the flashcard title already exists (excluding the current editing one)
+function isDuplicateTitle(title, excludeId) {
+    const flashcards = document.querySelectorAll('.card');
+    console.log("Checking for duplicates for title: ", title);
+
+    for (let flashcard of flashcards) {
+        let existingTitle = flashcard.querySelector(".question-div").textContent.trim().toLowerCase();
+        console.log("Existing title: ", existingTitle);
+
+        if (flashcard.dataset.id !== excludeId && existingTitle === title.toLowerCase()) {
+            console.log("Duplicate found for title: ", title);
+            return true; // Duplicate title found
+        }
+    }
+    console.log("No duplicate found for title: ", title);
+    return false; // No duplicate title found
+}
+
+
+let editingFlashcardId = null; // This should be defined in the global scope
+
+function editFlashcard(flashcardDiv) {
+    var questionText = flashcardDiv.querySelector(".question-div").textContent;
+    var answerText = flashcardDiv.querySelector(".answer-div").textContent;
+    editingFlashcardId = flashcardDiv.dataset.id; // Make sure to set this ID from the flashcardDiv
+
+    // Fill the form with the flashcard info and show it
+    question.value = questionText;
+    answer.value = answerText;
+    editBool = true; // Set edit mode to true
+    addQuestionCard.classList.remove("hide");
+    container.classList.add("hide");
+    cardButton.textContent = 'Update Flashcard'; // Change the button text to indicate updating
+
+    // Update the submit function reference to handle the update operation
+    submitEdit = function() {
+        submitQuestion(true); // Pass true to indicate this is an edit operation
+    };
+    cardButton.removeEventListener('click', submitQuestion); // Remove the event listener for adding
+    cardButton.addEventListener('click', submitEdit); // Add the new event listener for editing
+}
+
+function deleteFlashcard(flashcardId) {
+    // Get the modal
+    var modal = document.getElementById("deleteModal");
+    var confirmDelete = document.getElementById("confirmDelete");
+    var cancelDelete = document.getElementById("cancelDelete");
+    var span = document.getElementsByClassName("close")[0];
+
+    // Open the modal
+    modal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks on "No", close the modal
+    cancelDelete.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks on "Yes", delete the flashcard
+    confirmDelete.onclick = function() {
+        fetch('/deleteFlashcard/' + flashcardId, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector(`div[data-id="${flashcardId}"]`)?.remove();
+                    localStorage.setItem('updateCounts', 'true');
+                    modal.style.display = "none"; // Close modal on success
+                } else {
+                    console.error('Error deleting flashcard:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+}
+
+// Function to add a flashcard to the UI after it's created
+function addFlashcardToUI(flashcardData) {
+    const cardElement = createViewForFlashcard(flashcardData);
+    flashcardContainer.appendChild(cardElement); // Append the new card to the container
+}
+
+
+// Fetch and display flashcards for the current category
+function fetchAndDisplayFlashcards() {
+    fetch(`/getFlashcards?category=${encodeURIComponent(currentCategory)}`) // Use ?category= instead of /category
+        .then(response => response.json())
+        .then(flashcards => {
+            console.log(flashcards);
+            flashcardContainer.innerHTML = ''; // Clear existing flashcards
+            flashcards.forEach(flashcard => {
+                const cardElement = createViewForFlashcard(flashcard);
+                flashcardContainer.appendChild(cardElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching flashcards:', error);
+        });
+}
+
+// Call fetchAndDisplayFlashcards when the page loads
+document.addEventListener('DOMContentLoaded', () => {
+    const categoryTitle = getCategoryFromUrl();
+    if (categoryTitle) {
+        document.getElementById('category-title').textContent = categoryTitle.charAt(0).toUpperCase() + categoryTitle.slice(1);
+        fetchAndDisplayFlashcards();
+    }
+});
+
+
+//--------------------------------------------------------------
+
+document.getElementById('delete-all-flashcards').addEventListener('click', () => {
+    // Get the delete all modal
+    var deleteAllModal = document.getElementById("deleteAllModal");
+    var confirmDeleteAll = document.getElementById("confirmDeleteAll");
+    var cancelDeleteAll = document.getElementById("cancelDeleteAll");
+    var spanDeleteAllClose = document.querySelector(".delete-all-close");
+
+    // Open the modal
+    deleteAllModal.style.display = "block";
+
+    // When the user clicks on <span> (x), close the modal
+    spanDeleteAllClose.onclick = function() {
+        deleteAllModal.style.display = "none";
+    }
+
+    // When the user clicks on "No", close the modal
+    cancelDeleteAll.onclick = function() {
+        deleteAllModal.style.display = "none";
+    }
+
+    // When the user clicks on "Yes", delete all flashcards
+    confirmDeleteAll.onclick = function() {
+        fetch(`/deleteAllFlashcards?category=${encodeURIComponent(currentCategory)}`, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove all flashcards from the UI
+                    while (flashcardContainer.firstChild) {
+                        flashcardContainer.removeChild(flashcardContainer.firstChild);
+                    }
+                    deleteAllModal.style.display = "none"; // Close modal on success
+                } else {
+                    console.error('Error deleting all flashcards:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == deleteAllModal) {
+            deleteAllModal.style.display = "none";
+        }
+    }
+});
+
+
+
+
