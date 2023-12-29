@@ -1,0 +1,31 @@
+# Abhängigkeitsverzeichnisse
+/node_modules/
+
+# Umgebungsdateien
+.env
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Betriebssystem- und Editor-Dateien
+.DS_Store
+Thumbs.db
+*.sublime*
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Sicherheitskopien von Dateien, die von verschiedenen Editoren erstellt werden
+*~
+*.bak
+*.tmp
+
+# Kompilierte Dateien und Build-Verzeichnisse
+/dist
+/build
+/temp
+

@@ -1,10 +1,10 @@
-/* register.html */
+/* registration.html */
 
 #background-container-register{
     position: relative;
     width: 100%; /* Adjust if needed */
     height: 100vh; /* Adjust if needed */
-    background-image: url("register.png");
+    background-image: url("registration.png");
     background-size: cover;
 }
 
