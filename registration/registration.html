@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorer Homepage</title>
+    <link rel="stylesheet" href="registration_styling/registration.css">
+</head>
+<body>
+    <div id="background-container-register">
+        <form action="/register" method="post">
+            <label for="username_Register"></label><input type="text" id="username_Register" name="username" required><br>
+            <label for="password_Register"></label><input type="password" id="password_Register" name="password" required><br><br>
+            <input type="submit" id="register_Register" value="Register">
+            <button id="alreadyRegistered_Register" onclick="location.href='/login'">Already registered. Go to Login</button>
+        </form>
+    </div>
+    <script src="registration_scripts/registration.js"></script>
+</body>
+</html>

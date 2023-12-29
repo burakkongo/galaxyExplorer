@@ -1,5 +1,4 @@
-
-document.addEventListener('visibilitychange', function() {
+document.addEventListener('visibilitychange', function () {
     // Check if the updateCounts flag is set in local storage
     if (localStorage.getItem('updateCounts') === 'true') {
         // If so, call the updateFlashcardCounts function
@@ -19,7 +18,6 @@ function navigateTo(category) {
         window.location.href = `../flashcardsViews/flashcards.html?category=${encodeURIComponent(category)}`;
     }
 }
-
 
 function updateFlashcardCounts() {
     // Fetch flashcard counts from the server
@@ -51,21 +49,21 @@ function updateFlashcardCounts() {
 
 updateFlashcardCounts();
 
-document.getElementById('import-flashcards-btn').addEventListener('click', function() {
+document.getElementById('import-flashcards-btn').addEventListener('click', function () {
     document.getElementById('flashcards-file-input').click();
 });
 
-document.getElementById('flashcards-file-input').addEventListener('change', function(event) {
+document.getElementById('flashcards-file-input').addEventListener('change', function (event) {
     var file = event.target.files[0];
     var reader = new FileReader();
 
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         var text = e.target.result;
         var lines = text.split('\n');
         // Parse CSV lines into objects
         var flashcards = lines.slice(1).map(line => {
             var [category, title, answer] = line.split(',');
-            return { category, title, answer };
+            return {category, title, answer};
         });
         sendFlashcardsToServer(flashcards);
     };
@@ -80,7 +78,7 @@ function sendFlashcardsToServer(flashcards) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ flashcards: flashcards }),
+        body: JSON.stringify({flashcards: flashcards}),
     })
         .then(response => response.json())
         .then(data => {
@@ -95,24 +93,22 @@ function sendFlashcardsToServer(flashcards) {
             console.error('Error:', error);
             alert('An error occurred while importing flashcards.');
         });
-
 }
 
-
-document.getElementById('delete-all-flashcards-btn').addEventListener('click', function() {
+document.getElementById('delete-all-flashcards-btn').addEventListener('click', function () {
     document.getElementById('confirmDeleteModal').style.display = 'block';
 });
 
 var confirmDeleteModal = document.getElementById('confirmDeleteModal');
-document.getElementById('confirmDeleteModalClose').onclick = function() {
+document.getElementById('confirmDeleteModalClose').onclick = function () {
     confirmDeleteModal.style.display = "none";
 };
 
-document.getElementById('cancelDelete').addEventListener('click', function() {
+document.getElementById('cancelDelete').addEventListener('click', function () {
     confirmDeleteModal.style.display = 'none';
 });
 
-document.getElementById('confirmDelete').addEventListener('click', function() {
+document.getElementById('confirmDelete').addEventListener('click', function () {
     // Logic to delete all flashcards
     fetch('/deleteAllFlashcardsAllCategories', {
         method: 'DELETE'
@@ -121,7 +117,7 @@ document.getElementById('confirmDelete').addEventListener('click', function() {
         .then(data => {
             if (data.success) {
                 alert('All flashcards deleted successfully!');
-                setTimeout(updateFlashcardCounts,1000);
+                setTimeout(updateFlashcardCounts, 1000);
             } else {
                 alert('Failed to delete flashcards.');
             }
@@ -134,8 +130,8 @@ document.getElementById('confirmDelete').addEventListener('click', function() {
 });
 
 // Close the modal if clicked outside of it
-window.onclick = function(event) {
-    if (event.target == confirmDeleteModal) {
+window.onclick = function (event) {
+    if (event.target === confirmDeleteModal) {
         confirmDeleteModal.style.display = "none";
     }
 };
