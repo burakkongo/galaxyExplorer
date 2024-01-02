@@ -1,3 +1,30 @@
+window.addEventListener('pageshow', (event) => {
+    if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        // Page is loaded from cache, update the flashcard counts
+        updateFlashcardCounts();
+    }
+});
+function fetchAndDisplayUsername() {
+    fetch('/getUsername')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.username) {
+                document.getElementById('header').querySelector('h1').textContent = `Hello, ${data.username}!`;
+            }
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
+// Call the function on page load to show the user greeting
+fetchAndDisplayUsername();
+
 document.addEventListener('visibilitychange', function () {
     // Check if the updateCounts flag is set in local storage
     if (localStorage.getItem('updateCounts') === 'true') {
@@ -10,7 +37,7 @@ document.addEventListener('visibilitychange', function () {
 
 const navigateTo = (category) => {
     if (category === 'map') {
-        // Navigate to the map page if 'map' is the category
+        // Navigate to the map page
         window.location.href = '../adventureMap/adventure_map.html';
     } else {
         // Otherwise, navigate to the flashcards page with the correct category
@@ -24,30 +51,46 @@ const updateFlashcardCounts = () => {
     fetch('/getFlashcardCounts')
         .then(response => response.json())
         .then(data => {
-            // The data is expected to be an array of objects with 'Category' and 'Count' properties
-            data.forEach(item => {
-                const countElement = document.getElementById(`${item.Category.toLowerCase()}-count`);
+            const categories = ['biology', 'chemistry', 'geography', 'history', 'mathematics', 'programming'];
+
+            // Reset all counts to 'No flashcards'
+            categories.forEach(category => {
+                const countElement = document.getElementById(`${category}-count`);
                 if (countElement) {
-                    countElement.textContent = item.Count > 0 ? `${item.Count} Flashcards` : 'No flashcards';
+                    countElement.textContent = 'No flashcards';
                 }
             });
 
-            // Update categories with no flashcards after all counts are loaded
-            const categories = ['biology', 'chemistry', 'geography', 'history', 'mathematics', 'programming'];
-            categories.forEach(category => {
-                const countElement = document.getElementById(`${category}-count`);
-                if (countElement && countElement.textContent === 'Loading...') {
-                    countElement.textContent = 'No Flashcards';
+            // Update counts with data from the server
+            data.forEach(item => {
+                const countElement = document.getElementById(`${item.category.toLowerCase()}-count`);
+                if (countElement) {
+                    countElement.textContent = item.Count > 0 ? `${item.Count} Flashcards` : 'No flashcards';
                 }
             });
         })
         .catch(error => {
             console.error('Error fetching flashcard counts:', error);
-            // If there's an error, you may want to set all to 'No flashcards' or handle it as appropriate
+            // If there's an error, update UI accordingly
+            const categories = ['biology', 'chemistry', 'geography', 'history', 'mathematics', 'programming'];
+            categories.forEach(category => {
+                const countElement = document.getElementById(`${category}-count`);
+                if (countElement) {
+                    countElement.textContent = 'Error fetching counts';
+                }
+            });
         });
-}
+};
 
-updateFlashcardCounts();
+// Call updateFlashcardCounts on page load and when visibility changes
+document.addEventListener('DOMContentLoaded', updateFlashcardCounts);
+document.addEventListener('visibilitychange', function () {
+    if (localStorage.getItem('updateCounts') === 'true') {
+        updateFlashcardCounts();
+        localStorage.removeItem('updateCounts');
+    }
+});
+
 
 document.getElementById('import-flashcards-btn').addEventListener('click', function () {
     document.getElementById('flashcards-file-input').click();

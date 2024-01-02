@@ -50,18 +50,7 @@
 </div>
 
 <!-- Script -->
-<script src="flashcardsViews_scripts/flashcards.js"></script> <!-- Update the path if necessary -->
-<script>
-    // Script to set the category title based on URL parameter
-    document.addEventListener('DOMContentLoaded', function () {
-        const params = new URLSearchParams(window.location.search);
-        const category = params.get('category');
-        const categoryTitleElement = document.getElementById('category-title');
-        if (categoryTitleElement && category) {
-            categoryTitleElement.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-        }
-    });
-</script>
+<script src="flashcardsViews_scripts/flashcards.js"></script>
 
 <!-- The Modal -->
 <div class="modal" id="deleteModal">
