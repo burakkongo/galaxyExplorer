@@ -79,7 +79,7 @@ app.get('/registration', (req, res) => {
 // Handle registration POST request
 app.post('/registration', (req, res) => {
     const {username, password} = req.body;
-    const checkUserQuery = 'SELECT * FROM users WHERE Username = ?';
+    const checkUserQuery = 'SELECT * FROM users WHERE username = ?';
     db.query(checkUserQuery, [username], (err, results) => {
         if (err) {
             res.status(500).send('Error checking user');
@@ -88,7 +88,7 @@ app.post('/registration', (req, res) => {
         if (results.length > 0) {
             res.send('User already registered');
         } else {
-            const query = 'INSERT INTO users (Username, Password) VALUES (?, ?)';
+            const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
             db.query(query, [username, password], (err, result) => {
                 if (err) {
                     res.status(500).send('Error registering user');
@@ -108,7 +108,7 @@ app.get('/login', (req, res) => {
 // Handle login POST request
 app.post('/login', (req, res) => {
     const {username, password} = req.body;
-    const query = 'SELECT userID FROM users WHERE Username = ? AND Password = ?';
+    const query = 'SELECT userID FROM users WHERE username = ? AND password = ?';
     db.query(query, [username, password], (err, results) => {
         if (err) {
             res.status(500).send('Error logging in');
@@ -130,9 +130,9 @@ app.get('/dashboard', (req, res) => {
 
 // Add flashcard route
 app.post('/addFlashcard', (req, res) => {
-    const {category, title, answer, userID} = req.body;
-    const checkQuery = 'SELECT * FROM flashcards WHERE Category = ? AND Title = ?';
-    db.query(checkQuery, [category, title], (err, results) => {
+    const {category, flashcardTitle, answer, userID} = req.body;
+    const checkQuery = 'SELECT * FROM flashcards WHERE category = ? AND flashcardTitle = ?';
+    db.query(checkQuery, [category, flashcardTitle], (err, results) => {
         if (err) {
             res.status(500).json({success: false, error: 'Error checking for flashcard'});
             return;
@@ -141,13 +141,13 @@ app.post('/addFlashcard', (req, res) => {
             res.status(409).json({success: false, error: 'Flashcard already exists'});
             return;
         }
-        const insertQuery = 'INSERT INTO flashcards (Category, Title, Answer, UserID) VALUES (?, ?, ?, ?)';
-        db.query(insertQuery, [category, title, answer, userID], (insertErr, insertResults) => {
+        const insertQuery = 'INSERT INTO flashcards (category, flashcardTitle, answer, userID) VALUES (?, ?, ?, ?)';
+        db.query(insertQuery, [category, flashcardTitle, answer, userID], (insertErr, insertResults) => {
             if (insertErr) {
                 res.status(500).json({success: false, error: 'Error saving flashcard'});
                 return;
             }
-            res.json({success: true, flashcard: {category, title, answer, userID}});
+            res.json({success: true, flashcard: {category, flashcardTitle, answer, userID}});
         });
     });
 });
@@ -155,7 +155,7 @@ app.post('/addFlashcard', (req, res) => {
 // Get flashcards route
 app.get('/getFlashcards', (req, res) => {
     const {category} = req.query;
-    const query = 'SELECT * FROM flashcards WHERE Category = ?';
+    const query = 'SELECT * FROM flashcards WHERE category = ?';
     db.query(query, [category], (err, results) => {
         if (err) {
             res.status(500).json({success: false, error: 'Error fetching flashcards'});
@@ -168,7 +168,7 @@ app.get('/getFlashcards', (req, res) => {
 // Get flashcards by category route
 app.get('/getFlashcards/:category', (req, res) => {
     const category = req.params.category;
-    const query = 'SELECT * FROM flashcards WHERE Category = ?';
+    const query = 'SELECT * FROM flashcards WHERE category = ?';
     db.query(query, [category], (err, results) => {
         if (err) {
             res.status(500).json({success: false, error: 'Error fetching flashcards'});
@@ -180,7 +180,7 @@ app.get('/getFlashcards/:category', (req, res) => {
 
 // Get flashcard counts per category route
 app.get('/getFlashcardCounts', (req, res) => {
-    const query = 'SELECT Category, COUNT(*) as Count FROM flashcards GROUP BY Category';
+    const query = 'SELECT category, COUNT(*) as Count FROM flashcards GROUP BY category';
     db.query(query, (err, results) => {
         if (err) {
             res.status(500).json({success: false, error: 'Error fetching flashcard counts'});
@@ -193,9 +193,9 @@ app.get('/getFlashcardCounts', (req, res) => {
 // Update flashcard route
 app.put('/updateFlashcard/:id', (req, res) => {
     const {id} = req.params;
-    const {category, title, answer} = req.body;
-    const updateQuery = 'UPDATE flashcards SET Category = ?, Title = ?, Answer = ? WHERE FlashcardID = ?';
-    db.query(updateQuery, [category, title, answer, id], (err, results) => {
+    const {category, flashcardTitle, answer} = req.body;
+    const updateQuery = 'UPDATE flashcards SET category = ?, flashcardTitle = ?, answer = ? WHERE flashcardID = ?';
+    db.query(updateQuery, [category, flashcardTitle, answer, id], (err, results) => {
         if (err) {
             res.status(500).json({success: false, error: 'Error updating flashcard'});
             return;
@@ -207,7 +207,7 @@ app.put('/updateFlashcard/:id', (req, res) => {
 // Delete flashcard route
 app.delete('/deleteFlashcard/:id', (req, res) => {
     const {id} = req.params;
-    const deleteQuery = 'DELETE FROM flashcards WHERE FlashcardID = ?';
+    const deleteQuery = 'DELETE FROM flashcards WHERE flashcardID = ?';
     db.query(deleteQuery, [id], (err, results) => {
         if (err) {
             res.status(500).json({success: false, error: 'Error deleting flashcard'});
@@ -220,7 +220,7 @@ app.delete('/deleteFlashcard/:id', (req, res) => {
 // Delete all flashcards in a category route
 app.delete('/deleteAllFlashcards', (req, res) => {
     const {category} = req.query;
-    const deleteQuery = 'DELETE FROM flashcards WHERE Category = ?';
+    const deleteQuery = 'DELETE FROM flashcards WHERE category = ?';
     db.query(deleteQuery, [category], (err, results) => {
         if (err) {
             res.status(500).json({success: false, error: 'Error deleting flashcards'});
