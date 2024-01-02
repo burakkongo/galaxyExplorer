@@ -4,6 +4,13 @@
 # Umgebungsdateien
 .env
 
+# Sonar
+.sonar
+
+.idea/sonarlint
+*.pb
+*.iml
+
 # Logs
 *.log
 npm-debug.log*

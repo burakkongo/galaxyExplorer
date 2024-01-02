@@ -1,8 +1,25 @@
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
+const session = require('express-session');
 const app = express();
 const port = 3000; // or use a different port
+
+// Configuring session middleware
+app.use(session({
+    secret: 'galaxyExplorer24',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+
+// Disabled caching for to instanly see changes in the flashcards count
+app.use((req, res, next) => {
+    res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.header('Pragma', 'no-cache');
+    res.header('Expires', '0');
+    next();
+});
 
 // Start the server
 app.listen(port, () => {
@@ -107,15 +124,16 @@ app.get('/login', (req, res) => {
 
 // Handle login POST request
 app.post('/login', (req, res) => {
-    const {username, password} = req.body;
-    const query = 'SELECT userID FROM users WHERE username = ? AND password = ?';
+    const { username, password } = req.body;
+    const query = 'SELECT userID FROM users WHERE username = ? AND password = ?'; // Consider using hashed passwords
     db.query(query, [username, password], (err, results) => {
         if (err) {
             res.status(500).send('Error logging in');
             return;
         }
         if (results.length > 0) {
-            const userID = results[0].userID;
+            // Saving userID in session
+            req.session.userID = results[0].userID;
             res.redirect('/dashboard');
         } else {
             res.send('Invalid username or password');
@@ -123,109 +141,130 @@ app.post('/login', (req, res) => {
     });
 });
 
+// Endpoint to get username
+app.get('/getUsername', (req, res) => {
+    if (req.session.userID) {
+        const query = 'SELECT username FROM users WHERE userID = ?';
+        db.query(query, [req.session.userID], (err, results) => {
+            if (err) {
+                res.status(500).send('Error fetching username');
+                return;
+            }
+            if (results.length > 0) {
+                res.json({ username: results[0].username });
+            } else {
+                res.status(404).send('User not found');
+            }
+        });
+    } else {
+        res.status(401).send('Not logged in');
+    }
+});
+
 // Dashboard route
 app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'differentViews', 'dashboard', 'dashboard.html'));
 });
 
+
 // Add flashcard route
 app.post('/addFlashcard', (req, res) => {
-    const {category, flashcardTitle, answer, userID} = req.body;
-    const checkQuery = 'SELECT * FROM flashcards WHERE category = ? AND flashcardTitle = ?';
-    db.query(checkQuery, [category, flashcardTitle], (err, results) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const { category, flashcardTitle, answer } = req.body;
+    const userID = req.session.userID; // Get userID from session
+    const insertQuery = 'INSERT INTO flashcards (category, flashcardTitle, answer, userID) VALUES (?, ?, ?, ?)';
+    db.query(insertQuery, [category, flashcardTitle, answer, userID], (err, result) => {
         if (err) {
-            res.status(500).json({success: false, error: 'Error checking for flashcard'});
-            return;
+            return res.status(500).json({ success: false, error: 'Error saving flashcard' });
         }
-        if (results.length > 0) {
-            res.status(409).json({success: false, error: 'Flashcard already exists'});
-            return;
-        }
-        const insertQuery = 'INSERT INTO flashcards (category, flashcardTitle, answer, userID) VALUES (?, ?, ?, ?)';
-        db.query(insertQuery, [category, flashcardTitle, answer, userID], (insertErr, insertResults) => {
-            if (insertErr) {
-                res.status(500).json({success: false, error: 'Error saving flashcard'});
-                return;
-            }
-            res.json({success: true, flashcard: {category, flashcardTitle, answer, userID}});
-        });
+        res.json({ success: true, flashcard: { category, flashcardTitle, answer, userID } });
     });
 });
 
 // Get flashcards route
 app.get('/getFlashcards', (req, res) => {
-    const {category} = req.query;
-    const query = 'SELECT * FROM flashcards WHERE category = ?';
-    db.query(query, [category], (err, results) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const { category } = req.query;
+    const userID = req.session.userID; // Get userID from session
+    const query = 'SELECT * FROM flashcards WHERE category = ? AND userID = ?';
+    db.query(query, [category, userID], (err, results) => {
         if (err) {
-            res.status(500).json({success: false, error: 'Error fetching flashcards'});
-            return;
+            return res.status(500).json({ success: false, error: 'Error fetching flashcards' });
         }
         res.json(results);
     });
 });
 
-// Get flashcards by category route
-app.get('/getFlashcards/:category', (req, res) => {
-    const category = req.params.category;
-    const query = 'SELECT * FROM flashcards WHERE category = ?';
-    db.query(query, [category], (err, results) => {
-        if (err) {
-            res.status(500).json({success: false, error: 'Error fetching flashcards'});
-            return;
-        }
-        res.json(results);
-    });
-});
-
-// Get flashcard counts per category route
 app.get('/getFlashcardCounts', (req, res) => {
-    const query = 'SELECT category, COUNT(*) as Count FROM flashcards GROUP BY category';
-    db.query(query, (err, results) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const userID = req.session.userID; // Get userID from session
+    const query = 'SELECT category, COUNT(*) as Count FROM flashcards WHERE userID = ? GROUP BY category';
+    db.query(query, [userID], (err, results) => {
         if (err) {
-            res.status(500).json({success: false, error: 'Error fetching flashcard counts'});
-            return;
+            return res.status(500).json({success: false, error: 'Error fetching flashcard counts'});
         }
         res.json(results);
     });
 });
+
 
 // Update flashcard route
 app.put('/updateFlashcard/:id', (req, res) => {
-    const {id} = req.params;
-    const {category, flashcardTitle, answer} = req.body;
-    const updateQuery = 'UPDATE flashcards SET category = ?, flashcardTitle = ?, answer = ? WHERE flashcardID = ?';
-    db.query(updateQuery, [category, flashcardTitle, answer, id], (err, results) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const { category, flashcardTitle, answer } = req.body;
+    const userID = req.session.userID; // Get userID from session
+    const { id } = req.params;
+    const updateQuery = 'UPDATE flashcards SET category = ?, flashcardTitle = ?, answer = ? WHERE flashcardID = ? AND userID = ?';
+    db.query(updateQuery, [category, flashcardTitle, answer, id, userID], (err, results) => {
         if (err) {
-            res.status(500).json({success: false, error: 'Error updating flashcard'});
-            return;
+            return res.status(500).json({ success: false, error: 'Error updating flashcard' });
         }
-        res.json({success: true});
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ success: false, error: 'Flashcard not found or user mismatch' });
+        }
+        res.json({ success: true });
     });
 });
 
 // Delete flashcard route
 app.delete('/deleteFlashcard/:id', (req, res) => {
-    const {id} = req.params;
-    const deleteQuery = 'DELETE FROM flashcards WHERE flashcardID = ?';
-    db.query(deleteQuery, [id], (err, results) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const userID = req.session.userID; // Get userID from session
+    const { id } = req.params;
+    const deleteQuery = 'DELETE FROM flashcards WHERE flashcardID = ? AND userID = ?';
+    db.query(deleteQuery, [id, userID], (err, results) => {
         if (err) {
-            res.status(500).json({success: false, error: 'Error deleting flashcard'});
-            return;
+            return res.status(500).json({ success: false, error: 'Error deleting flashcard' });
         }
-        res.json({success: true});
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ success: false, error: 'Flashcard not found or user mismatch' });
+        }
+        res.json({ success: true });
     });
 });
 
 // Delete all flashcards in a category route
 app.delete('/deleteAllFlashcards', (req, res) => {
-    const {category} = req.query;
-    const deleteQuery = 'DELETE FROM flashcards WHERE category = ?';
-    db.query(deleteQuery, [category], (err, results) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const { category } = req.query;
+    const userID = req.session.userID; // Get userID from session
+    const deleteQuery = 'DELETE FROM flashcards WHERE category = ? AND userID = ?';
+    db.query(deleteQuery, [category, userID], (err, results) => {
         if (err) {
-            res.status(500).json({success: false, error: 'Error deleting flashcards'});
-            return;
+            return res.status(500).json({ success: false, error: 'Error deleting flashcards' });
         }
-        res.json({success: true, message: 'All flashcards deleted successfully.'});
+        res.json({ success: true, message: 'All flashcards deleted successfully.' });
     });
 });
