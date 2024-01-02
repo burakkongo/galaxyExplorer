@@ -48,12 +48,12 @@ app.use('/quizView', express.static(path.join(__dirname, 'differentViews', 'quiz
 app.use('/quizview_scripts', express.static(path.join(__dirname, 'differentViews', 'quizview', 'quizview_scripts')));
 app.use('/quizview_styling', express.static(path.join(__dirname, 'differentViews', 'quizview', 'quizview_styling')));
 
-// Database connection configuration
+// Database connection configuration 02.01.2024
 const db = mysql.createConnection({
-    host: 'sql11.freesqldatabase.com',
-    user: 'sql11672895',
-    password: 'BZDVYvzD6x',
-    database: 'sql11672895',
+    host: 'sql8.freesqldatabase.com',
+    user: 'sql8674277',
+    database: 'sql8674277',
+    password: '8WvdRrPxqF',
     port: 3306
 });
 
