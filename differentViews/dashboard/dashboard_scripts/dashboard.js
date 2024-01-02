@@ -8,7 +8,7 @@ document.addEventListener('visibilitychange', function () {
     }
 });
 
-function navigateTo(category) {
+const navigateTo = (category) => {
     if (category === 'map') {
         // Navigate to the map page if 'map' is the category
         window.location.href = '../adventureMap/adventure_map.html';
@@ -17,9 +17,9 @@ function navigateTo(category) {
         // The relative path goes up one directory from 'dashboard_scripts' and then into 'flashcardsViews'
         window.location.href = `../flashcardsViews/flashcards.html?category=${encodeURIComponent(category)}`;
     }
-}
+};
 
-function updateFlashcardCounts() {
+const updateFlashcardCounts = () => {
     // Fetch flashcard counts from the server
     fetch('/getFlashcardCounts')
         .then(response => response.json())
@@ -54,31 +54,30 @@ document.getElementById('import-flashcards-btn').addEventListener('click', funct
 });
 
 document.getElementById('flashcards-file-input').addEventListener('change', function (event) {
-    var file = event.target.files[0];
-    var reader = new FileReader();
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
     reader.onload = function (e) {
-        var text = e.target.result;
-        var lines = text.split('\n');
+        const text = e.target.result;
+        const lines = text.split('\n');
         // Parse CSV lines into objects
-        var flashcards = lines.slice(1).map(line => {
-            var [category, title, answer] = line.split(',');
-            return {category, title, answer};
+        const flashcards = lines.slice(1).map(line => {
+            const [category, title, answer] = line.split(',');
+            return { category, title, answer };
         });
         sendFlashcardsToServer(flashcards);
     };
-
     reader.readAsText(file);
 });
 
-function sendFlashcardsToServer(flashcards) {
+const sendFlashcardsToServer = (flashcards) => {
     // Send the flashcards to the backend
     fetch('/importFlashcards', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({flashcards: flashcards}),
+        body: JSON.stringify({ flashcards: flashcards }),
     })
         .then(response => response.json())
         .then(data => {
@@ -99,7 +98,7 @@ document.getElementById('delete-all-flashcards-btn').addEventListener('click', f
     document.getElementById('confirmDeleteModal').style.display = 'block';
 });
 
-var confirmDeleteModal = document.getElementById('confirmDeleteModal');
+const confirmDeleteModal = document.getElementById('confirmDeleteModal');
 document.getElementById('confirmDeleteModalClose').onclick = function () {
     confirmDeleteModal.style.display = "none";
 };

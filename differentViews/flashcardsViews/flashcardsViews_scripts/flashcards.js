@@ -233,12 +233,12 @@ answer.addEventListener('input', () => {
 
 
 function createViewForFlashcard(flashcard) {
-    var div = document.createElement("div");
+    const div = document.createElement("div");
     div.classList.add("card");
 
 
-    var questionText = flashcard.Title;
-    var answerText = flashcard.Answer;
+    const questionText = flashcard.tit;
+    const answerText = flashcard.Answer;
 
     div.dataset.id = flashcard.FlashcardID;
 
@@ -253,18 +253,18 @@ function createViewForFlashcard(flashcard) {
     `;
 
 
-    var link = div.querySelector(".show-hide-btn");
+    const link = div.querySelector(".show-hide-btn");
     link.addEventListener("click", (e) => {
         e.preventDefault();
         div.querySelector(".answer-div").classList.toggle("hide");
     });
 
-    var editButton = div.querySelector(".edit-btn");
+    const editButton = div.querySelector(".edit-btn");
     editButton.addEventListener("click", () => {
         editFlashcard(div);
     });
 
-    var deleteButton = div.querySelector(".delete-btn");
+    const deleteButton = div.querySelector(".delete-btn");
     deleteButton.addEventListener("click", () => {
         deleteFlashcard(div.dataset.id);
     });
@@ -295,8 +295,8 @@ function isDuplicateTitle(title, excludeId) {
 let editingFlashcardId = null;
 
 function editFlashcard(flashcardDiv) {
-    var questionText = flashcardDiv.querySelector(".question-div").textContent;
-    var answerText = flashcardDiv.querySelector(".answer-div").textContent;
+    const questionText = flashcardDiv.querySelector(".question-div").textContent;
+    const answerText = flashcardDiv.querySelector(".answer-div").textContent;
     editingFlashcardId = flashcardDiv.dataset.id;
 
 
@@ -317,10 +317,10 @@ function editFlashcard(flashcardDiv) {
 
 function deleteFlashcard(flashcardId) {
 
-    var modal = document.getElementById("deleteModal");
-    var confirmDelete = document.getElementById("confirmDelete");
-    var cancelDelete = document.getElementById("cancelDelete");
-    var span = document.getElementsByClassName("close")[0];
+    const modal = document.getElementById("deleteModal");
+    const confirmDelete = document.getElementById("confirmDelete");
+    const cancelDelete = document.getElementById("cancelDelete");
+    const span = document.getElementsByClassName("close")[0];
 
 
     modal.style.display = "block";
@@ -354,7 +354,7 @@ function deleteFlashcard(flashcardId) {
     }
 
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = "none";
         }
     }
@@ -396,10 +396,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById('delete-all-flashcards').addEventListener('click', () => {
 
-    var deleteAllModal = document.getElementById("deleteAllModal");
-    var confirmDeleteAll = document.getElementById("confirmDeleteAll");
-    var cancelDeleteAll = document.getElementById("cancelDeleteAll");
-    var spanDeleteAllClose = document.querySelector(".delete-all-close");
+    const deleteAllModal = document.getElementById("deleteAllModal");
+    const confirmDeleteAll = document.getElementById("confirmDeleteAll");
+    const cancelDeleteAll = document.getElementById("cancelDeleteAll");
+    const spanDeleteAllClose = document.querySelector(".delete-all-close");
 
 
     deleteAllModal.style.display = "block";
@@ -434,7 +434,7 @@ document.getElementById('delete-all-flashcards').addEventListener('click', () =>
     }
 
     window.onclick = function(event) {
-        if (event.target == deleteAllModal) {
+        if (event.target === deleteAllModal) {
             deleteAllModal.style.display = "none";
         }
     }
