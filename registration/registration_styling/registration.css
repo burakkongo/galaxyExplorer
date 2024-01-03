@@ -9,19 +9,31 @@
 }
 
 #username_Register{
-    background-color: blue;
+    background-color: white;
+    border: red 2px solid;
+    border-radius: 7px;
     position: absolute; /* or 'relative' depending on your layout needs */
-    top: 53%;
-    left: 75%;
+    top: 46.5%;
+    left: 68.3%;
+    height: 50px;
+    width: 432px;
     display: block; /* or 'inline-block' */
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 #password_Register {
-    background-color: red;
+    background-color: white;
+    border: blue 2px solid;
+    border-radius: 7px;
     position: absolute; /* or 'relative' depending on your layout needs */
-    top: 67%;
-    left: 75%;
+    top: 59.5%;
+    left: 68.3%;
+    height: 52px;
+    width: 432px;
     display: block; /* or 'inline-block' */
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 #register_Register {
