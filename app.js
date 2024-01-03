@@ -5,7 +5,10 @@ const session = require('express-session');
 const app = express();
 const port = 3000; // or use a different port
 
-// Configuring session middleware
+const bcrypt = require('bcrypt');
+const saltRounds = 10; // for bcrypt
+
+// Configuring session management middleware
 app.use(session({
     secret: 'galaxyExplorer24',
     resave: false,
@@ -13,7 +16,7 @@ app.use(session({
     cookie: { secure: false }
 }));
 
-// Disabled caching for to instanly see changes in the flashcards count
+// Disabled caching to instantly see changes in the flashcards count
 app.use((req, res, next) => {
     res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.header('Pragma', 'no-cache');
@@ -21,12 +24,12 @@ app.use((req, res, next) => {
     next();
 });
 
-// Start the server
+// Starting the node server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
-// Use middleware to serve static files and parse request bodies
+// Using middleware to serve static files and parse request bodies
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -74,7 +77,7 @@ const db = mysql.createConnection({
     port: 3306
 });
 
-// Connect to the database
+// Building the connection to the database
 db.connect(err => {
     if (err) {
         console.error('Error connecting to the database', err);
@@ -83,19 +86,19 @@ db.connect(err => {
     console.log('Connected to the database');
 });
 
-// Serve the index page from the landingPage directory
+// Serving the index page from the landingPage directory
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'landingPage', 'index.html'));
 });
 
-// Serve the registration page
+// Serving the registration page
 app.get('/registration', (req, res) => {
     res.sendFile(path.join(__dirname, 'registration', 'registration.html'));
 });
 
-// Handle registration POST request
+// Handling registration POST request
 app.post('/registration', (req, res) => {
-    const {username, password} = req.body;
+    const { username, password } = req.body;
     const checkUserQuery = 'SELECT * FROM users WHERE username = ?';
     db.query(checkUserQuery, [username], (err, results) => {
         if (err) {
@@ -105,43 +108,57 @@ app.post('/registration', (req, res) => {
         if (results.length > 0) {
             res.send('User already registered');
         } else {
-            const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
-            db.query(query, [username, password], (err, result) => {
+            // Hash the password
+            bcrypt.hash(password, saltRounds, (err, hash) => {
                 if (err) {
-                    res.status(500).send('Error registering user');
+                    res.status(500).send('Error hashing password');
                     return;
                 }
-                res.redirect('/login');
+                const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
+                db.query(query, [username, hash], (err) => {
+                    if (err) {
+                        res.status(500).send('Error registering user');
+                        return;
+                    }
+                    res.redirect('/login');
+                });
             });
         }
     });
 });
 
-// Serve the login form
+// Serving the login form
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'login', 'login.html'));
 });
 
-// Handle login POST request
+// Handling login POST requests
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    const query = 'SELECT userID FROM users WHERE username = ? AND password = ?'; // Consider using hashed passwords
-    db.query(query, [username, password], (err, results) => {
+    const query = 'SELECT userID, password FROM users WHERE username = ?';
+    db.query(query, [username], (err, results) => {
         if (err) {
             res.status(500).send('Error logging in');
             return;
         }
         if (results.length > 0) {
-            // Saving userID in session
-            req.session.userID = results[0].userID;
-            res.redirect('/dashboard');
+            // Compare hashed password
+            bcrypt.compare(password, results[0].password, (err, result) => {
+                if (result) {
+                    // Saving userID in session
+                    req.session.userID = results[0].userID;
+                    res.redirect('/dashboard');
+                } else {
+                    res.send('Invalid username or password');
+                }
+            });
         } else {
             res.send('Invalid username or password');
         }
     });
 });
 
-// Endpoint to get username
+// Endpoint to get the username
 app.get('/getUsername', (req, res) => {
     if (req.session.userID) {
         const query = 'SELECT username FROM users WHERE userID = ?';
@@ -166,8 +183,7 @@ app.get('/dashboard', (req, res) => {
     res.sendFile(path.join(__dirname, 'differentViews', 'dashboard', 'dashboard.html'));
 });
 
-
-// Add flashcard route
+// Adding flashcards
 app.post('/addFlashcard', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
@@ -175,7 +191,7 @@ app.post('/addFlashcard', (req, res) => {
     const { category, flashcardTitle, answer } = req.body;
     const userID = req.session.userID; // Get userID from session
     const insertQuery = 'INSERT INTO flashcards (category, flashcardTitle, answer, userID) VALUES (?, ?, ?, ?)';
-    db.query(insertQuery, [category, flashcardTitle, answer, userID], (err, result) => {
+    db.query(insertQuery, [category, flashcardTitle, answer, userID], (err) => {
         if (err) {
             return res.status(500).json({ success: false, error: 'Error saving flashcard' });
         }
@@ -183,7 +199,7 @@ app.post('/addFlashcard', (req, res) => {
     });
 });
 
-// Get flashcards route
+// Getting flashcards
 app.get('/getFlashcards', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
@@ -199,6 +215,7 @@ app.get('/getFlashcards', (req, res) => {
     });
 });
 
+// Getting flashcard counts
 app.get('/getFlashcardCounts', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
@@ -213,8 +230,7 @@ app.get('/getFlashcardCounts', (req, res) => {
     });
 });
 
-
-// Update flashcard route
+// Updating flashcard
 app.put('/updateFlashcard/:id', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
@@ -234,7 +250,7 @@ app.put('/updateFlashcard/:id', (req, res) => {
     });
 });
 
-// Delete flashcard route
+// Deleting single flashcard
 app.delete('/deleteFlashcard/:id', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
@@ -253,7 +269,7 @@ app.delete('/deleteFlashcard/:id', (req, res) => {
     });
 });
 
-// Delete all flashcards in a category route
+// Deleting all flashcards in a category route linked to userID
 app.delete('/deleteAllFlashcards', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
@@ -261,10 +277,31 @@ app.delete('/deleteAllFlashcards', (req, res) => {
     const { category } = req.query;
     const userID = req.session.userID; // Get userID from session
     const deleteQuery = 'DELETE FROM flashcards WHERE category = ? AND userID = ?';
-    db.query(deleteQuery, [category, userID], (err, results) => {
+    db.query(deleteQuery, [category, userID], (err) => {
         if (err) {
             return res.status(500).json({ success: false, error: 'Error deleting flashcards' });
         }
         res.json({ success: true, message: 'All flashcards deleted successfully.' });
+    });
+});
+
+app.post('/importFlashcards', (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+
+    const flashcards = req.body.flashcards;
+    const userID = req.session.userID;
+
+    const insertQuery = 'INSERT INTO flashcards (category, flashcardTitle, answer, userID) VALUES ?';
+
+    const values = flashcards.map(f => [f.category, f.flashcardTitle, f.answer, userID]);
+
+    db.query(insertQuery, [values], (err, result) => {
+        if (err) {
+            console.error('Error importing flashcards:', err);
+            return res.status(500).json({ success: false, error: 'Error importing flashcards' });
+        }
+        res.json({ success: true, message: 'Flashcards imported successfully', importedCount: result.affectedRows });
     });
 });
