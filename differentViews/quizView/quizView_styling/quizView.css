@@ -1,0 +1,14 @@
+#container {
+    background: red;
+    width: 100%;
+    margin: 0 auto;
+}
+#question {
+    margin-bottom: 20px;
+}
+#question-header {
+    font-weight: bold;
+}
+#question-input {
+    margin-top: 5px;
+}

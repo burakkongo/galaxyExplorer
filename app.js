@@ -64,9 +64,11 @@ app.use('/flashcardsViews_scripts', express.static(path.join(__dirname, 'differe
 app.use('/flashcardsViews_styling', express.static(path.join(__dirname, 'differentViews', 'flashcardsViews', 'flashcardsViews_styling')));
 
 // Quiz view static route with routes to scripts and styles
-app.use('/quizView', express.static(path.join(__dirname, 'differentViews', 'quizview')));
-app.use('/quizview_scripts', express.static(path.join(__dirname, 'differentViews', 'quizview', 'quizview_scripts')));
-app.use('/quizview_styling', express.static(path.join(__dirname, 'differentViews', 'quizview', 'quizview_styling')));
+
+app.use('/quizView', express.static(path.join(__dirname, 'differentViews', 'quizView')));
+app.use('/quizView_scripts', express.static(path.join(__dirname, 'differentViews', 'quizView', 'quizView_scripts')));
+app.use('/quizView_styling', express.static(path.join(__dirname, 'differentViews', 'quizView', 'quizView_styling')));
+
 
 // Database connection configuration 02.01.2024
 const db = mysql.createConnection({
@@ -306,3 +308,23 @@ app.post('/importFlashcards', (req, res) => {
         res.json({ success: true, message: 'Flashcards imported successfully', importedCount: result.affectedRows });
     });
 });
+
+
+//
+app.get('/quizView', (req, res) => {
+    res.sendFile(path.join(__dirname, 'differentViews', 'quizView', 'quizView.html'));
+});
+
+// random questions selection
+app.get('/getQuizQuestions', (req, res) => {
+    // Logic to get 5 random questions from the database
+    const query = 'SELECT * FROM test_flashcards ORDER BY RAND() LIMIT 5';
+    db.query(query, (err, results) => {
+        if (err) {
+            res.status(500).json({success: false, error: 'Error fetching quiz questions'});
+            return;
+        }
+        res.json(results);
+    });
+});
+
