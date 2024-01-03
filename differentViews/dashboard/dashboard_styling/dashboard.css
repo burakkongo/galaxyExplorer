@@ -1,21 +1,27 @@
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
+
 
 body, html {
     margin: 0;
     padding: 0;
+    width: 100%;
     height: 100%;
-    font-family: 'Open Sans', sans-serif;
-    background: #34264f;
+    font-family: 'Montserrat', sans-serif;
+    background: #000 url("Hintergrund-Dashboard.jpg") no-repeat center center/cover; /* Fallback-Farbe und Hintergrund-Definition */
     color: white;
 }
 
 #header {
     padding: 20px;
+    padding-left: 35px;
+    padding-top: 40px;
     background: transparent;
     color: white;
-    text-align: left;
+
 }
 
 #header h1 {
@@ -65,13 +71,16 @@ body, html {
 
 #map-button {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #5a2d82;
+    top: 40px;
+    right: 35px;
     border: none;
     padding: 10px;
-    border-radius: 50%;
     cursor: pointer;
+    color: white;
+    background-color: transparent;
+     font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 19px;
 }
 
 @media (max-width: 1024px) {
@@ -89,17 +98,21 @@ body, html {
 
 #import-flashcards-btn {
     font-size: 1rem;
-    background-color: #6c5490; /* A shade of purple */
+    background-image: linear-gradient(to right, #C65BC3, #8A33B5);
+       border: none;
+       border-radius: 15px;
     color: white;
     padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
+
     /* Added 20px right margin */
     margin-left: 30px;
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: inline-block;
+}
+#import-flashcards-btn:hover {
+    transform: scale(1.05); /* Button beim Hovern leicht vergrößern */
 }
 
 #import-flashcards-btn:hover {
@@ -156,7 +169,7 @@ body, html {
 /* Button styling */
 .modal button {
     padding: 10px 20px;
-    margin-right: 10px; /* Space between buttons */
+    margin-right: 5px; /* Space between buttons */
     border: none;
     border-radius: 5px;
     background-color: #5a2d82;
@@ -198,8 +211,8 @@ body, html {
     color: white;
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
-    margin-left: 30px;
+    border-radius: 15px;
+    margin-left: 15px;
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;

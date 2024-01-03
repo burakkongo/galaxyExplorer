@@ -1,23 +1,48 @@
 /* index.html */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
 #backgroundContainer_Index {
     position: relative;
-    width: 100%; /* Adjust if needed */
-    height: 100vh; /* Adjust if needed */
+    width: 100%;
+    height: 100vh;
     background-image: url("index.png");
     background-size: cover;
+    background-position: center;
 }
 
 #loginButtonContainer_Index {
     position: absolute;
-    top: 75%; /* Adjust this to align with the login button */
-    left: 72%; /* Adjust this to align with the login button */
-    width: 50px;
-    height: 50px;
+    top: 67.2%;
+    left: 66%;
+    min-width: 239.3px;
+    height: 49px;
     background-color: transparent;
     z-index: 1;
 }
 
-#loginButtonContainer_Index:hover{
-    background-color: red;
-    transition: transform 3s ease-in-out;
+#myButton{
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, #ff7e5f, #feb47b);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-size: 19px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
 }
+
+#myButton:hover {
+    transform: scale(1.05); /* Button beim Hovern leicht vergrößern */
+}
+
