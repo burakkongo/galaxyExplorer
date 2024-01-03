@@ -42,26 +42,15 @@
         <i class="fa-solid fa-xmark" id="close-btn"></i>
     </div>
 
-    <label for="question">Question:</label>
-    <textarea class="input" id="question" placeholder="Type the question here..." rows="2"></textarea>
+    <label for="flashcardTitle">Question:</label>
+    <textarea class="input" id="flashcardTitle" placeholder="Type the question here..." rows="2"></textarea>
     <label for="answer">Answer:</label>
     <textarea class="input" id="answer" placeholder="Type the answer here..." rows="4"></textarea>
     <button id="save-btn">Save</button>
 </div>
 
 <!-- Script -->
-<script src="flashcardsViews_scripts/flashcards.js"></script> <!-- Update the path if necessary -->
-<script>
-    // Script to set the category title based on URL parameter
-    document.addEventListener('DOMContentLoaded', function () {
-        const params = new URLSearchParams(window.location.search);
-        const category = params.get('category');
-        const categoryTitleElement = document.getElementById('category-title');
-        if (categoryTitleElement && category) {
-            categoryTitleElement.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-        }
-    });
-</script>
+<script src="flashcardsViews_scripts/flashcards.js"></script>
 
 <!-- The Modal -->
 <div class="modal" id="deleteModal">
