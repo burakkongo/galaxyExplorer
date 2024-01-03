@@ -206,12 +206,13 @@ app.get('/getFlashcards', (req, res) => {
     }
     const { category } = req.query;
     const userID = req.session.userID; // Get userID from session
-    const query = 'SELECT * FROM flashcards WHERE category = ? AND userID = ?';
+    const query = 'SELECT flashcardID, category, flashcardTitle, answer FROM flashcards WHERE category = ? AND userID = ?';
     db.query(query, [category, userID], (err, results) => {
         if (err) {
-            return res.status(500).json({ success: false, error: 'Error fetching flashcards' });
+            return res.status(500).send('Error fetching flashcards');
+        } else {
+            res.json(results);
         }
-        res.json(results);
     });
 });
 
