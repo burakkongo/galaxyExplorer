@@ -4,6 +4,7 @@ window.addEventListener('pageshow', (event) => {
         updateFlashcardCounts();
     }
 });
+
 function fetchAndDisplayUsername() {
     fetch('/getUsername')
         .then(response => {
@@ -21,7 +22,6 @@ function fetchAndDisplayUsername() {
             console.error('There has been a problem with your fetch operation:', error);
         });
 }
-
 // Call the function on page load to show the user greeting
 fetchAndDisplayUsername();
 
@@ -102,31 +102,46 @@ document.getElementById('flashcards-file-input').addEventListener('change', func
 
     reader.onload = function (e) {
         const text = e.target.result;
-        const lines = text.split('\n');
-        // Parse CSV lines into objects
+        const lines = text.split('\n').map(line => line.trim()).filter(line => line);
+        const headers = lines[0].split(',').map(header => header.trim().toLowerCase());
+
+        if (headers.length !== 3 || headers[0] !== 'category' || headers[1] !== 'question' || headers[2] !== 'answer') {
+            alert('CSV format is incorrect. Please ensure the first line has headers "Category,Question,Answer".');
+            return;
+        }
+
         const flashcards = lines.slice(1).map(line => {
-            const [category, title, answer] = line.split(',');
-            return { category, title, answer };
+            const [category, flashcardTitle, answer] = line.split(',').map(item => item.trim());
+            if (!category || !flashcardTitle || !answer) {
+                throw new Error('Each row must include a category, question, and answer.');
+            }
+            return { category, flashcardTitle, answer };
         });
+
         sendFlashcardsToServer(flashcards);
     };
+
+    reader.onerror = () => {
+        alert('Failed to read the file.');
+    };
+
     reader.readAsText(file);
 });
 
-const sendFlashcardsToServer = (flashcards) => {
+function sendFlashcardsToServer(flashcards) {
     // Send the flashcards to the backend
     fetch('/importFlashcards', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ flashcards: flashcards }),
+        body: JSON.stringify({ flashcards }),
     })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 alert('Flashcards imported successfully!');
-                updateFlashcardCounts()
+                // Maybe call a function to update the UI here
             } else {
                 alert('Failed to import flashcards: ' + data.error);
             }
@@ -136,6 +151,7 @@ const sendFlashcardsToServer = (flashcards) => {
             alert('An error occurred while importing flashcards.');
         });
 }
+
 
 document.getElementById('delete-all-flashcards-btn').addEventListener('click', function () {
     document.getElementById('confirmDeleteModal').style.display = 'block';
