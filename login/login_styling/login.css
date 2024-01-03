@@ -1,40 +1,98 @@
 /* login.html */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
 #backgroundContainer_Login{
     position: relative;
-    width: 100%; /* Adjust if needed */
-    height: 100vh; /* Adjust if needed */
+    width: 100%;
+    height: 100vh;
     background-image: url("login.png");
     background-size: cover;
 }
 
 #username_Login{
-    background-color: red;
-    position: absolute; /* or 'relative' depending on your layout needs */
-    top: 43%;
-    left: 70%;
-    display: block; /* or 'inline-block' */
+   background-color: transparent;
+      border: none;
+      position: absolute; /* or 'relative' depending on your layout needs */
+      top: 40.5%;
+      left: 65.9%;
+      display: block;
+      min-width: 416px;
+      height: 48px;
+      color: grey;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 400;
+          font-size: 17px;
+}
+
+#username_Login:focus {
+    outline: none;  /* Entfernt den Standard-Fokus-Rahmen */
 }
 
 #password_Login{
-    background-color: green;
-    position: absolute; /* or 'relative' depending on your layout needs */
-    top: 58%;
-    left: 70%;
-    display: block; /* or 'inline-block' */
+     background-color: transparent;
+        border: none;
+        position: absolute; /* or 'relative' depending on your layout needs */
+        top: 55%;
+        left: 66%;
+        display: block;
+        min-width: 416px;
+        height: 48px;
+        color: grey;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 20px;
 }
 
+#password_Login:focus {
+    outline: none;
+}
+
+
 #submit_Login{
-    background-color: yellow;
-    position: absolute; /* or 'relative' depending on your layout needs */
-    top: 70%;
-    left: 70%;
-    display: block; /* or 'inline-block' */
+    background-image: linear-gradient(to right, #ff7e5f, #feb47b);
+        border: none;
+        border-radius: 15px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 19px;
+        color: white;
+        cursor: pointer;
+        position: absolute;
+        top: 67.4%;
+        left: 64.9%;
+        min-width: 420px;
+        height: 48px;
+        display: block;
+}
+
+#submit_Login:hover {
+    transform: scale(1.05);
 }
 
 #goToRegister_Login{
-    background-color: blue;
-    position: absolute; /* or 'relative' depending on your layout needs */
-    top: 86%;
-    left: 85%;
-    display: block; /* or 'inline-block' */
+     background-color: transparent;
+        color: violet;
+        position: absolute;
+        top: 84.3%;
+        left: 83%;
+        border: none;
+        display: block;
+        font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 19px;
+        cursor: pointer;
+}
+
+#goToRegister_Login:hover {
+    text-decoration: underline;
+
 }

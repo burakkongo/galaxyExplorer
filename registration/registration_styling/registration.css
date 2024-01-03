@@ -1,53 +1,99 @@
 /* registration.html */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
 #background-container-register{
     position: relative;
-    width: 100%; /* Adjust if needed */
-    height: 100vh; /* Adjust if needed */
+    width: 100%;
+    height: 100vh;
     background-image: url("registration.png");
     background-size: cover;
 }
 
 #username_Register{
-    background-color: white;
-    border: red 2px solid;
-    border-radius: 7px;
-    position: absolute; /* or 'relative' depending on your layout needs */
-    top: 46.5%;
-    left: 68.3%;
-    height: 50px;
-    width: 432px;
-    display: block; /* or 'inline-block' */
-    font-size: 1.5rem;
-    text-align: center;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 39.2%;
+    left: 65.3%;
+    display: block;
+    min-width: 416px;
+    height: 48px;
+    color: grey;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 17px;
+}
+
+#username_Register:focus {
+    outline: none;
 }
 
 #password_Register {
-    background-color: white;
-    border: blue 2px solid;
-    border-radius: 7px;
-    position: absolute; /* or 'relative' depending on your layout needs */
-    top: 59.5%;
-    left: 68.3%;
-    height: 52px;
-    width: 432px;
-    display: block; /* or 'inline-block' */
-    font-size: 1.5rem;
-    text-align: center;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 53%;
+    left: 65%;
+    display: block;
+    min-width: 416px;
+    height: 48px;
+    color: grey;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+#password_Register:focus {
+    outline: none;
 }
 
 #register_Register {
-    background-color: purple;
-    position: absolute; /* or 'relative' depending on your layout needs */
-    top: 80%;
-    left: 80%;
-    display: block; /* or 'inline-block' */
+    background-image: linear-gradient(to right, #ff7e5f, #feb47b);
+    border: none;
+    border-radius: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 19px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 64.3%;
+    left: 64.7%;
+    min-width: 420px;
+    height: 48px;
+    display: block;
+}
+
+#register_Register:hover {
+    transform: scale(1.05);
 }
 
 #alreadyRegistered_Register{
-    background-color: yellow;
-    position: absolute; /* or 'relative' depending on your layout needs */
-    top: 90%;
-    left: 80%;
-    display: block; /* or 'inline-block' */
+    background-color: transparent;
+    color: violet;
+    position: absolute;
+    top: 79.3%;
+    left: 81.7%;
+    border: none;
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+        font-weight: 400;
+        font-size: 19px;
+    cursor: pointer;
+
+}
+
+#alreadyRegistered_Register:hover {
+    text-decoration: underline;
+
 }
