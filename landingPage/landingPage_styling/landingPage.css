@@ -21,13 +21,16 @@ html, body {
 
 #loginButtonContainer_Index {
     position: absolute;
+
     top: 67.2%;
     left: 66%;
     min-width: 239.3px;
     height: 49px;
+
     background-color: transparent;
     z-index: 1;
 }
+
 
 #myButton{
     width: 100%;
@@ -44,5 +47,6 @@ html, body {
 
 #myButton:hover {
     transform: scale(1.05); /* Button beim Hovern leicht vergrößern */
+
 }
 
