@@ -193,3 +193,11 @@ window.onclick = function (event) {
         confirmDeleteModal.style.display = "none";
     }
 };
+
+//Redirect to quizView on button click
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('generate-quiz-button').addEventListener('click', function() {
+        // Navigate to the registration.html page
+        window.location.href = '/quizView';
+    });
+});
