@@ -310,12 +310,12 @@ app.post('/importFlashcards', (req, res) => {
 });
 
 
-//
+// get quizView
 app.get('/quizView', (req, res) => {
     res.sendFile(path.join(__dirname, 'differentViews', 'quizView', 'quizView.html'));
 });
 
-// random questions selection
+// Random questions selection out of the test_flashcards table
 app.get('/getQuizQuestions', (req, res) => {
     // Logic to get 5 random questions from the database
     const query = 'SELECT * FROM test_flashcards ORDER BY RAND() LIMIT 5';
@@ -327,4 +327,63 @@ app.get('/getQuizQuestions', (req, res) => {
         res.json(results);
     });
 });
+
+//03.01.2024, Filip
+//getUserID function
+app.get('/getUserID', (req, res) => {
+    if (req.session.userID) {
+        const query = 'SELECT username, userID FROM users WHERE userID = ?';
+        db.query(query, [req.session.userID], (err, results) => {
+            if (err) {
+                res.status(500).send('Error fetching username');
+                return;
+            }
+            if (results.length > 0) {
+                res.json({ username: results[0].username, userID: results[0].userID });
+            } else {
+                res.status(404).send('User not found');
+            }
+        });
+    } else {
+        res.status(401).send('Not logged in');
+    }
+});
+
+// Update userXP for currently logged in user
+app.post('/updateUserXP', (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const userID = req.session.userID;
+
+    // Get the current userXP of the currently logged user
+    const getCurrentXPQuery = 'SELECT userXP FROM users WHERE userID = ?';
+    db.query(getCurrentXPQuery, [userID], (err, results) => {
+        if (err) {
+            return res.status(500).json({ success: false, error: 'Error fetching current userXP' });
+        }
+
+        if (results.length > 0) {
+            let currentUserXP = results[0].userXP;
+            // Increment XP by 1
+            let updatedUserXP = currentUserXP + 1;
+
+            // Update the userXP with the new value
+            const updateXPQuery = 'UPDATE users SET userXP = ? WHERE userID = ?';
+            db.query(updateXPQuery, [updatedUserXP, userID], (err, updateResults) => {
+                if (err) {
+                    return res.status(500).json({ success: false, error: 'Error updating userXP' });
+                }
+                if (updateResults.affectedRows === 0) {
+                    return res.status(404).json({ success: false, error: 'User not found' });
+                }
+                res.json({ success: true, message: 'User XP updated successfully' });
+            });
+        } else {
+            return res.status(404).json({ success: false, error: 'User not found' });
+        }
+    });
+});
+
+
 
