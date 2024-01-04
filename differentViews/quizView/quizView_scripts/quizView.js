@@ -5,15 +5,35 @@ document.addEventListener('DOMContentLoaded', function () {
         submitQuiz();
     });
 
+    function fetchAndDisplayUserID() {
+        fetch('/getUserID')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.username && data.userID) {
+                    alert(`Username: ${data.username}, User ID: ${data.userID}`); // Alerting with username and userID
+                    // Optionally display the username in the header if you want
+                    // document.getElementById('header').querySelector('h1').textContent = `Hello, ${data.username}!`;
+                }
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+    }
+    // Call the function on page load to show the user greeting
+    fetchAndDisplayUserID();
+
     // Function that loads quiz questions from the server
     function loadQuizQuestions() {
-        fetch('/getQuizQuestions') // AJAX call to the server to get the quiz questions
-            .then(response => response.json()) // Parsing the JSON response
+        fetch('/getQuizQuestions')
+            .then(response => response.json())
             .then(questions => {
-                // Reference to the quiz container element
                 const quizContainer = document.getElementById('quiz-container');
                 questions.forEach((question, index) => {
-                    // Creating and appending question elements to the quiz container
                     const questionDiv = document.createElement('div');
                     questionDiv.className = 'question';
 
@@ -31,32 +51,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             })
             .catch(error => {
-                // Logging any errors that occur during the fetch operation to the console
                 console.error('Error fetching quiz questions:', error);
             });
     }
 
     // Invoke the function to load quiz questions once the DOM content has loaded
     loadQuizQuestions();
+
     // Function that handles the quiz submission logic
     function submitQuiz() {
         const questions = document.querySelectorAll('.question');
         let score = 0;
         questions.forEach(question => {
             const input = question.querySelector('input');
-            // Checks if the provided answer matches the correct answer, ignoring case
             const isCorrect = input.dataset.answer.toLowerCase() === input.value.toLowerCase();
             if (isCorrect) {
-                score++; // Increment score if the answer is correct
-                question.style.color = 'green'; // Change text color to green for correct answers
+                score++;
+                question.style.color = 'green';
             } else {
-                question.style.color = 'red'; // Change text color to red for incorrect answers
+                question.style.color = 'red';
             }
         });
-        // Update the quiz result text with the user's score
+
         const resultDiv = document.getElementById('quiz-result');
         resultDiv.textContent = `You scored ${score} out of ${questions.length}`;
-    }
 
+        // Check if the score is 5 before updating userXP
+        if (score === 5) {
+            fetch('/updateUserXP', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message); // Log the response message
+                })
+                .catch(error => console.error('Error updating userXP:', error));
+        } else {
+            console.log('Score less than 5, not updating userXP');
+        }
+    }
 
 });
