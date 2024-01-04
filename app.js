@@ -108,6 +108,7 @@ app.post('/registration', (req, res) => {
             return;
         }
         if (results.length > 0) {
+            //alert("User already registered.");
             res.send('User already registered');
         } else {
             // Hash the password
@@ -310,25 +311,47 @@ app.post('/importFlashcards', (req, res) => {
 });
 
 
-// get quizView
+// Get quizView
 app.get('/quizView', (req, res) => {
     res.sendFile(path.join(__dirname, 'differentViews', 'quizView', 'quizView.html'));
 });
 
-// Random questions selection out of the test_flashcards table
+// Test if there are >= 5  questions for the logged in user
+// Random questions selection out of the test_flashcards table for the logged-in user
 app.get('/getQuizQuestions', (req, res) => {
-    // Logic to get 5 random questions from the database
-    const query = 'SELECT * FROM test_flashcards ORDER BY RAND() LIMIT 5';
-    db.query(query, (err, results) => {
+    if (!req.session.userID) {
+        return res.status(401).json({ success: false, error: 'User not authenticated' });
+    }
+
+    const userID = req.session.userID;
+
+    // First, check if there are at least 5 questions in the database for the logged-in user
+    const countQuery = 'SELECT COUNT(*) AS questionCount FROM test_flashcards WHERE userID = ?';
+    db.query(countQuery, [userID], (err, countResults) => {
         if (err) {
-            res.status(500).json({success: false, error: 'Error fetching quiz questions'});
+            res.status(500).json({ success: false, error: 'Error checking question count' });
             return;
         }
-        res.json(results);
+
+        // Check if there are at least 5 questions for the user
+        if (countResults[0].questionCount < 5) {
+            res.status(200).json({ success: false, error: 'Not enough questions in the database for the user' });
+            return;
+        }
+
+        // If there are enough questions, proceed to get 5 random questions for the logged-in user
+        const query = 'SELECT * FROM test_flashcards WHERE userID = ? ORDER BY RAND() LIMIT 5';
+        db.query(query, [userID], (err, results) => {
+            if (err) {
+                res.status(500).json({ success: false, error: 'Error fetching quiz questions for the user' });
+                return;
+            }
+            res.json(results);
+        });
     });
 });
 
-//03.01.2024, Filip
+
 //getUserID function
 app.get('/getUserID', (req, res) => {
     if (req.session.userID) {

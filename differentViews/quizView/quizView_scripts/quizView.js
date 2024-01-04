@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('/getUserID')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Network response was NOT ok');
                 }
                 return response.json();
             })
@@ -17,17 +17,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.username && data.userID) {
                     alert(`Username: ${data.username}, User ID: ${data.userID}`); // Alerting with username and userID
                     // Optionally display the username in the header if you want
-                    // document.getElementById('header').querySelector('h1').textContent = `Hello, ${data.username}!`;
+                    document.getElementById('container').querySelector('h1').textContent = `Welcome to the Flashcard Quiz, ${data.username}!`;
                 }
             })
             .catch(error => {
                 console.error('There has been a problem with your fetch operation:', error);
             });
     }
-    // Call the function on page load to show the user greeting
     fetchAndDisplayUserID();
 
-    // Function that loads quiz questions from the server
+    // Loads quiz questions from the server
     function loadQuizQuestions() {
         fetch('/getQuizQuestions')
             .then(response => response.json())
@@ -54,11 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error fetching quiz questions:', error);
             });
     }
-
-    // Invoke the function to load quiz questions once the DOM content has loaded
     loadQuizQuestions();
 
-    // Function that handles the quiz submission logic
+    // Submit Quiz
+    // Check if score is = 5. If 5, add XP to user entry in DB
     function submitQuiz() {
         const questions = document.querySelectorAll('.question');
         let score = 0;
@@ -81,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('/updateUserXP', { method: 'POST' })
                 .then(response => response.json())
                 .then(data => {
+                    alert("You answered all questions right. You get Experience!");
                     console.log(data.message); // Log the response message
                 })
                 .catch(error => console.error('Error updating userXP:', error));
