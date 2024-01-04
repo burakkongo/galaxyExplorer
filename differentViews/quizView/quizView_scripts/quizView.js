@@ -5,7 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
         submitQuiz();
     });
 
-    function fetchAndDisplayUserID() {
+    // Logout button
+
+    document.getElementById('exitButton').addEventListener('click', function() {
+            // Navigate to the registration.html page
+            window.location.href = '/dashboard';
+        });
+
+        function fetchAndDisplayUserID() {
         fetch('/getUserID')
             .then(response => {
                 if (!response.ok) {
