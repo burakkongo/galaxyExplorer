@@ -409,4 +409,155 @@ app.post('/updateUserXP', (req, res) => {
 });
 
 
+// Endpoint to fetch quiz questions by quiz ID
+app.get('/getQuestions/:quizID', (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+
+    const { quizID } = req.params;
+    const userID = req.session.userID;
+
+    const query = `
+  SELECT * FROM quiz_flashcards 
+  INNER JOIN flashcards 
+  ON quiz_flashcards.FlashcardID = flashcards.flashcardID 
+  WHERE quiz_flashcards.QuizID = ? AND flashcards.userID = ?
+`;
+    db.query(query, [quizID, userID], (err, results) => {
+        if (err) {
+            res.status(500).json({ success: false, error: 'Error fetching quiz questions' });
+            return;
+        }
+        if (results.length < 5) {
+            res.status(200).json({ success: false, error: 'Not enough questions for the quiz' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+
+app.post('/createCustomQuiz', async (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+
+    const { quizName, questionCount, categories } = req.body;
+
+    if (!categories || categories.length === 0) {
+        return res.status(400).json({ success: false, error: 'No categories selected' });
+    }
+    const userID = req.session.userID;
+
+    db.beginTransaction(err => {
+        if (err) { throw err; }
+
+        db.query('INSERT INTO quiz (UserID, Title) VALUES (?, ?)', [userID, quizName], (err, quizResults) => {
+            if (err) {
+                return db.rollback(() => {
+                    throw err;
+                });
+            }
+
+            const quizID = quizResults.insertId;
+
+            let placeholders = categories.map(() => '?').join(',');
+            let queryValues = [...categories, userID, parseInt(questionCount)];
+            const flashcardsQuery = `SELECT FlashcardID FROM flashcards WHERE category IN (${placeholders}) AND UserID = ? ORDER BY RAND() LIMIT ?`;
+
+            db.query(flashcardsQuery, queryValues, (err, flashcardsResults) => {
+                if (err) {
+                    return db.rollback(() => {
+                        throw err;
+                    });
+                }
+
+
+                const flashcardQuizMappings = flashcardsResults.map(flashcard => [quizID, flashcard.FlashcardID]);
+
+                if (flashcardQuizMappings.length > 0) {
+                    db.query('INSERT INTO quiz_flashcards (QuizID, FlashcardID) VALUES ?', [flashcardQuizMappings], (err, mappingResults) => {
+                        if (err) {
+                            return db.rollback(() => {
+                                throw err;
+                            });
+                        }
+
+                        db.commit(err => {
+                            if (err) {
+                                return db.rollback(() => {
+                                    throw err;
+                                });
+                            }
+                            res.json({ success: true, quiz: { quizID, quizName, questionCount, categories } });
+                        });
+                    });
+                } else {
+
+                    db.commit(err => {
+                        if (err) {
+                            return db.rollback(() => {
+                                throw err;
+                            });
+                        }
+                        res.json({ success: true, quiz: { quizID, quizName, questionCount, categories } });
+                    });
+                }
+            });
+        });
+    });
+});
+
+
+app.get('/getUserQuizzes', (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const userID = req.session.userID;
+    const query = 'SELECT * FROM quiz WHERE UserID = ?';
+    db.query(query, [userID], (err, results) => {
+        if (err) {
+            console.error('Error fetching quizzes:', err);
+            res.status(500).send('Error fetching quizzes');
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+
+// Endpoint to delete a quiz
+app.delete('/deleteQuiz/:quizID', (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const quizID = req.params.quizID;
+    const userID = req.session.userID;
+
+
+    const deleteFlashcardsQuery = 'DELETE FROM quiz_flashcards WHERE QuizID = ?';
+    db.query(deleteFlashcardsQuery, [quizID], (err, flashcardsResults) => {
+        if (err) {
+            console.error('Error deleting flashcards for quiz:', err);
+            return db.rollback(() => {
+                res.status(500).json({success: false, error: 'Error deleting associated flashcards'});
+            });
+        }
+    });
+
+    const deleteQuery = 'DELETE FROM quiz WHERE QuizID = ? AND UserID = ?';
+    db.query(deleteQuery, [quizID, userID], (err, results) => {
+        if (err) {
+            console.error('Error deleting quiz:', err);
+            return res.status(500).json({ success: false, error: 'Error deleting quiz' });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ success: false, error: 'Quiz not found or user mismatch' });
+        }
+        res.json({ success: true, message: 'Quiz deleted successfully' });
+    });
+});
+
+
 
