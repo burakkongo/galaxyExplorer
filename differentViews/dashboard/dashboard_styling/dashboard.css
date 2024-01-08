@@ -4,7 +4,6 @@
     box-sizing: border-box;
 }
 
-
 body, html {
     margin: 0;
     padding: 0;
@@ -16,12 +15,9 @@ body, html {
 }
 
 #header {
-    padding: 20px;
-    padding-left: 35px;
-    padding-top: 40px;
+    padding: 40px 20px 14px 35px;
     background: transparent;
     color: white;
-
 }
 
 #header h1 {
@@ -33,6 +29,8 @@ body, html {
     font-weight: 400;
 }
 
+/* Card designs */
+
 #card-container {
     display: flex;
     justify-content: space-evenly;
@@ -41,33 +39,86 @@ body, html {
 }
 
 .card {
+    border-radius: 9px;
     background: white;
-    border-radius: 20px;
     margin: 10px;
     padding: 20px 20px 20px; /* Adjusted padding for top, right/left, bottom */
     width: calc(33.333% - 20px); /* Adjusted width for larger cards */
+    height: 25.3rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    color: #333;
+    align-items: flex-end;
+    color: black;
     cursor: pointer;
 }
 
+#biology-card {
+    background: #FBA1C5;
+    color: #8B0048;
+
+}
+
+#biology-svg {
+    fill: #8B0048;
+}
+
+
+#chemistry-card {
+    background: #87C7F1;
+    color: #002E5D;
+}
+
+#geography-card {
+    background: #CDE7CD;
+    color: #215732;
+}
+
+#history-card {
+    background: #F9DFA0;
+    color: #6B4226;
+}
+
+#mathematics-card {
+    background: #FF785C;
+    color: #800000;
+}
+
+#programming-card {
+    background: #FFFCF6;
+    color: #A0785A;
+}
+
+.card img {
+    width: 270px;
+    height: 190px;
+    object-fit: contain;
+    margin-right: 280px;
+    margin-top: 40px;
+}
+
 .card:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .card h2 {
-    margin: 0 0 5px 0; /* Added margin to the bottom of the subtitle */
+    margin: 0 10px 5px 10px; /* Added margin to the bottom of the subtitle */
     font-weight: 600;
+    font-size: 3.1rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .card p {
-    margin: 0; /* Removed margin for the paragraph */
+    margin: 0;
     font-weight: 400;
+    font-size: 1.1rem;
+    font-family: 'Montserrat', sans-serif;
 }
+
+
+/* Card designs end */
+
 
 #map-button {
     position: fixed;
@@ -97,7 +148,7 @@ body, html {
 }
 
 #import-flashcards-btn {
-    font-size: 1rem;
+    font-size: .9rem;
     background-image: linear-gradient(to right, #C65BC3, #8A33B5);
        border: none;
        border-radius: 15px;
@@ -112,17 +163,11 @@ body, html {
     display: inline-block;
 }
 #import-flashcards-btn:hover {
-    transform: scale(1.05); /* Button beim Hovern leicht vergrößern */
+    transform: scale(1.05);
 }
-
-#import-flashcards-btn:hover {
-    background-color: #5e497a;
-}
-
 #import-flashcards-btn:active {
     background-color: #53416a;
 }
-
 
 /* Modal styling */
 .modal {
@@ -182,7 +227,6 @@ body, html {
     background-color: #473067;
 }
 
-
 #successModal .modal-content {
     text-align: center;
 }
@@ -206,7 +250,7 @@ body, html {
 }
 
 #delete-all-flashcards-btn {
-    font-size: 1rem;
+    font-size: .9rem;
     background-color: #ff4d4d; /* Red color for delete action */
     color: white;
     padding: 10px 20px;
@@ -235,6 +279,7 @@ body, html {
 
 #delete-all-flashcards-btn:hover {
     background-color: #e04444; /* Darker shade for hover */
+    transform: scale(1.05);
 }
 
 #delete-all-flashcards-btn:active {

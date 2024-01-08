@@ -91,7 +91,6 @@ document.addEventListener('visibilitychange', function () {
     }
 });
 
-
 document.getElementById('import-flashcards-btn').addEventListener('click', function () {
     document.getElementById('flashcards-file-input').click();
 });
