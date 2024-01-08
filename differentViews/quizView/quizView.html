@@ -7,13 +7,33 @@
 </head>
 <body>
 <div id="container">
-    <h1>Welcome to the Flashcard Quiz!</h1>
+    <h1>Welcome!</h1>
     <div id="quiz-container">
-        <!-- Quiz questions will be loaded here -->
+
     </div>
-    <button id="submit-quiz">Submit Quiz</button>
+    <button id="submit-quiz" style="display:none;">Submit Quiz</button>
     <div id="quiz-result"></div>
 </div>
+<button id="exit-quiz" type="button" >Go Back</button>
 <script src="quizView_scripts/quizView.js"></script>
+
+<div id="custom-quiz-generator">
+    <h2>Create a Quiz</h2>
+    <form id="custom-quiz-form">
+        <input type="text" id="quiz-name" placeholder="Enter quiz name" required>
+
+        <fieldset>
+            <legend>Select Categories:</legend>
+
+            <div id="categories-placeholder"></div>
+        </fieldset>
+        <button type="submit">Generate Custom Quiz</button>
+    </form>
+</div>
+
+<div id="quiz-list-container">
+
+</div>
+
 </body>
 </html>

@@ -263,6 +263,20 @@ body, html {
     display: inline-block; /* To allow margin to work */
 }
 
+#generate-quiz-button {
+    font-size: 1rem;
+    background-color: #ff4d4d; /* Red color for delete action */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* To allow margin to work */
+}
+
 #delete-all-flashcards-btn:hover {
     background-color: #e04444; /* Darker shade for hover */
     transform: scale(1.05);
