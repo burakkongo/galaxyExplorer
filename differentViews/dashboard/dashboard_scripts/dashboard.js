@@ -22,6 +22,7 @@ function fetchAndDisplayUsername() {
             console.error('There has been a problem with your fetch operation:', error);
         });
 }
+
 // Call the function on page load to show the user greeting
 fetchAndDisplayUsername();
 
@@ -114,7 +115,7 @@ document.getElementById('flashcards-file-input').addEventListener('change', func
             if (!category || !flashcardTitle || !answer) {
                 throw new Error('Each row must include a category, question, and answer.');
             }
-            return { category, flashcardTitle, answer };
+            return {category, flashcardTitle, answer};
         });
 
         sendFlashcardsToServer(flashcards);
@@ -134,7 +135,7 @@ function sendFlashcardsToServer(flashcards) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ flashcards }),
+        body: JSON.stringify({flashcards}),
     })
         .then(response => response.json())
         .then(data => {
@@ -195,7 +196,7 @@ window.onclick = function (event) {
 
 //Redirect to quizView on button click
 document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('generate-quiz-button').addEventListener('click', function() {
+    document.getElementById('generate-quiz-button').addEventListener('click', function () {
         // Navigate to the registration.html page
         window.location.href = '/quizView';
     });
