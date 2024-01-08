@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galaxy Explorer</title>
-    <link rel="preload" as="image" href="Hintergrund-Dashboard.jpg">
+    <link rel="preload" as="image" href="dashboard_styling/Hintergrund-Dashboard.jpg">
     <link rel="stylesheet" href="dashboard_styling/dashboard.css">
 </head>
 <body>
@@ -12,31 +12,43 @@
 <div id="header">
     <h1>Hello, User!</h1>
     <p>Discover a flash card set you want to learn.</p>
+    <br>
+    <hr>
 </div>
 
+<button id="import-flashcards-btn">Import Flashcards (CSV)</button>
+<input type="file" id="flashcards-file-input" accept=".csv" style="display: none;">
+
+<button id="delete-all-flashcards-btn">Delete All Flashcards</button>
+
 <div id="card-container">
-    <!-- Cards -->
-    <div class="card" onclick="navigateTo('biology')">
+    <div class="card" id="biology-card" onclick="navigateTo('biology')">
+        <img id="biology-svg" src="../../assets/biology-colored.svg" alt="biology-icon">
         <h2>Biology</h2>
         <p id="biology-count">Loading...</p>
     </div>
-    <div class="card" onclick="navigateTo('chemistry')">
+    <div class="card" id="chemistry-card" onclick="navigateTo('chemistry')">
+        <img src="../../assets/chemistry-colored.svg" alt="chemistry-icon">
         <h2>Chemistry</h2>
         <p id="chemistry-count">Loading...</p>
     </div>
-    <div class="card" onclick="navigateTo('geography')">
+    <div class="card" id="geography-card" onclick="navigateTo('geography')">
+        <img src="../../assets/geography-colored.svg" alt="geography-icon">
         <h2>Geography</h2>
         <p id="geography-count">Loading...</p>
     </div>
-    <div class="card" onclick="navigateTo('history')">
+    <div class="card" id="history-card" onclick="navigateTo('history')">
+        <img src="../../assets/history-colored.svg" alt="history-icon">
         <h2>History</h2>
         <p id="history-count">Loading...</p>
     </div>
-    <div class="card" onclick="navigateTo('mathematics')">
+    <div class="card" id="mathematics-card" onclick="navigateTo('mathematics')">
+        <img src="../../assets/mathematics-colored.svg" alt="mathematics-icon">
         <h2>Mathematics</h2>
         <p id="mathematics-count">Loading...</p>
     </div>
-    <div class="card" onclick="navigateTo('programming')">
+    <div class="card" id="programming-card" onclick="navigateTo('programming')">
+        <img src="../../assets/programming-colored.svg" alt="programming-icon">
         <h2>Programming</h2>
         <p id="programming-count">Loading...</p>
     </div>
@@ -46,17 +58,11 @@
     MAP
 </button>
 
-
-<button id="import-flashcards-btn">Import Flashcards (CSV)</button>
-<input type="file" id="flashcards-file-input" accept=".csv" style="display: none;">
-
-<button id="delete-all-flashcards-btn">Delete All Flashcards</button>
-
 <div id="confirmDeleteModal" class="modal">
     <div class="modal-content">
         <span class="close" id="confirmDeleteModalClose">&times;</span>
         <p>Are you sure you want to delete all flashcards?</p>
-        <button id="confirmDelete">Yes, Delete All</button>
+        <button id="confirmDelete">Yes, delete all flashcards</button>
         <button id="cancelDelete">Cancel</button>
     </div>
 </div>
