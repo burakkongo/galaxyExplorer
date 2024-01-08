@@ -123,31 +123,44 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function createCustomQuiz(quizName, questionCount, categories) {
-        fetch('/createCustomQuiz', {
+        fetch('/checkQuestionsCount', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({quizName, questionCount, categories})
+            body: JSON.stringify({categories})
         })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success && data.count >= questionCount) {
+
+                    return fetch('/createCustomQuiz', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({quizName, questionCount, categories})
+                    });
+                } else {
+
+                    alert("Not enough questions in chosen categories.");
+                    throw new Error("Not enough questions");
+                }
+            })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     const newQuiz = {
-                        quizID: data.quiz.quizID,
-                        title: quizName,
-
+                        QuizID: data.quiz.quizID,
+                        Title: quizName,
                     };
-
                     displayQuiz(newQuiz);
                     document.getElementById('quiz-name').value = '';
-                    window.location.reload();
                 } else {
                     alert('Failed to create custom quiz');
                 }
             })
             .catch(error => {
-                console.error('Error creating custom quiz:', error);
+                console.error('Error:', error);
             });
     }
+
 
     function deleteQuiz(quizID) {
         fetch(`/deleteQuiz/${quizID}`, { method: 'DELETE' })

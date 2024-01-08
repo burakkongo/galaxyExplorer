@@ -560,4 +560,31 @@ app.delete('/deleteQuiz/:quizID', (req, res) => {
 });
 
 
+//Check if there are enough questions
+app.post('/checkQuestionsCount', (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+
+    const { categories } = req.body;
+    const userID = req.session.userID;
+
+    let placeholders = categories.map(() => '?').join(',');
+    let queryValues = [...categories, userID];
+    const countQuery = `SELECT COUNT(*) AS totalQuestions FROM flashcards WHERE category IN (${placeholders}) AND UserID = ?`;
+
+    db.query(countQuery, queryValues, (err, results) => {
+        if (err) {
+            console.error('Error checking questions count:', err);
+            res.status(500).json({ success: false, error: 'Error checking questions count' });
+        } else {
+            const totalQuestions = results[0].totalQuestions;
+            if(totalQuestions >= 5) {
+                res.json({ success: true, count: totalQuestions });
+            } else {
+                res.json({ success: false, count: totalQuestions });
+            }
+        }
+    });
+});
 
