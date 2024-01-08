@@ -4,39 +4,49 @@
     <meta charset="UTF-8">
     <title>Galaxy Explorer</title>
 
-    <link rel="stylesheet" href="adventureMap_styling/adventuremap.css">
+    <link href="adventureMap_styling/adventuremap.css" rel="stylesheet">
 </head>
 <body>
 
-
-<!-- Planeten -->
+<!-- Different planets -->
 <div class="space-container">
-    <img src="adventureMap_styling/offlinePlanet/Planet1.png" alt="Planet 1" class="planet" id="planet1" title="Planet Cosmo">
-    <img src="adventureMap_styling/onlinePlanet/Planet1Online.png" alt="Activated Planet 1" class="planet" id="activatedPlanet1" style="display: none;">
+    <img alt="Planet 1" class="planet" id="planet1" src="adventureMap_styling/lockedPlanets/Planet1.png"
+         title="Planet Cosmo">
+    <img alt="Activated Planet 1" class="planet" id="activatedPlanet1"
+         src="adventureMap_styling/unlockedPlanets/Planet1Unlocked.png" style="display: none;">
 
-    <img src="adventureMap_styling/offlinePlanet/Planet2.png" alt="Planet 2" class="planet" id="planet2" title="Planet Wanda">
-    <img src="adventureMap_styling/onlinePlanet/Planet2Online.png" alt="Activated Planet 2" class="planet" id="activatedPlanet2" style="display: none;">
+    <img alt="Planet 2" class="planet" id="planet2" src="adventureMap_styling/lockedPlanets/Planet2.png"
+         title="Planet Wanda">
+    <img alt="Activated Planet 2" class="planet" id="activatedPlanet2"
+         src="adventureMap_styling/unlockedPlanets/Planet2Unlocked.png" style="display: none;">
 
-    <img src="adventureMap_styling/offlinePlanet/Planet3.png" alt="Planet 3" class="planet" id="planet3" title="Planet Cryo">
-    <img src="adventureMap_styling/onlinePlanet/Planet3Online.png" alt="Activated Planet 3" class="planet" id="activatedPlanet3" style="display: none;">
+    <img alt="Planet 3" class="planet" id="planet3" src="adventureMap_styling/lockedPlanets/Planet3.png"
+         title="Planet Cryo">
+    <img alt="Activated Planet 3" class="planet" id="activatedPlanet3"
+         src="adventureMap_styling/unlockedPlanets/Planet3Unlocked.png" style="display: none;">
 
-    <img src="adventureMap_styling/offlinePlanet/Planet4.png" alt="Planet 4" class="planet" id="planet4"title="Planet Aurora">
-    <img src="adventureMap_styling/onlinePlanet/Planet4Online.png" alt="Activated Planet 4" class="planet" id="activatedPlanet4" style="display: none;">
+    <img alt="Planet 4" class="planet" id="planet4" src="adventureMap_styling/lockedPlanets/Planet4.png"
+         title="Planet Aurora">
+    <img alt="Activated Planet 4" class="planet" id="activatedPlanet4"
+         src="adventureMap_styling/unlockedPlanets/Planet4Unlocked.png" style="display: none;">
 
-    <img src="adventureMap_styling/offlinePlanet/Planet5.png" alt="Planet 5" class="planet" id="planet5" title="Planet Micky">
-    <img src="adventureMap_styling/onlinePlanet/Planet5Online.png" alt="Activated Planet 5" class="planet" id="activatedPlanet5" style="display: none;">
+    <img alt="Planet 5" class="planet" id="planet5" src="adventureMap_styling/lockedPlanets/Planet5.png"
+         title="Planet Micky">
+    <img alt="Activated Planet 5" class="planet" id="activatedPlanet5"
+         src="adventureMap_styling/unlockedPlanets/Planet5Unlocked.png" style="display: none;">
 
-    <img src="adventureMap_styling/offlinePlanet/Planet6.png" alt="Planet 6" class="planet" id="planet6" title="Planet Pluto">
-    <img src="adventureMap_styling/onlinePlanet/Planet6Online.png" alt="Activated Planet 6" class="planet" id="activatedPlanet6" style="display: none;">
+    <img alt="Planet 6" class="planet" id="planet6" src="adventureMap_styling/lockedPlanets/Planet6.png"
+         title="Planet Pluto">
+    <img alt="Activated Planet 6" class="planet" id="activatedPlanet6"
+         src="adventureMap_styling/unlockedPlanets/Planet6Unlocked.png" style="display: none;">
 
+    <!-- Planet earth not done yet -->
 </div>
 
-<div id="Treibstoff">
-    <p>Raketentreibstoff: <span id="xpValueToDisplay">0</span></p>
+<div id="xpValueText">
+    <p>Rocket fuel: <span id="xpValueToDisplay">0</span> liters</p>
 </div>
 
-
-
-    <script src="adventureMap_scripts/adventuremap.js"></script>
+<script src="adventureMap_scripts/adventuremap.js"></script>
 </body>
 </html>

@@ -13,7 +13,7 @@ app.use(session({
     secret: 'galaxyExplorer24',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: {secure: false}
 }));
 
 // Disabled caching to instantly see changes in the flashcards count
@@ -64,7 +64,6 @@ app.use('/flashcardsViews_scripts', express.static(path.join(__dirname, 'differe
 app.use('/flashcardsViews_styling', express.static(path.join(__dirname, 'differentViews', 'flashcardsViews', 'flashcardsViews_styling')));
 
 // Quiz view static route with routes to scripts and styles
-
 app.use('/quizView', express.static(path.join(__dirname, 'differentViews', 'quizView')));
 app.use('/quizView_scripts', express.static(path.join(__dirname, 'differentViews', 'quizView', 'quizView_scripts')));
 app.use('/quizView_styling', express.static(path.join(__dirname, 'differentViews', 'quizView', 'quizView_styling')));
@@ -100,7 +99,7 @@ app.get('/registration', (req, res) => {
 
 // Handling registration POST request
 app.post('/registration', (req, res) => {
-    const { username, password } = req.body;
+    const {username, password} = req.body;
     const checkUserQuery = 'SELECT * FROM users WHERE username = ?';
     db.query(checkUserQuery, [username], (err, results) => {
         if (err) {
@@ -137,7 +136,7 @@ app.get('/login', (req, res) => {
 
 // Handling login POST requests
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    const {username, password} = req.body;
     const query = 'SELECT userID, password FROM users WHERE username = ?';
     db.query(query, [username], (err, results) => {
         if (err) {
@@ -171,7 +170,7 @@ app.get('/getUsername', (req, res) => {
                 return;
             }
             if (results.length > 0) {
-                res.json({ username: results[0].username });
+                res.json({username: results[0].username});
             } else {
                 res.status(404).send('User not found');
             }
@@ -180,6 +179,28 @@ app.get('/getUsername', (req, res) => {
         res.status(401).send('Not logged in');
     }
 });
+
+// Endpoint to get the userXP
+app.get('/getUserXP', (req, res) => {
+    if (req.session.userID) {
+        const query = 'SELECT userXP FROM users WHERE userID = ?';
+        db.query(query, [req.session.userID], (err, results) => {
+            if (err) {
+                console.error('Database Error:', err);
+                res.status(500).send('Error fetching user XP');
+                return;
+            }
+            if (results.length > 0) {
+                res.json({userXP: results[0].userXP});
+            } else {
+                res.status(404).send('User not found');
+            }
+        });
+    } else {
+        res.status(401).send('Not logged in');
+    }
+});
+
 
 // Dashboard route
 app.get('/dashboard', (req, res) => {
@@ -191,14 +212,14 @@ app.post('/addFlashcard', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
     }
-    const { category, flashcardTitle, answer } = req.body;
+    const {category, flashcardTitle, answer} = req.body;
     const userID = req.session.userID; // Get userID from session
     const insertQuery = 'INSERT INTO flashcards (category, flashcardTitle, answer, userID) VALUES (?, ?, ?, ?)';
     db.query(insertQuery, [category, flashcardTitle, answer, userID], (err) => {
         if (err) {
-            return res.status(500).json({ success: false, error: 'Error saving flashcard' });
+            return res.status(500).json({success: false, error: 'Error saving flashcard'});
         }
-        res.json({ success: true, flashcard: { category, flashcardTitle, answer, userID } });
+        res.json({success: true, flashcard: {category, flashcardTitle, answer, userID}});
     });
 });
 
@@ -207,7 +228,7 @@ app.get('/getFlashcards', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
     }
-    const { category } = req.query;
+    const {category} = req.query;
     const userID = req.session.userID; // Get userID from session
     const query = 'SELECT flashcardID, category, flashcardTitle, answer FROM flashcards WHERE category = ? AND userID = ?';
     db.query(query, [category, userID], (err, results) => {
@@ -239,18 +260,18 @@ app.put('/updateFlashcard/:id', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
     }
-    const { category, flashcardTitle, answer } = req.body;
+    const {category, flashcardTitle, answer} = req.body;
     const userID = req.session.userID; // Get userID from session
-    const { id } = req.params;
+    const {id} = req.params;
     const updateQuery = 'UPDATE flashcards SET category = ?, flashcardTitle = ?, answer = ? WHERE flashcardID = ? AND userID = ?';
     db.query(updateQuery, [category, flashcardTitle, answer, id, userID], (err, results) => {
         if (err) {
-            return res.status(500).json({ success: false, error: 'Error updating flashcard' });
+            return res.status(500).json({success: false, error: 'Error updating flashcard'});
         }
         if (results.affectedRows === 0) {
-            return res.status(404).json({ success: false, error: 'Flashcard not found or user mismatch' });
+            return res.status(404).json({success: false, error: 'Flashcard not found or user mismatch'});
         }
-        res.json({ success: true });
+        res.json({success: true});
     });
 });
 
@@ -260,16 +281,16 @@ app.delete('/deleteFlashcard/:id', (req, res) => {
         return res.status(401).send('User not authenticated');
     }
     const userID = req.session.userID; // Get userID from session
-    const { id } = req.params;
+    const {id} = req.params;
     const deleteQuery = 'DELETE FROM flashcards WHERE flashcardID = ? AND userID = ?';
     db.query(deleteQuery, [id, userID], (err, results) => {
         if (err) {
-            return res.status(500).json({ success: false, error: 'Error deleting flashcard' });
+            return res.status(500).json({success: false, error: 'Error deleting flashcard'});
         }
         if (results.affectedRows === 0) {
-            return res.status(404).json({ success: false, error: 'Flashcard not found or user mismatch' });
+            return res.status(404).json({success: false, error: 'Flashcard not found or user mismatch'});
         }
-        res.json({ success: true });
+        res.json({success: true});
     });
 });
 
@@ -278,14 +299,14 @@ app.delete('/deleteAllFlashcards', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
     }
-    const { category } = req.query;
+    const {category} = req.query;
     const userID = req.session.userID; // Get userID from session
     const deleteQuery = 'DELETE FROM flashcards WHERE category = ? AND userID = ?';
     db.query(deleteQuery, [category, userID], (err) => {
         if (err) {
-            return res.status(500).json({ success: false, error: 'Error deleting flashcards' });
+            return res.status(500).json({success: false, error: 'Error deleting flashcards'});
         }
-        res.json({ success: true, message: 'All flashcards deleted successfully.' });
+        res.json({success: true, message: 'All flashcards deleted successfully.'});
     });
 });
 
@@ -304,9 +325,9 @@ app.post('/importFlashcards', (req, res) => {
     db.query(insertQuery, [values], (err, result) => {
         if (err) {
             console.error('Error importing flashcards:', err);
-            return res.status(500).json({ success: false, error: 'Error importing flashcards' });
+            return res.status(500).json({success: false, error: 'Error importing flashcards'});
         }
-        res.json({ success: true, message: 'Flashcards imported successfully', importedCount: result.affectedRows });
+        res.json({success: true, message: 'Flashcards imported successfully', importedCount: result.affectedRows});
     });
 });
 
@@ -320,7 +341,7 @@ app.get('/quizView', (req, res) => {
 // Random questions selection out of the test_flashcards table for the logged-in user
 app.get('/getQuizQuestions', (req, res) => {
     if (!req.session.userID) {
-        return res.status(401).json({ success: false, error: 'User not authenticated' });
+        return res.status(401).json({success: false, error: 'User not authenticated'});
     }
 
     const userID = req.session.userID;
@@ -329,13 +350,13 @@ app.get('/getQuizQuestions', (req, res) => {
     const countQuery = 'SELECT COUNT(*) AS questionCount FROM test_flashcards WHERE userID = ?';
     db.query(countQuery, [userID], (err, countResults) => {
         if (err) {
-            res.status(500).json({ success: false, error: 'Error checking question count' });
+            res.status(500).json({success: false, error: 'Error checking question count'});
             return;
         }
 
         // Check if there are at least 5 questions for the user
         if (countResults[0].questionCount < 5) {
-            res.status(200).json({ success: false, error: 'Not enough questions in the database for the user' });
+            res.status(200).json({success: false, error: 'Not enough questions in the database for the user'});
             return;
         }
 
@@ -343,7 +364,7 @@ app.get('/getQuizQuestions', (req, res) => {
         const query = 'SELECT * FROM test_flashcards WHERE userID = ? ORDER BY RAND() LIMIT 5';
         db.query(query, [userID], (err, results) => {
             if (err) {
-                res.status(500).json({ success: false, error: 'Error fetching quiz questions for the user' });
+                res.status(500).json({success: false, error: 'Error fetching quiz questions for the user'});
                 return;
             }
             res.json(results);
@@ -362,7 +383,7 @@ app.get('/getUserID', (req, res) => {
                 return;
             }
             if (results.length > 0) {
-                res.json({ username: results[0].username, userID: results[0].userID });
+                res.json({username: results[0].username, userID: results[0].userID});
             } else {
                 res.status(404).send('User not found');
             }
@@ -383,7 +404,7 @@ app.post('/updateUserXP', (req, res) => {
     const getCurrentXPQuery = 'SELECT userXP FROM users WHERE userID = ?';
     db.query(getCurrentXPQuery, [userID], (err, results) => {
         if (err) {
-            return res.status(500).json({ success: false, error: 'Error fetching current userXP' });
+            return res.status(500).json({success: false, error: 'Error fetching current userXP'});
         }
 
         if (results.length > 0) {
@@ -395,15 +416,15 @@ app.post('/updateUserXP', (req, res) => {
             const updateXPQuery = 'UPDATE users SET userXP = ? WHERE userID = ?';
             db.query(updateXPQuery, [updatedUserXP, userID], (err, updateResults) => {
                 if (err) {
-                    return res.status(500).json({ success: false, error: 'Error updating userXP' });
+                    return res.status(500).json({success: false, error: 'Error updating userXP'});
                 }
                 if (updateResults.affectedRows === 0) {
-                    return res.status(404).json({ success: false, error: 'User not found' });
+                    return res.status(404).json({success: false, error: 'User not found'});
                 }
-                res.json({ success: true, message: 'User XP updated successfully' });
+                res.json({success: true, message: 'User XP updated successfully'});
             });
         } else {
-            return res.status(404).json({ success: false, error: 'User not found' });
+            return res.status(404).json({success: false, error: 'User not found'});
         }
     });
 });
@@ -415,7 +436,7 @@ app.get('/getQuestions/:quizID', (req, res) => {
         return res.status(401).send('User not authenticated');
     }
 
-    const { quizID } = req.params;
+    const {quizID} = req.params;
     const userID = req.session.userID;
 
     const query = `
@@ -426,11 +447,11 @@ app.get('/getQuestions/:quizID', (req, res) => {
 `;
     db.query(query, [quizID, userID], (err, results) => {
         if (err) {
-            res.status(500).json({ success: false, error: 'Error fetching quiz questions' });
+            res.status(500).json({success: false, error: 'Error fetching quiz questions'});
             return;
         }
         if (results.length < 5) {
-            res.status(200).json({ success: false, error: 'Not enough questions for the quiz' });
+            res.status(200).json({success: false, error: 'Not enough questions for the quiz'});
         } else {
             res.json(results);
         }
@@ -443,15 +464,17 @@ app.post('/createCustomQuiz', async (req, res) => {
         return res.status(401).send('User not authenticated');
     }
 
-    const { quizName, questionCount, categories } = req.body;
+    const {quizName, questionCount, categories} = req.body;
 
     if (!categories || categories.length === 0) {
-        return res.status(400).json({ success: false, error: 'No categories selected' });
+        return res.status(400).json({success: false, error: 'No categories selected'});
     }
     const userID = req.session.userID;
 
     db.beginTransaction(err => {
-        if (err) { throw err; }
+        if (err) {
+            throw err;
+        }
 
         db.query('INSERT INTO quiz (UserID, Title) VALUES (?, ?)', [userID, quizName], (err, quizResults) => {
             if (err) {
@@ -490,7 +513,7 @@ app.post('/createCustomQuiz', async (req, res) => {
                                     throw err;
                                 });
                             }
-                            res.json({ success: true, quiz: { quizID, quizName, questionCount, categories } });
+                            res.json({success: true, quiz: {quizID, quizName, questionCount, categories}});
                         });
                     });
                 } else {
@@ -501,7 +524,7 @@ app.post('/createCustomQuiz', async (req, res) => {
                                 throw err;
                             });
                         }
-                        res.json({ success: true, quiz: { quizID, quizName, questionCount, categories } });
+                        res.json({success: true, quiz: {quizID, quizName, questionCount, categories}});
                     });
                 }
             });
@@ -550,12 +573,12 @@ app.delete('/deleteQuiz/:quizID', (req, res) => {
     db.query(deleteQuery, [quizID, userID], (err, results) => {
         if (err) {
             console.error('Error deleting quiz:', err);
-            return res.status(500).json({ success: false, error: 'Error deleting quiz' });
+            return res.status(500).json({success: false, error: 'Error deleting quiz'});
         }
         if (results.affectedRows === 0) {
-            return res.status(404).json({ success: false, error: 'Quiz not found or user mismatch' });
+            return res.status(404).json({success: false, error: 'Quiz not found or user mismatch'});
         }
-        res.json({ success: true, message: 'Quiz deleted successfully' });
+        res.json({success: true, message: 'Quiz deleted successfully'});
     });
 });
 
@@ -566,7 +589,7 @@ app.post('/checkQuestionsCount', (req, res) => {
         return res.status(401).send('User not authenticated');
     }
 
-    const { categories } = req.body;
+    const {categories} = req.body;
     const userID = req.session.userID;
 
     let placeholders = categories.map(() => '?').join(',');
@@ -576,13 +599,13 @@ app.post('/checkQuestionsCount', (req, res) => {
     db.query(countQuery, queryValues, (err, results) => {
         if (err) {
             console.error('Error checking questions count:', err);
-            res.status(500).json({ success: false, error: 'Error checking questions count' });
+            res.status(500).json({success: false, error: 'Error checking questions count'});
         } else {
             const totalQuestions = results[0].totalQuestions;
-            if(totalQuestions >= 5) {
-                res.json({ success: true, count: totalQuestions });
+            if (totalQuestions >= 5) {
+                res.json({success: true, count: totalQuestions});
             } else {
-                res.json({ success: false, count: totalQuestions });
+                res.json({success: false, count: totalQuestions});
             }
         }
     });

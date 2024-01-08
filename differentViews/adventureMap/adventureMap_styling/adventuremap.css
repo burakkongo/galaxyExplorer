@@ -26,6 +26,7 @@ html, body {
     height: 175px;
 
     transition: transform 1.7s ease;
+    cursor: pointer;
 }
 
 
@@ -64,7 +65,7 @@ html, body {
     left: 700px;
 }
 
-#Treibstoff {
+#xpValueText {
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     color: white;
@@ -73,6 +74,7 @@ html, body {
     bottom: 20px;
 }
 
-#xpValueToDisplay{
+#xpValueToDisplay {
     color: palegoldenrod;
+    font-size: 25px;
 }
