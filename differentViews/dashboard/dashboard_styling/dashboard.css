@@ -15,7 +15,7 @@ body, html {
 }
 
 #header {
-    padding: 40px 20px 14px 35px;
+    padding: 40px 40px 5px 50px;
     background: transparent;
     color: white;
 }
@@ -27,6 +27,15 @@ body, html {
 
 #header p {
     font-weight: 400;
+    color: #CBEFF7;
+}
+
+#header hr {
+    border: none;
+    height: 2px;
+    width: 29%;
+    background-color: #ECCBF4;
+
 }
 
 /* Card designs */
@@ -35,16 +44,16 @@ body, html {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    padding: 20px 20px 0;
+    padding: 20px 40px 0;
 }
 
 .card {
     border-radius: 9px;
     background: white;
     margin: 10px;
-    padding: 20px 20px 20px; /* Adjusted padding for top, right/left, bottom */
+    padding: 15px; /* Adjusted padding for top, right/left, bottom */
     width: calc(33.333% - 20px); /* Adjusted width for larger cards */
-    height: 25.3rem;
+    height: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease-in-out;
     display: flex;
@@ -55,8 +64,8 @@ body, html {
 }
 
 #biology-card {
-    background: #FBA1C5;
-    color: #8B0048;
+    background: #EDF9F5;
+    color: #ADC9BF;
 
 }
 
@@ -66,36 +75,39 @@ body, html {
 
 
 #chemistry-card {
-    background: #87C7F1;
-    color: #002E5D;
+    background: #EFDFD5;
+    color: #BC9F8F;
 }
 
 #geography-card {
-    background: #CDE7CD;
-    color: #215732;
+    background: #CECCF2;
+    color: #9393CC;
 }
 
 #history-card {
-    background: #F9DFA0;
-    color: #6B4226;
+    background: #CCD6F2;
+    color: #8D9FC6;
 }
 
 #mathematics-card {
-    background: #FF785C;
-    color: #800000;
+    background: #ECCBF4;
+    color: #A372AF;
 }
 
 #programming-card {
-    background: #FFFCF6;
-    color: #A0785A;
+    background: #F2CCE4;
+    color: #BC91AE;
 }
 
 .card img {
-    width: 270px;
-    height: 190px;
     object-fit: contain;
-    margin-right: 280px;
-    margin-top: 40px;
+    margin-right: 250px;
+    margin-left: 10px; /* Reduzierter linker Rand */
+    margin-top: 10px; /* Reduzierter oberer Rand */
+
+    width: 120px; /* Beispielgröße */
+    height: auto;
+
 }
 
 .card:hover {
@@ -103,35 +115,49 @@ body, html {
 }
 
 .card h2 {
-    margin: 0 10px 5px 10px; /* Added margin to the bottom of the subtitle */
+
+    margin-right: 10px; /* Abstand zum rechten Rand */
+    align-self: flex-end; /* Positioniert den Text am unteren Rand */
+
     font-weight: 600;
-    font-size: 3.1rem;
+    font-size: 2.3rem;
     font-family: 'Montserrat', sans-serif;
 }
 
 .card p {
-    margin: 0;
+    margin-right: 10px; /* Abstand zum rechten Rand */
+    align-self: flex-end; /* Positioniert den Text am unteren Rand */
+
     font-weight: 400;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
 }
+
 
 
 /* Card designs end */
 
 
 #map-button {
-    position: fixed;
+    position: absolute;
     top: 40px;
-    right: 35px;
+    right: 45px;
     border: none;
-    padding: 10px;
+    padding: 15px 30px;
     cursor: pointer;
-    color: white;
+    color: transparent;
     background-color: transparent;
-     font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif;
         font-weight: 600;
         font-size: 19px;
+
+    background-image: url('Illustrations/Map-Btn.png'); /* Pfad zu deinem Hintergrundbild */
+    background-size: contain; /* Bedeckt den gesamten Button, kann je nach Bedarf angepasst werden */
+    background-position: center; /* Zentriert das Bild im Button */
+    background-repeat: no-repeat;
+
+    min-width: 50px; /* Mindestbreite */
+    min-height: 50px; /* Mindesthöhe */
 }
 
 @media (max-width: 1024px) {
@@ -156,7 +182,7 @@ body, html {
     padding: 10px 20px;
 
     /* Added 20px right margin */
-    margin-left: 30px;
+    margin-left: 50px;
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
