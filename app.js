@@ -71,10 +71,10 @@ app.use('/quizView_styling', express.static(path.join(__dirname, 'differentViews
 
 // Database connection configuration 02.01.2024
 const db = mysql.createConnection({
-    host: 'sql8.freesqldatabase.com',
-    user: 'sql8674277',
-    database: 'sql8674277',
-    password: '8WvdRrPxqF',
+    host: 'sql11.freesqldatabase.com',
+    user: 'sql11675781',
+    database: 'sql11675781',
+    password: 'rTgr5W5TDP',
     port: 3306
 });
 
