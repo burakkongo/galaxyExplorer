@@ -141,7 +141,8 @@ function sendFlashcardsToServer(flashcards) {
         .then(data => {
             if (data.success) {
                 alert('Flashcards imported successfully!');
-                // Maybe call a function to update the UI here
+                // Call updateFlashcardCounts to refresh counts after successful import
+                updateFlashcardCounts();
             } else {
                 alert('Failed to import flashcards: ' + data.error);
             }
@@ -167,15 +168,13 @@ document.getElementById('cancelDelete').addEventListener('click', function () {
 });
 
 document.getElementById('confirmDelete').addEventListener('click', function () {
-    // Logic to delete all flashcards
-    fetch('/deleteAllFlashcardsAllCategories', {
-        method: 'DELETE'
-    })
+    fetch('/deleteAllFlashcards', { method: 'DELETE' })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 alert('All flashcards deleted successfully!');
-                setTimeout(updateFlashcardCounts, 1000);
+                // Call updateFlashcardCounts after successful deletion
+                updateFlashcardCounts();
             } else {
                 alert('Failed to delete flashcards.');
             }
@@ -186,6 +185,7 @@ document.getElementById('confirmDelete').addEventListener('click', function () {
         });
     confirmDeleteModal.style.display = 'none';
 });
+
 
 // Close the modal if clicked outside of it
 window.onclick = function (event) {

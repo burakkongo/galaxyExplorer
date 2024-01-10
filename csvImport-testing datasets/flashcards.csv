@@ -1,0 +1,61 @@
+category,question,answer
+Biology,What is the largest organ in the human body?,Skin
+Biology,What gas do plants absorb from the atmosphere during photosynthesis?,Carbon dioxide
+Biology,Which gas do animals release into the atmosphere as a waste product of respiration?,Carbon dioxide
+Biology,What is the powerhouse of the cell called?,Mitochondria
+Biology,What is the chemical symbol for water?,H2O
+Biology,What is the process by which plants make their food using sunlight?,Photosynthesis
+Biology,What is the smallest unit of life?,Cell
+Biology,What is the process by which organisms evolve over time?,Natural selection
+Biology,Which gas is responsible for the Earth's greenhouse effect?,Carbon dioxide
+Biology,What is the study of fossils called?,Paleontology
+Chemistry,What is the chemical symbol for oxygen?,O
+Chemistry,What is the most abundant gas in the Earth's atmosphere?,Nitrogen
+Chemistry,What is the chemical formula for table salt?,NaCl
+Chemistry,What is the pH of pure water at room temperature?,7
+Chemistry,What is the process of converting a solid directly into a gas called?,Sublimation
+Chemistry,What is the lightest element in the periodic table?,Hydrogen
+Chemistry,What is the chemical symbol for gold?,Au
+Chemistry,What is the process of rusting an example of?,Oxidation
+Chemistry,What is the chemical formula for methane?,CH4
+Chemistry,What is the state of matter with a definite shape and volume?,Solid
+Geography,What is the capital of France?,Paris
+Geography,Which river is the longest in the world?,Nile
+Geography,What is the highest mountain in the world?,Mount Everest
+Geography,Which country is known as the Land of the Rising Sun?,Japan
+Geography,What is the largest desert in the world?,Sahara Desert
+Geography,What is the largest ocean on Earth?,Pacific Ocean
+Geography,Which continent is the least populated?,Antarctica
+Geography,What is the equator?,An imaginary line that divides the Earth into Northern and Southern Hemispheres
+Geography,What is the largest country by land area?,Russia
+Geography,What is the smallest country in the world?,Vatican City
+History,Who was the first President of the United States?,George Washington
+History,Which war is often referred to as the "War to End All Wars"?,World War I
+History,Who wrote the Declaration of Independence?,Thomas Jefferson
+History,What year did Christopher Columbus first arrive in the Americas?,1492
+History,Who was the leader of the Soviet Union during the Cuban Missile Crisis?,Nikita Khrushchev
+History,What event marked the beginning of World War II?,The invasion of Poland by Germany
+History,Who was the first woman to fly solo across the Atlantic Ocean?,Amelia Earhart
+History,What was the name of the ship that carried the Pilgrims to America in 1620?,Mayflower
+History,Who was the first emperor of Rome?,Augustus Caesar
+History,Which civilization built the Great Wall of China?,Ancient China
+Mathematics,What is the value of Pi (π)?,3.14159265359
+Mathematics,What is the Pythagorean Theorem?,a² + b² = c²
+Mathematics,What is the square root of 64?,8
+Mathematics,What is the formula for the area of a circle?,πr²
+Mathematics,What is the smallest prime number?,2
+Mathematics,What is the sum of the angles in a triangle?,180 degrees
+Mathematics,What is the mathematical term for a straight line that touches a curve at a single point without crossing it?,Tangent
+Mathematics,What is the value of Euler's number (e)?,2.71828182846
+Mathematics,What is the difference between mean and median in statistics?,Mean is the average of a set of numbers, while median is the middle value when the numbers are sorted.
+Mathematics,What is the largest two-digit prime number?,97
+Programming,What does HTML stand for?,Hypertext Markup Language
+Programming,What is the most commonly used programming language for web development?,JavaScript
+Programming,What is the purpose of a "for" loop in programming?,To repeatedly execute a block of code a specified number of times
+Programming,What does API stand for in the context of programming?,Application Programming Interface
+Programming,What is the primary function of a database management system (DBMS)?,To store, manage, and retrieve data efficiently
+Programming,What does "HTTP" stand for in website URLs?,Hypertext Transfer Protocol
+Programming,What is the difference between a compiler and an interpreter?,A compiler translates the entire program into machine code before execution, while an interpreter translates and executes code line by line.
+Programming,What is the main advantage of object-oriented programming (OOP)?,It allows for the organization of code into reusable and modular objects.
+Programming,What is the purpose of version control systems like Git?,To track changes in code, collaborate with others, and maintain a history of code revisions.
+Programming,What is a "bug" in programming?,An error or flaw in a program that causes it to behave unexpectedly.

@@ -322,7 +322,7 @@ document.getElementById('delete-all-flashcards').addEventListener('click', () =>
     }
 
     confirmDeleteAll.onclick = function () {
-        fetch(`/deleteAllFlashcards?category=${encodeURIComponent(currentCategory)}`, {method: 'DELETE'})
+        fetch(`/deleteAllFlashcardsInCategory?category=${encodeURIComponent(currentCategory)}`, {method: 'DELETE'})
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
