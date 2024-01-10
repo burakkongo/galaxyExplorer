@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
@@ -8,13 +9,35 @@ const port = 3000; // or use a different port
 const bcrypt = require('bcrypt');
 const saltRounds = 10; // for bcrypt
 
+// Starting the node server
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});
+
 // Configuring session management middleware
 app.use(session({
-    secret: 'galaxyExplorer24',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {secure: false}
 }));
+
+const db = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT
+});
+
+// Building the connection to the database
+db.connect(err => {
+    if (err) {
+        console.error('Error connecting to the database', err);
+        return;
+    }
+    console.log('Connected to the database');
+});
 
 // Disabled caching to instantly see changes in the flashcards count
 app.use((req, res, next) => {
@@ -22,11 +45,6 @@ app.use((req, res, next) => {
     res.header('Pragma', 'no-cache');
     res.header('Expires', '0');
     next();
-});
-
-// Starting the node server
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
 });
 
 // Using middleware to serve static files and parse request bodies
@@ -68,24 +86,6 @@ app.use('/quizView', express.static(path.join(__dirname, 'differentViews', 'quiz
 app.use('/quizView_scripts', express.static(path.join(__dirname, 'differentViews', 'quizView', 'quizView_scripts')));
 app.use('/quizView_styling', express.static(path.join(__dirname, 'differentViews', 'quizView', 'quizView_styling')));
 
-
-// Database connection configuration 02.01.2024
-const db = mysql.createConnection({
-    host: 'sql11.freesqldatabase.com',
-    user: 'sql11675781',
-    database: 'sql11675781',
-    password: 'rTgr5W5TDP',
-    port: 3306
-});
-
-// Building the connection to the database
-db.connect(err => {
-    if (err) {
-        console.error('Error connecting to the database', err);
-        return;
-    }
-    console.log('Connected to the database');
-});
 
 // Serving the index page from the landingPage directory
 app.get('/', (req, res) => {

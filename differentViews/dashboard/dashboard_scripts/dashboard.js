@@ -62,7 +62,7 @@ const updateFlashcardCounts = () => {
                 }
             });
 
-            // Update counts with data from the server
+            // Update counts with csvImport-testing datasets from the server
             data.forEach(item => {
                 const countElement = document.getElementById(`${item.category.toLowerCase()}-count`);
                 if (countElement) {
