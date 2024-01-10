@@ -295,7 +295,7 @@ app.delete('/deleteFlashcard/:id', (req, res) => {
 });
 
 // Deleting all flashcards in a category route linked to userID
-app.delete('/deleteAllFlashcards', (req, res) => {
+app.delete('/deleteAllFlashcardsInCategory', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).send('User not authenticated');
     }
@@ -309,6 +309,23 @@ app.delete('/deleteAllFlashcards', (req, res) => {
         res.json({success: true, message: 'All flashcards deleted successfully.'});
     });
 });
+
+app.delete('/deleteAllFlashcards', (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+
+    const userID = req.session.userID; // Get userID from session
+    const deleteQuery = 'DELETE FROM flashcards WHERE userID = ?';
+
+    db.query(deleteQuery, [userID], (err) => {
+        if (err) {
+            return res.status(500).json({success: false, error: 'Error deleting flashcards'});
+        }
+        res.json({success: true, message: 'All flashcards for the user deleted successfully.'});
+    });
+});
+
 
 app.post('/importFlashcards', (req, res) => {
     if (!req.session.userID) {
@@ -440,11 +457,10 @@ app.get('/getQuestions/:quizID', (req, res) => {
     const userID = req.session.userID;
 
     const query = `
-  SELECT * FROM quiz_flashcards 
-  INNER JOIN flashcards 
-  ON quiz_flashcards.FlashcardID = flashcards.flashcardID 
-  WHERE quiz_flashcards.QuizID = ? AND flashcards.userID = ?
-`;
+        SELECT * FROM quiz_flashcards 
+            INNER JOIN flashcards ON quiz_flashcards.flashcardID = flashcards.flashcardID 
+            WHERE quiz_flashcards.quizID = ? AND flashcards.userID = ?
+    `;
     db.query(query, [quizID, userID], (err, results) => {
         if (err) {
             res.status(500).json({success: false, error: 'Error fetching quiz questions'});
@@ -476,7 +492,7 @@ app.post('/createCustomQuiz', async (req, res) => {
             throw err;
         }
 
-        db.query('INSERT INTO quiz (UserID, Title) VALUES (?, ?)', [userID, quizName], (err, quizResults) => {
+        db.query('INSERT INTO quiz (userID, title) VALUES (?, ?)', [userID, quizName], (err, quizResults) => {
             if (err) {
                 return db.rollback(() => {
                     throw err;
@@ -487,7 +503,7 @@ app.post('/createCustomQuiz', async (req, res) => {
 
             let placeholders = categories.map(() => '?').join(',');
             let queryValues = [...categories, userID, parseInt(questionCount)];
-            const flashcardsQuery = `SELECT FlashcardID FROM flashcards WHERE category IN (${placeholders}) AND UserID = ? ORDER BY RAND() LIMIT ?`;
+            const flashcardsQuery = `SELECT flashcardID FROM flashcards WHERE category IN (${placeholders}) AND userID = ? ORDER BY RAND() LIMIT ?`;
 
             db.query(flashcardsQuery, queryValues, (err, flashcardsResults) => {
                 if (err) {
@@ -497,16 +513,15 @@ app.post('/createCustomQuiz', async (req, res) => {
                 }
 
 
-                const flashcardQuizMappings = flashcardsResults.map(flashcard => [quizID, flashcard.FlashcardID]);
+                const flashcardQuizMappings = flashcardsResults.map(flashcard => [quizID, flashcard.flashcardID]);
 
                 if (flashcardQuizMappings.length > 0) {
-                    db.query('INSERT INTO quiz_flashcards (QuizID, FlashcardID) VALUES ?', [flashcardQuizMappings], (err, mappingResults) => {
+                    db.query('INSERT INTO quiz_flashcards (quizID, flashcardID) VALUES ?', [flashcardQuizMappings], (err, mappingResults) => {
                         if (err) {
                             return db.rollback(() => {
                                 throw err;
                             });
                         }
-
                         db.commit(err => {
                             if (err) {
                                 return db.rollback(() => {
@@ -517,7 +532,6 @@ app.post('/createCustomQuiz', async (req, res) => {
                         });
                     });
                 } else {
-
                     db.commit(err => {
                         if (err) {
                             return db.rollback(() => {
@@ -538,7 +552,7 @@ app.get('/getUserQuizzes', (req, res) => {
         return res.status(401).send('User not authenticated');
     }
     const userID = req.session.userID;
-    const query = 'SELECT * FROM quiz WHERE UserID = ?';
+    const query = 'SELECT * FROM quiz WHERE userID = ?';
     db.query(query, [userID], (err, results) => {
         if (err) {
             console.error('Error fetching quizzes:', err);
@@ -558,8 +572,7 @@ app.delete('/deleteQuiz/:quizID', (req, res) => {
     const quizID = req.params.quizID;
     const userID = req.session.userID;
 
-
-    const deleteFlashcardsQuery = 'DELETE FROM quiz_flashcards WHERE QuizID = ?';
+    const deleteFlashcardsQuery = 'DELETE FROM quiz_flashcards WHERE quizID = ?';
     db.query(deleteFlashcardsQuery, [quizID], (err, flashcardsResults) => {
         if (err) {
             console.error('Error deleting flashcards for quiz:', err);
@@ -569,7 +582,7 @@ app.delete('/deleteQuiz/:quizID', (req, res) => {
         }
     });
 
-    const deleteQuery = 'DELETE FROM quiz WHERE QuizID = ? AND UserID = ?';
+    const deleteQuery = 'DELETE FROM quiz WHERE quizID = ? AND userID = ?';
     db.query(deleteQuery, [quizID, userID], (err, results) => {
         if (err) {
             console.error('Error deleting quiz:', err);
@@ -594,7 +607,7 @@ app.post('/checkQuestionsCount', (req, res) => {
 
     let placeholders = categories.map(() => '?').join(',');
     let queryValues = [...categories, userID];
-    const countQuery = `SELECT COUNT(*) AS totalQuestions FROM flashcards WHERE category IN (${placeholders}) AND UserID = ?`;
+    const countQuery = `SELECT COUNT(*) AS totalQuestions FROM flashcards WHERE category IN (${placeholders}) AND userID = ?`;
 
     db.query(countQuery, queryValues, (err, results) => {
         if (err) {

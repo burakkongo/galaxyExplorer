@@ -1,19 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    document.getElementById('exit-quiz').addEventListener('click', function() {
+    document.getElementById('exit-quiz').addEventListener('click', function () {
         window.location.href = '/dashboard';
     });
+
     function displayCurrentQuizOnly() {
-        document.getElementById('exit-quiz').addEventListener('click', function() {
+        document.getElementById('exit-quiz').addEventListener('click', function () {
 
             window.location.href = '/quizView';
         });
         document.getElementById('quiz-list-container').style.display = 'none';
         document.getElementById('custom-quiz-generator').style.display = 'none';
         document.getElementById('submit-quiz').style.display = 'block';
-
     }
-
 
     function handleQuizSubmission(score, questionsLength) {
         const resultText = `You scored ${score} out of ${questionsLength}`;
@@ -22,22 +21,18 @@ document.addEventListener('DOMContentLoaded', function () {
         const resultDiv = document.getElementById('quiz-result');
         resultDiv.textContent = resultText;
 
-
         const exitQuizButton = document.getElementById('exit-quiz');
         exitQuizButton.addEventListener('click', function () {
             window.location.href = '/dashboard';
         });
 
-
         resultDiv.appendChild(exitQuizButton);
-
-
 
         if (score === 5) {
             fetch('/updateUserXP', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ score })
+                body: JSON.stringify({score})
             })
                 .then(response => response.json())
                 .then(data => {
@@ -106,9 +101,10 @@ document.addEventListener('DOMContentLoaded', function () {
             categoriesPlaceholder.appendChild(label);
         });
     }
+
     loadCategories();
 
-    document.getElementById('custom-quiz-form').addEventListener('submit', function(event) {
+    document.getElementById('custom-quiz-form').addEventListener('submit', function (event) {
         event.preventDefault();
         const quizName = document.getElementById('quiz-name').value;
         const questionCount = 5;
@@ -130,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => response.json())
             .then(data => {
-                if(data.success && data.count >= questionCount) {
+                if (data.success && data.count >= questionCount) {
 
                     return fetch('/createCustomQuiz', {
                         method: 'POST',
@@ -163,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function deleteQuiz(quizID) {
-        fetch(`/deleteQuiz/${quizID}`, { method: 'DELETE' })
+        fetch(`/deleteQuiz/${quizID}`, {method: 'DELETE'})
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -206,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const loadButton = document.createElement('button');
         loadButton.textContent = 'Load Quiz';
-        loadButton.onclick = function() {
+        loadButton.onclick = function () {
             displayCurrentQuizOnly();
             loadQuizQuestions(quiz.QuizID);
         };
@@ -214,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete Quiz';
-        deleteButton.onclick = function() {
+        deleteButton.onclick = function () {
             if (confirm('Are you sure you want to delete this quiz?')) {
                 deleteQuiz(quiz.QuizID);
             }
@@ -255,6 +251,3 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 });
-
-
-
