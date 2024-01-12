@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryTitle = getCategoryFromUrl();
     if (categoryTitle) {
         document.getElementById('category-title').textContent = categoryTitle.charAt(0).toUpperCase() + categoryTitle.slice(1);
-        fetchAndDisplayFlashcards();
+        refreshFlashcards();
     }
 });
 
@@ -172,6 +172,7 @@ function createViewForFlashcard(flashcard) {
         <div class="question-div">${questionText}</div>
         <p class="answer-div hide">${answerText}</p>
         <a href="#" class="show-hide-btn">Show answer / Hide answer</a>
+        <br>
         <div class="card-buttons">
             <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
             <button class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
@@ -231,7 +232,6 @@ function editFlashcard(flashcardDiv) {
 
     submitEdit = function () {
         submitQuestion(true);
-
     };
     cardButton.removeEventListener('click', submitQuestion);
     cardButton.addEventListener('click', submitEdit);
@@ -285,25 +285,9 @@ function addFlashcardToUI(flashcardData) {
     flashcardContainer.appendChild(cardElement);
 }
 
-// Fetch and display flashcards for the current category
-function fetchAndDisplayFlashcards() {
-    fetch(`/getFlashcards?category=${encodeURIComponent(currentCategory)}`)
-        .then(response => response.json())
-        .then(flashcards => {
-            flashcardContainer.innerHTML = '';
-            flashcards.forEach(flashcard => {
-                const cardElement = createViewForFlashcard(flashcard);
-                flashcardContainer.appendChild(cardElement);
-            });
-            //updateFlashcardCounts();
-        })
-        .catch(error => {
-            console.error('Error fetching flashcards:', error);
-        });
-}
 
 // Call fetchAndDisplayFlashcards when the page loads
-document.addEventListener('DOMContentLoaded', fetchAndDisplayFlashcards);
+document.addEventListener('DOMContentLoaded', refreshFlashcards);
 
 document.getElementById('delete-all-flashcards').addEventListener('click', () => {
     const deleteAllModal = document.getElementById("deleteAllModal");

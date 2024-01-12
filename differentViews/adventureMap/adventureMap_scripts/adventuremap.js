@@ -1,4 +1,3 @@
-// Funktion zum Ändern des Planeten bildes
 function changePlanetImage(planetId, activatedPlanetId) {
     const planet = document.getElementById(planetId);
     const activatedPlanet = document.getElementById(activatedPlanetId);

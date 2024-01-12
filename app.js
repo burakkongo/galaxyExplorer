@@ -354,8 +354,8 @@ app.get('/quizView', (req, res) => {
     res.sendFile(path.join(__dirname, 'differentViews', 'quizView', 'quizView.html'));
 });
 
-// Test if there are >= 5  questions for the logged in user
-// Random questions selection out of the test_flashcards table for the logged-in user
+// Test if there are >= 5 questions for the active user
+// Random questions selection out of the test_flashcards table for the active user
 app.get('/getQuizQuestions', (req, res) => {
     if (!req.session.userID) {
         return res.status(401).json({success: false, error: 'User not authenticated'});
