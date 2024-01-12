@@ -172,6 +172,7 @@ function createViewForFlashcard(flashcard) {
         <div class="question-div">${questionText}</div>
         <p class="answer-div hide">${answerText}</p>
         <a href="#" class="show-hide-btn">Show answer / Hide answer</a>
+        <br>
         <div class="card-buttons">
             <button class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
             <button class="delete-btn"><i class="fa-solid fa-trash-can"></i></button>
@@ -231,7 +232,6 @@ function editFlashcard(flashcardDiv) {
 
     submitEdit = function () {
         submitQuestion(true);
-
     };
     cardButton.removeEventListener('click', submitQuestion);
     cardButton.addEventListener('click', submitEdit);
@@ -284,6 +284,7 @@ function addFlashcardToUI(flashcardData) {
     const cardElement = createViewForFlashcard(flashcardData);
     flashcardContainer.appendChild(cardElement);
 }
+
 
 // Call fetchAndDisplayFlashcards when the page loads
 document.addEventListener('DOMContentLoaded', refreshFlashcards);
