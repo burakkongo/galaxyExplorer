@@ -32,7 +32,7 @@ html, body {
 }
 
 
-#myButton{
+#startButton{
     width: 100%;
     height: 100%;
     background-image: linear-gradient(to right, #ff7e5f, #feb47b);
@@ -45,7 +45,7 @@ html, body {
     font-weight: 700;
 }
 
-#myButton:hover {
+#startButton:hover {
     transform: scale(1.05); /* Button beim Hovern leicht vergrößern */
 
 }

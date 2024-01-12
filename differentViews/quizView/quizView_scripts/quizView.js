@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
-
     document.getElementById('exit-quiz').addEventListener('click', function () {
         window.location.href = '/dashboard';
     });
 
     function displayCurrentQuizOnly() {
         document.getElementById('exit-quiz').addEventListener('click', function () {
-
             window.location.href = '/quizView';
         });
         document.getElementById('quiz-list-container').style.display = 'none';
@@ -83,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 question.style.color = 'red';
             }
         });
-
         handleQuizSubmission(score, questions.length);
     }
 

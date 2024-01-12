@@ -19,14 +19,7 @@ button {
     outline: none;
     cursor: pointer;
 }
-.add-flashcard-con button {
-    font-size: 1em;
-    background-color: #587ef4;
-    color: #ffffff;
-    padding: 0.8em 1.2em;
-    font-weight: 500;
-    border-radius: 0.4em;
-}
+
 #card-con {
     margin-top: 1em;
 }
@@ -67,7 +60,7 @@ button {
 }
 .fa-xmark {
     font-size: 1.4em;
-    background-color: #587ef4;
+    background-color: #ff4d4d;
     height: 1.8em;
     width: 1.8em;
     display: grid;
@@ -133,7 +126,7 @@ textarea:focus {
 }
 .show-hide-btn {
     display: block;
-    background-color: #587ef4;
+    background-color: #ff4d4d;;
     color: #ffffff;
     text-decoration: none;
     text-align: center;
@@ -203,13 +196,14 @@ textarea:focus {
     background-color: rgba(0,0,0,0.4);
 }
 
-/* Modal Content */
+
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
+    padding: 40px;
     border: 1px solid #888;
     width: 80%;
+    text-align: center;
 }
 
 
@@ -238,4 +232,72 @@ textarea:focus {
     padding: 0.8em 1.2em;
     font-weight: 500;
     border-radius: 0.4em;
+}
+.add-flashcard-con button {
+    position: absolute;
+    top: 20px;
+    right: 240px;
+    font-size: 1em;
+    background-color: #587ef4;
+    color: #ffffff;
+    padding: 0.8em 1.2em;
+    font-weight: 500;
+    border-radius: 0.4em;
+}
+
+.delete-btn{
+    background: #ff5353;
+    width: 35px;
+    height: 35px;
+    color: white;
+    font-size: 1rem;
+}
+.edit-btn{
+    background: blue;
+    width: 35px;
+    height: 35px;
+    color: white;
+    font-size: 1rem;
+}
+
+#confirmDelete {
+    background: red;
+    width: 50px;
+    height: 40px;
+    color: white;
+    font-size: 1.3rem;
+}
+#cancelDelete {
+    background: blue;
+    width: 50px;
+    height: 40px;
+    color: white;
+    font-size: 1.3rem;
+}
+
+#confirmDeleteAll {
+    background: red;
+    width: 60px;
+    height: 40px;
+    color: white;
+    font-size: 1.3rem;
+}
+#cancelDeleteAll {
+    background: blue;
+    width: 50px;
+    height: 40px;
+    color: white;
+    font-size: 1.3rem;
+}
+
+#deleteModal {
+    font-size: 1.5rem;
+    color:red;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#deleteAllModal {
+    font-size: 1.5rem;
+    color:red;
+    font-family: 'Montserrat', sans-serif;
 }
