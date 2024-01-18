@@ -22,7 +22,7 @@ html, body {
    background-color: transparent;
       border: none;
       position: absolute; /* or 'relative' depending on your layout needs */
-      top: 40.5%;
+      top: 41%;
       left: 65.9%;
       display: block;
       min-width: 400px;
@@ -41,7 +41,7 @@ html, body {
      background-color: transparent;
         border: none;
         position: absolute; /* or 'relative' depending on your layout needs */
-        top: 55%;
+        top: 56%;
         left: 66%;
         display: block;
         min-width: 416px;
@@ -49,7 +49,7 @@ html, body {
         color: grey;
         font-family: 'Montserrat', sans-serif;
         font-weight: 400;
-        font-size: 20px;
+        font-size: 19px;
 }
 
 #password_Login:focus {
@@ -67,7 +67,9 @@ html, body {
         color: white;
         cursor: pointer;
         position: absolute;
-        top: 68%;
+
+        top: 68.4%;
+
         left: 64.9%;
         min-width: 420px;
         height: 50px;
@@ -79,17 +81,17 @@ html, body {
 }
 
 #goToRegister_Login{
-     background-color: transparent;
-        color: violet;
-        position: absolute;
-        top: 85.6%;
-        left: 83%;
-        border: none;
-        display: block;
-        font-family: 'Montserrat', sans-serif;
-            font-weight: 400;
-            font-size: 19px;
-        cursor: pointer;
+    background-color: transparent;
+    color: violet;
+    position: absolute;
+    top: 85.6%;
+    left: 83%;
+    border: none;
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 19px;
+    cursor: pointer;
 }
 
 #goToRegister_Login:hover {

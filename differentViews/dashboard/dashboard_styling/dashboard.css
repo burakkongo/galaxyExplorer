@@ -176,13 +176,11 @@ body, html {
 
 #import-flashcards-btn {
     font-size: .9rem;
-    background-image: linear-gradient(to right, #8A33B5, #C65BC3);
-       border: none;
-       border-radius: 15px;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
+    border: none;
+    border-radius: 15px;
     color: white;
     padding: 10px 20px;
-
-    /* Added 20px right margin */
     margin-left: 50px;
     margin-top: 20px;
     cursor: pointer;
@@ -279,7 +277,7 @@ body, html {
 
 #delete-all-flashcards-btn-OLD {
     font-size: .9rem;
-    background-color: #ff4d4d; /* Red color for delete action */
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -291,9 +289,10 @@ body, html {
     display: inline-block; /* To allow margin to work */
 }
 
-#delete-all-flashcards-btn {
-    font-size: .9rem;
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
+
+#goToQuizViewButton {
+    font-size: 0.9rem;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     color: white;
     padding: 10px 20px;
     border: none;
@@ -317,6 +316,11 @@ body, html {
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: inline-block; /* To allow margin to work */
+}
+
+#generate-quiz-button:hover{
+    background-color: #e04444; /* Darker shade for hover */
+    transform: scale(1.05);
 }
 
 #delete-all-flashcards-btn:hover {
