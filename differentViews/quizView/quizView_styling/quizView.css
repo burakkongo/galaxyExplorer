@@ -1,13 +1,132 @@
-#container {
-    width: 100%;
-    margin: 0 auto;
+:root {
+    --background-main: #342A67; /* Main background color matching the dashboard */
+    --background-panel: rgba(255, 255, 255, 0.1); /* Panel background */
+    --accent-color: #62D2A2; /* Accent color for buttons and links */
+    --text-color: #ffffff; /* Main text color */
+    --button-hover-color: #ff7e5f; /* Button hover color */
+    --border-radius: 8px; /* Border radius for buttons and cards */
 }
-#question {
+
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-main);
+    color: var(--text-color);
+}
+
+#backgroundContainer_quizView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    height: 100vh;
+    padding: 50px;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+#custom-quiz-generator {
+    background: var(--background-panel);
+    padding: 20px;
+    border-radius: var(--border-radius);
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px; /* Adjust width as needed */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-#question-header {
-    font-weight: bold;
+
+#custom-quiz-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
-#question-input {
-    margin-top: 5px;
+
+#custom-quiz-form input[type='text'],
+#custom-quiz-form button {
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: none;
+    outline: none;
 }
+
+#custom-quiz-form button {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#custom-quiz-form button:hover {
+    background-color: var(--button-hover-color);
+}
+
+#exit-quiz {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: var(--text-color);
+    font-size: 19px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Spacing after the form */
+}
+
+#exit-quiz:hover {
+    background-color: var(--button-hover-color);
+}
+
+#submitButton {
+    padding: 10px 20px;
+    border-radius: 20px;
+    padding: 20px;
+    border: none;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: var(--text-color);
+    font-size: 19px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Spacing after the form */
+}
+
+#submitButton:hover {
+    background-color: var(--button-hover-color);
+}
+
+#categories-placeholder {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#categories-placeholder label {
+    cursor: pointer;
+    background: var(--background-panel);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#categories-placeholder label:hover {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #backgroundContainer_quizView {
+        padding: 20px;
+    }
+}
+
+/* Add any additional styles you need below */

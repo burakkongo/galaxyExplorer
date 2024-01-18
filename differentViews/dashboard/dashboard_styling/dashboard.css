@@ -79,6 +79,7 @@ body, html {
     color: #BC9F8F;
 }
 
+
 #geography-card {
     background: #CECCF2;
     color: #9393CC;
@@ -273,7 +274,8 @@ body, html {
     background-color: #473067;
 }
 
-#delete-all-flashcards-btn {
+
+#delete-all-flashcards-btn-OLD {
     font-size: .9rem;
     background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     color: white;
@@ -287,9 +289,24 @@ body, html {
     display: inline-block; /* To allow margin to work */
 }
 
+
 #goToQuizViewButton {
     font-size: 0.9rem;
     background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* To allow margin to work */
+}
+
+#generate-quiz-button {
+    font-size: 1rem;
+    background-color: #ff4d4d; /* Red color for delete action */
     color: white;
     padding: 10px 20px;
     border: none;
@@ -307,6 +324,25 @@ body, html {
 }
 
 #delete-all-flashcards-btn:hover {
+    background-color: #e04444; /* Darker shade for hover */
+    transform: scale(1.05);
+}
+
+#quizView {
+    font-size: .9rem;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* To allow margin to work */
+}
+
+#quizView:hover {
     background-color: #e04444; /* Darker shade for hover */
     transform: scale(1.05);
 }
