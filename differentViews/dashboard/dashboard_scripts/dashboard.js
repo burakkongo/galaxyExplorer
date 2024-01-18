@@ -196,7 +196,7 @@ window.onclick = function (event) {
 
 //Redirect to quizView on button click
 document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('generate-quiz-button').addEventListener('click', function () {
+    document.getElementById('quizView').addEventListener('click', function () {
         // Navigate to the registration.html page
         window.location.href = '/quizView';
     });
