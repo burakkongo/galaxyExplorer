@@ -20,16 +20,12 @@ html, body {
 }
 
 #username_Register{
-    -webkit-appearance: none; /* For Safari and Chrome */
-    -moz-appearance: none; /* For Firefox */
-    appearance: none; /* Standard syntax */
     position: absolute;
     background-color: transparent; /* Make the background transparent */
     position: absolute;
     border: none;  /* Remove the border */
     outline: none;  /* Remove the outline to avoid highlighting on focus */
-
-    top: 38%;
+    top: 39.5%;
     left: 65.3%;
     display: block;
     min-width: 300px;
@@ -48,12 +44,12 @@ html, body {
     background-color: transparent;
     border: none;
     position: absolute;
-    top: 52%;
+    top: 53%;
     left: 65.3%;
     display: block;
     min-width: 300px;
     height: 48px;
-    color: grey;
+    color: black;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 20px;
@@ -73,7 +69,7 @@ html, body {
     color: white;
     cursor: pointer;
     position: absolute;
-    top: 63%;
+    top: 64%;
     left: 64.7%;
     min-width: 420px;
     height: 60px;

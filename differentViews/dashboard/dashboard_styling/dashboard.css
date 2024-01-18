@@ -275,7 +275,7 @@ body, html {
 }
 
 
-#delete-all-flashcards-btn-OLD {
+#delete-all-flashcards-btn {
     font-size: .9rem;
     background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     color: white;

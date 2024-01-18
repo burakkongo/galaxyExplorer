@@ -225,24 +225,52 @@ textarea:focus {
 .delete-all-flashcard-con button {
     position: absolute;
     top: 20px;
-    right: 100px;
-    font-size: 1em;
-    background-color: #ff4d4d;
-    color: #ffffff;
-    padding: 0.8em 1.2em;
-    font-weight: 500;
-    border-radius: 0.4em;
+    right: 20%;
+    font-size: 0.9rem;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* To allow margin to work */
 }
+
 .add-flashcard-con button {
     position: absolute;
     top: 20px;
-    right: 240px;
-    font-size: 1em;
-    background-color: #587ef4;
-    color: #ffffff;
-    padding: 0.8em 1.2em;
-    font-weight: 500;
-    border-radius: 0.4em;
+    right: 30%;
+    font-size: 0.9rem;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* To allow margin to work */
+}
+
+#back-to-dashboard {
+    font-size: 0.9rem;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* To allow margin to work */
+    position: absolute;
+    top: 20px;
+    right:4.5%;
 }
 
 .delete-btn{

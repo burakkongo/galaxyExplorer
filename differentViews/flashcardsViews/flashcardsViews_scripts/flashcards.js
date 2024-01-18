@@ -17,6 +17,12 @@ function getCategoryFromUrl() {
     return params.get('category');
 }
 
+// back to dashboard function
+document.getElementById('back-to-dashboard').addEventListener('click', function () {
+    // Navigate to the dashboard.html page
+    window.location.href = '/dashboard';
+});
+
 // Set the category title
 document.addEventListener('DOMContentLoaded', () => {
     const categoryTitle = getCategoryFromUrl();
