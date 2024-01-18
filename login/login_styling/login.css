@@ -22,7 +22,7 @@ html, body {
    background-color: transparent;
       border: none;
       position: absolute; /* or 'relative' depending on your layout needs */
-      top: 41%;
+      top: 39.5%;
       left: 65.9%;
       display: block;
       min-width: 400px;
@@ -41,7 +41,7 @@ html, body {
      background-color: transparent;
         border: none;
         position: absolute; /* or 'relative' depending on your layout needs */
-        top: 56%;
+        top: 54%;
         left: 66%;
         display: block;
         min-width: 416px;
@@ -67,12 +67,10 @@ html, body {
         color: white;
         cursor: pointer;
         position: absolute;
-
-        top: 68.4%;
-
+        top: 66%;
         left: 64.9%;
         min-width: 420px;
-        height: 50px;
+        height: 45px;
         display: block;
 }
 
@@ -84,7 +82,7 @@ html, body {
     background-color: transparent;
     color: violet;
     position: absolute;
-    top: 85.6%;
+    top: 82.3%;
     left: 83%;
     border: none;
     display: block;

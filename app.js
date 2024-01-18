@@ -624,3 +624,18 @@ app.post('/checkQuestionsCount', (req, res) => {
     });
 });
 
+//logout
+app.post('/logout', function(req, res) {
+    if (req.session) {
+        req.session.destroy(err => {
+            if (err) {
+                res.status(500).json({ status: 'error', message: 'Error in logging out' });
+            } else {
+                res.json({ status: 'success', message: 'Logged out!' });
+            }
+        });
+    } else {
+        res.status(400).json({ status: 'error', message: 'Not logged in' });
+    }
+});
+
