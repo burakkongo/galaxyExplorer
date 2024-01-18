@@ -78,3 +78,14 @@ html, body {
     color: palegoldenrod;
     font-size: 25px;
 }
+
+#backToDashboardButton {
+    font-size: 0.9rem;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
