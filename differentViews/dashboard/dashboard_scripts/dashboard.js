@@ -202,3 +202,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
         window.location.href = '/quizView';
     });
 });
+
+//logout
+document.getElementById('logoutButton').addEventListener('click', function(e) {
+    e.preventDefault();
+    fetch('/logout', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                window.location.href = '/';
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+});

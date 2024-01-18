@@ -149,8 +149,8 @@ body, html {
     color: transparent;
     background-color: transparent;
     font-family: 'Montserrat', sans-serif;
-        font-weight: 600;
-        font-size: 19px;
+    font-weight: 600;
+    font-size: 19px;
 
     background-image: url('Illustrations/Map-Btn.png'); /* Pfad zu deinem Hintergrundbild */
     background-size: contain; /* Bedeckt den gesamten Button, kann je nach Bedarf angepasst werden */
@@ -160,6 +160,28 @@ body, html {
     min-width: 50px; /* Mindestbreite */
     min-height: 50px; /* Mindesthöhe */
 }
+
+#logoutButton {
+    position: absolute;
+    top: 70px;
+    right: 45px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    background-size: contain; /* Bedeckt den gesamten Button, kann je nach Bedarf angepasst werden */
+    background-position: center; /* Zentriert das Bild im Button */
+    background-repeat: no-repeat;
+    font-size: 0.9rem;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 15px;
+    margin-left: 15px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+    display: inline-block; /* To allow margin to work */
+}
+
 
 @media (max-width: 1024px) {
     .card {
