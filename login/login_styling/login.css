@@ -25,7 +25,7 @@ html, body {
       top: 40.5%;
       left: 65.9%;
       display: block;
-      min-width: 416px;
+      min-width: 400px;
       height: 48px;
       color: grey;
           font-family: 'Montserrat', sans-serif;
@@ -67,10 +67,10 @@ html, body {
         color: white;
         cursor: pointer;
         position: absolute;
-        top: 67.4%;
+        top: 68%;
         left: 64.9%;
         min-width: 420px;
-        height: 48px;
+        height: 50px;
         display: block;
 }
 
@@ -82,7 +82,7 @@ html, body {
      background-color: transparent;
         color: violet;
         position: absolute;
-        top: 84.3%;
+        top: 85.6%;
         left: 83%;
         border: none;
         display: block;

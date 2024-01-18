@@ -51,3 +51,10 @@ function fetchAndDisplayXP() {
 
 // Call the function on page load to show user XP and activate planets
 fetchAndDisplayXP();
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('backToDashboard').addEventListener('click', function() {
+        // Navigate to the dashboard.html page
+        window.location.href = '/dashboard';
+    });
+});
