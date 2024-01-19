@@ -129,4 +129,36 @@ h1, h2 {
     }
 }
 
-/* Add any additional styles you need below */
+/* Flex container for quiz list */
+.quiz-list-flexbox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Space between quiz containers */
+    justify-content: flex-start; /* Align to the start or center as per design */
+}
+
+/* Style for each quiz entry */
+.quiz-entry {
+    flex-basis: calc(33.333% - 20px); /* Subtract gap from width for three in a row */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px; /* Space between rows */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center the text inside the quiz-entry */
+}
+
+/* Responsive adjustments if needed */
+@media (max-width: 768px) {
+    .quiz-entry {
+        flex-basis: calc(50% - 20px); /* Two per row on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .quiz-entry {
+        flex-basis: 100%; /* One per row on very small screens */
+    }
+}
+

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const exitQuizButton = document.getElementById('exit-quiz');
         exitQuizButton.addEventListener('click', function () {
-            window.location.href = '/dashboard';
+            window.location.href = '/quizView';
         });
 
         resultDiv.appendChild(exitQuizButton);
@@ -187,16 +187,26 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
+
     function displayQuiz(quiz) {
         const quizListContainer = document.getElementById('quiz-list-container');
 
+        // Ensure the quizListContainer will wrap its children in a flex container layout
+        quizListContainer.className = 'quiz-list-flexbox';
+
+        // Create a container for each quiz
         const quizDiv = document.createElement('div');
         quizDiv.className = 'quiz-entry';
 
+        quizDiv.style.color = 'black'; // Set background color to white
+        quizDiv.style.textAlign = 'center'; // Set background color to white
+
+        // Title of the quiz
         const quizTitle = document.createElement('h3');
         quizTitle.textContent = quiz.Title || 'No title';
         quizDiv.appendChild(quizTitle);
 
+        // Load Quiz Button
         const loadButton = document.createElement('button');
         loadButton.textContent = 'Load Quiz';
         loadButton.onclick = function () {
@@ -205,6 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         quizDiv.appendChild(loadButton);
 
+        // Delete Quiz Button
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete Quiz';
         deleteButton.onclick = function () {
@@ -212,11 +223,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 deleteQuiz(quiz.QuizID);
             }
         };
-
         quizDiv.appendChild(deleteButton);
 
+        // Append the new quiz container to the quiz list
         quizListContainer.appendChild(quizDiv);
     }
+
+
 
 
     function loadQuizQuestions(quizID) {
