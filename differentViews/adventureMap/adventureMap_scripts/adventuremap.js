@@ -21,6 +21,7 @@ function activatePlanetsBasedOnXP(userXP) {
     }
 }
 
+//click event
 function planetClickHandler(planetNumber) {
     let userXP = parseInt(document.getElementById('xpValueToDisplay').textContent);
     const xpRequired = planetNumber * 10;
