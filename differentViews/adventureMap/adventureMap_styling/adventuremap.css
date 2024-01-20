@@ -144,4 +144,36 @@ html, body {
 #CosmoStoryN {
     background-image: url('Dialogs/CosmoStoryN.png');
 }
-/* Wiederholen Sie dies für jedes Bild */
+
+#WandaStoryV {
+
+    background-image: url('Dialogs/WandaStoryV.png');
+
+}
+#WandaStoryN {
+    background-image: url('Dialogs/WandaStoryN.png');
+}
+
+#AuroraStoryV {
+    background-image: url('Dialogs/AuroraStoryV.png');
+}
+
+#AuroraStoryN {
+    background-image: url('Dialogs/AuroraStoryN.png');
+}
+
+#MickyStoryV {
+    background-image: url('Dialogs/MickyStoryV.png');
+}
+#MickyStoryN {
+    background-image: url('Dialogs/MickyStoryN.png');
+}
+
+#PlutoStoryV {
+    background-image: url('Dialogs/PlutoStoryV.png');
+}
+
+#PlutoStoryN {
+    background-image: url('Dialogs/PlutoStoryN.png');
+}
+
