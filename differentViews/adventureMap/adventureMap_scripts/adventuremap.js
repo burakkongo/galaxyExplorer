@@ -8,6 +8,7 @@ function changePlanetImage(planetId, activatedPlanetId) {
     activatedPlanet.onclick = function() { planetClickHandler(parseInt(planetId.replace('planet', ''))); };
 }
 
+
 function activatePlanetsBasedOnXP(userXP) {
     const xpPerPlanet = 10; // XP required to activate each subsequent planet
 
@@ -55,4 +56,12 @@ fetchAndDisplayXP();
 
 document.getElementById('backToDashboard').addEventListener('click', function() {
     window.location.href = '/dashboard';
+});
+
+//POP up schließen Button
+
+document.querySelectorAll('.close-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.parentElement.parentElement.style.display = 'none';
+    });
 });
