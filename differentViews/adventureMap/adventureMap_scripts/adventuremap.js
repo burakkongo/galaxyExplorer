@@ -4,29 +4,31 @@ function changePlanetImage(planetId, activatedPlanetId) {
 
     planet.style.display = 'none';
     activatedPlanet.style.display = 'block';
+    // Adding click event listener to the activated planet
+    activatedPlanet.onclick = function() { planetClickHandler(parseInt(planetId.replace('planet', ''))); };
 }
 
 function activatePlanetsBasedOnXP(userXP) {
-
-    // Current planet XP requirements:
-    //      Planet Cosmo - 10 points
-    //      Planet Wanda - 20 points
-    //      Planet Cryo - 30 points
-    //      Planet Aurora - 40 points
-    //      Planet Micky - 50 points
-    //      Planet Pluto - 60 points
-    //      Planet Earth - 70 points
-
     const xpPerPlanet = 10; // XP required to activate each subsequent planet
 
     for (let i = 1; i <= 7; i++) {
         let planetId = 'planet' + i;
         let activatedPlanetId = 'activatedPlanet' + i;
 
-        // Check if userXP is enough to activate the planet
         if (userXP >= i * xpPerPlanet) {
             changePlanetImage(planetId, activatedPlanetId);
         }
+    }
+}
+
+function planetClickHandler(planetNumber) {
+    let userXP = parseInt(document.getElementById('xpValueToDisplay').textContent);
+    const xpRequired = planetNumber * 10;
+
+    if (userXP >= xpRequired) {
+        alert(`Planet ${planetNumber} is clicked`);
+    } else {
+        alert(`You need ${xpRequired - userXP} more XP to unlock Planet ${planetNumber}`);
     }
 }
 
@@ -41,7 +43,7 @@ function fetchAndDisplayXP() {
         .then(data => {
             if (data.userXP) {
                 document.getElementById('xpValueToDisplay').textContent = `${data.userXP}`;
-                activatePlanetsBasedOnXP(data.userXP); // Call to activate planets
+                activatePlanetsBasedOnXP(data.userXP);
             }
         })
         .catch(error => {
@@ -49,12 +51,8 @@ function fetchAndDisplayXP() {
         });
 }
 
-// Call the function on page load to show user XP and activate planets
 fetchAndDisplayXP();
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('backToDashboard').addEventListener('click', function() {
-        // Navigate to the dashboard.html page
-        window.location.href = '/dashboard';
-    });
+document.getElementById('backToDashboard').addEventListener('click', function() {
+    window.location.href = '/dashboard';
 });

@@ -1,4 +1,3 @@
-/* index.html */
 * {
     margin: 0;
     padding: 0;
@@ -28,7 +27,6 @@ html, body {
     background-color: transparent;
     z-index: 1;
 }
-
 
 #startButton{
     width: 100%;
