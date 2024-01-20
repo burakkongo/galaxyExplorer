@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.addEventListener('click', resetUserXP);
 });
 
+//reset XP of currently logged in user and redirect to /dashboard
 function resetUserXP() {
     fetch('/resetUserXP', {
         method: 'POST',
