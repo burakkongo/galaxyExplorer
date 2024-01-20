@@ -66,36 +66,35 @@ h1, h2 {
 }
 
 #exit-quiz {
-    padding: 10px 20px;
-    border-radius: 20px;
+    font-size: .9rem;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     border: none;
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: var(--text-color);
-    font-size: 19px;
+    border-radius: 15px;
+    color: white;
+    padding: 10px 20px;
+    margin-left: 50px;
+    margin-top: 20px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
     transition: background-color 0.3s ease;
-    margin-top: 20px; /* Spacing after the form */
+    display: inline-block;
 }
 
 #exit-quiz:hover {
-    background-color: var(--button-hover-color);
+    transform: scale(1.05);
 }
 
 #submitButton {
-    padding: 10px 20px;
-    border-radius: 20px;
-    padding: 20px;
+    font-size: .9rem;
+    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     border: none;
-    background: linear-gradient(to right, #ff7e5f, #feb47b);
-    color: var(--text-color);
-    font-size: 19px;
+    border-radius: 15px;
+    color: white;
+    padding: 10px 20px;
+    margin-left: 50px;
+    margin-top: 20px;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
     transition: background-color 0.3s ease;
-    margin-top: 20px; /* Spacing after the form */
+    display: inline-block;
 }
 
 #submitButton:hover {
@@ -135,6 +134,10 @@ h1, h2 {
     flex-wrap: wrap;
     gap: 20px; /* Space between quiz containers */
     justify-content: flex-start; /* Align to the start or center as per design */
+}
+
+#quiz-list-container{
+    margin-top: 3%;
 }
 
 /* Style for each quiz entry */
