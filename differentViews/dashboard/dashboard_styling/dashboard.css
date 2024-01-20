@@ -133,16 +133,12 @@ body, html {
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
 }
-
-
-
 /* Card designs end */
-
 
 #map-button {
     position: absolute;
     top: 40px;
-    right: 45px;
+    right: 180px;
     border: none;
     padding: 15px 30px;
     cursor: pointer;
@@ -163,25 +159,28 @@ body, html {
 
 #logoutButton {
     position: absolute;
-    top: 70px;
+    top: 20px;
     right: 45px;
     border: none;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
-    background-size: contain; /* Bedeckt den gesamten Button, kann je nach Bedarf angepasst werden */
-    background-position: center; /* Zentriert das Bild im Button */
-    background-repeat: no-repeat;
-    font-size: 0.9rem;
-    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
-    color: white;
-    padding: 10px 20px;
+    font-size: 19px;
+    font-weight: 600;
+
+    color: transparent;
+    padding: 15px 20px;
     border-radius: 15px;
     margin-left: 15px;
     margin-top: 20px;
     transition: background-color 0.3s ease;
     display: inline-block; /* To allow margin to work */
-}
 
+    background-image: url('Illustrations/Logout-Btn.png');
+    background-size: contain; /* Bedeckt den gesamten Button, kann je nach Bedarf angepasst werden */
+    background-position: center; /* Zentriert das Bild im Button */
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
 
 @media (max-width: 1024px) {
     .card {
