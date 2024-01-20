@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetButton.addEventListener('click', resetUserXP);
 });
 
+//reset XP of currently logged in user and redirect to /dashboard
 function resetUserXP() {
     fetch('/resetUserXP', {
         method: 'POST',
@@ -15,14 +16,17 @@ function resetUserXP() {
         .then(data => {
             if (data.success) {
                 alert('Experience points have been reset. Ready for another adventure!');
-                // Redirect or update the UI as needed
             } else {
-                alert('There was a problem resetting your experience points.');
+                alert('Note: Your experience points may not have been reset.');
             }
-            window.location.href = '/dashboard';
         })
         .catch((error) => {
             console.error('Error:', error);
-            alert('There was a problem resetting your experience points.');
+            alert('There was an error processing your request.');
+        })
+        .finally(() => {
+            // Redirect to the dashboard regardless of the result
+            window.location.href = '/dashboard';
         });
 }
+
