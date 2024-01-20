@@ -86,6 +86,10 @@ app.use('/quizView', express.static(path.join(__dirname, 'differentViews', 'quiz
 app.use('/quizView_scripts', express.static(path.join(__dirname, 'differentViews', 'quizView', 'quizView_scripts')));
 app.use('/quizView_styling', express.static(path.join(__dirname, 'differentViews', 'quizView', 'quizView_styling')));
 
+// Adventure Map Ending route
+app.use('/ending', express.static(path.join(__dirname, 'differentViews', 'adventureMapEnding')));
+app.use('/adventureMapEnding_scripts', express.static(path.join(__dirname, 'differentViews', 'adventureMapEnding', 'adventureMapEnding_scripts')));
+app.use('/adventureMapEnding_styling', express.static(path.join(__dirname, 'differentViews', 'adventureMapEnding', 'adventureMapEnding_styling')));
 
 // Serving the index page from the landingPage directory
 app.get('/', (req, res) => {
@@ -132,6 +136,11 @@ app.post('/registration', (req, res) => {
 // Serving the login form
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'login', 'login.html'));
+});
+
+// Serving the ending page
+app.get('/ending', (req, res) => {
+    res.sendFile(path.join(__dirname, 'differentViews', 'adventureMapEnding', 'adventureMapEnding.html'));
 });
 
 // Handling login POST requests
@@ -638,4 +647,27 @@ app.post('/logout', function(req, res) {
         res.status(400).json({ status: 'error', message: 'Not logged in' });
     }
 });
+
+
+// Endpoint to reset userXP for currently logged in user
+app.post('/resetUserXP', (req, res) => {
+    if (!req.session.userID) {
+        return res.status(401).send('User not authenticated');
+    }
+    const userID = req.session.userID;
+
+    // Update the userXP to 0
+    const resetXPQuery = 'UPDATE users SET userXP = 0 WHERE userID = ?';
+    db.query(resetXPQuery, [userID], (err, result) => {
+        if (err) {
+            return res.status(500).json({success: false, error: 'Error resetting userXP'});
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({success: false, error: 'User not found'});
+        }
+        res.json({success: true, message: 'User XP reset successfully'});
+    });
+});
+
+
 
