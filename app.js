@@ -209,6 +209,10 @@ app.get('/getUserXP', (req, res) => {
     }
 });
 
+// Serving adventure map
+app.get('/adventureMap', (req, res) => {
+    res.sendFile(path.join(__dirname, 'differentViews', 'adventureMap', 'adventure_map.html'));
+});
 
 // Dashboard route
 app.get('/dashboard', (req, res) => {
