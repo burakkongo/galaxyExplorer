@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -34,6 +33,7 @@ html, body {
     /* 360 Grad Rotation */
     transform: rotate(360deg);
 }
+
 
 #planet1, #activatedPlanet1 {
     top: 420px;
