@@ -23,4 +23,4 @@ On the dashboard, you'll also find buttons for importing flashcards from CSV fil
 In the Quiz View, you can create or delete quizzes. All created quizzes are listed here, and you can start a quiz by clicking "Load Quiz". Once you've answered the questions and submitted the quiz, you'll get instant feedback on your answers. If all questions are answered correctly, you earn 1 XP point (1 liter of Rocket Fuel).
 
 #### Map
-The Map displays the different planets (levels). For every 10 liters of Rocket Fuel (XP points), a new planet is unlocked. The ultimate goal is to reach Earth. Each new Level unlocks a new skin and provides background information about the unlocked planet.
+The Map displays the different planets (levels). For every 10 liters of Rocket Fuel (XP points), a new planet is unlocked. The ultimate goal is to reach Earth. Each new Level unlocks a new skin and provides background information about the unlocked planet. Click on the unlocked planet to view it.
