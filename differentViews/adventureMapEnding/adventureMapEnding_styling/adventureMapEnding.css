@@ -1,16 +1,27 @@
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-image: url("BackgroundEndingPage.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
 .congratulatory-message {
-    background: #f9f9f9; /* Light grey background */
+    background-color: rgba(31, 30, 30, 0.5);
+    border: none;
     position: relative;
     margin: 50px auto;
     width: 50%; /* Sets the width to 50% of the parent element */
     max-width: 700px; /* Optional: Ensures that the div doesn't get too wide on large screens */
     padding: 20px;
-    border: 1px solid #ddd;
+
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
     text-align: center;
     font-family: 'Montserrat', sans-serif;
-    color: #333;
+    color: white;
     transition: all 0.3s ease;
 }
 
@@ -20,7 +31,7 @@
 
 .congratulatory-message h1 {
     margin-bottom: 15px;
-    color: #5cb85c;
+    color: white;
     font-size: 1.75em;
 }
 
@@ -37,7 +48,7 @@
     border-radius: 15px;
     color: white;
     padding: 10px 20px;
-    margin-left: 50px;
+    margin-left: 12px;
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -47,3 +58,6 @@
     transform: scale(1.05);
 }
 
+.congratulatory-message p.reduced-margin {
+    margin-bottom: -20px; /* Verringert den Abstand zum nächsten Paragraphen */
+}
