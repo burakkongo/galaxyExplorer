@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const submitQuizButton = document.getElementById('submit-quiz');
+    if (submitQuizButton) {
+        submitQuizButton.style.fontFamily = 'Montserrat, sans-serif';
+        submitQuizButton.style.backgroundColor = '#62D2A2';
+        submitQuizButton.style.fontSize = '16px';
+        submitQuizButton.style.borderRadius = '8px';
+        submitQuizButton.style.color = '#ffffff';
+        submitQuizButton.style.width = '150px';
+        submitQuizButton.style.height = '40px';
+        submitQuizButton.style.marginTop = '20px';
+}
     document.getElementById('exit-quiz').addEventListener('click', function () {
         window.location.href = '/dashboard';
     });
@@ -70,9 +81,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function submitQuiz() {
         const questions = document.querySelectorAll('.question');
+
+
         let score = 0;
         questions.forEach(question => {
             const input = question.querySelector('input');
+
             const isCorrect = input.dataset.answer.toLowerCase() === input.value.toLowerCase();
             if (isCorrect) {
                 score++;
@@ -198,8 +212,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const quizDiv = document.createElement('div');
         quizDiv.className = 'quiz-entry';
 
-        quizDiv.style.color = 'black'; // Set background color to white
-        quizDiv.style.textAlign = 'center'; // Set background color to white
+        quizDiv.style.color = '#5C06B3';
+        quizDiv.style.textAlign = 'center';
+        quizDiv.style.fontFamily = 'font-family: "Poppins", sans-serif';
+
 
         // Title of the quiz
         const quizTitle = document.createElement('h3');
@@ -209,15 +225,32 @@ document.addEventListener('DOMContentLoaded', function () {
         // Load Quiz Button
         const loadButton = document.createElement('button');
         loadButton.textContent = 'Load Quiz';
+        loadButton.style.fontFamily = 'Poppins, sans-serif';
+        loadButton.style.backgroundColor = '#6389D1';
+        loadButton.style.borderRadius = '7px';
+        loadButton.style.fontSize = '12px';
+        loadButton.style.color = 'white';
+        loadButton.style.width = '120px';
+        loadButton.style.height = '30px';
+
         loadButton.onclick = function () {
             displayCurrentQuizOnly();
             loadQuizQuestions(quiz.QuizID);
         };
         quizDiv.appendChild(loadButton);
 
+
         // Delete Quiz Button
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete Quiz';
+        deleteButton.style.fontFamily = 'Poppins, sans-serif';
+        deleteButton.style.backgroundColor = '#ff4d4d';
+        deleteButton.style.fontSize = '12px';
+        deleteButton.style.borderRadius = '7px';
+        deleteButton.style.color = 'white';
+        deleteButton.style.width = '120px';
+        deleteButton.style.height = '30px';
+
         deleteButton.onclick = function () {
             if (confirm('Are you sure you want to delete this quiz?')) {
                 deleteQuiz(quiz.QuizID);
@@ -243,6 +276,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     const questionDiv = document.createElement('div');
                     questionDiv.className = 'question';
 
+                    questionDiv.style.fontSize = '18px'; // Schriftgröße
+                    questionDiv.style.color = '#333333'; // Textfarbe
+                    questionDiv.style.marginBottom = '30px'; // Abstand nach unten
+                    questionDiv.style.padding = '10px'; // Innenabstand
+                    questionDiv.style.color = '#ffffff';
+
                     const questionHeader = document.createElement('div');
                     questionHeader.className = 'question-header';
                     questionHeader.textContent = `Question ${index + 1}: ${question.flashcardTitle}`;
@@ -250,6 +289,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     const questionInput = document.createElement('input');
                     questionInput.type = 'text';
                     questionInput.dataset.answer = question.answer;
+
+                    questionInput.style.width = '100%'; // Breite des Eingabefelds
+                    questionInput.style.padding = '10px'; // Innenabstand
+                    questionInput.style.marginTop = '5px'; // Abstand nach oben
+                    questionInput.style.borderRadius = '5px'; // Abgerundete Ecken
 
                     questionDiv.appendChild(questionHeader);
                     questionDiv.appendChild(questionInput);
