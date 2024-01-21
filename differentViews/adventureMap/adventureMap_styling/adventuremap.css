@@ -65,12 +65,12 @@ html, body {
     left: 700px;
 }
 
-#planet7 {
-    top: 4px;
+#planet7, #activatedPlanet7 {
+    top: 3px;
     left: 1170px;
 
     width: 230px;
-    height: 260px;
+    height: 230px;
 }
 
 
