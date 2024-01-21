@@ -3,7 +3,7 @@
 Welcome to Galaxy Explorer! This interactive web-based learning platform is brought to you by the students of FH Campus Wien. Our mission is to transform traditional learning by integrating the fun of gaming with the power of knowledge acquisition. Galaxy Explorer is designed to be an engaging and intuitive environment for self-directed learning, ideal for children and anyone eager to learn.
 
 ### Getting Started
-Before launching the project, you need to create a .env file in the root directory. This file is essential for the database connection as it stores the variables for database access. Please contat us for the Database credentials.
+Before launching the project, you need to create a .env file in the root directory. This file is essential for the database connection as it stores the variables for database access. Please contact us for the Database credentials.
 
 
 With the .env file set up and the database ready, import all the necessary modules by running npm install in the terminal.
