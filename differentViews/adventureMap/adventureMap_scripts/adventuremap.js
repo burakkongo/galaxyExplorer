@@ -28,9 +28,9 @@ function planetClickHandler(planetNumber) {
     const xpRequired = planetNumber * 10;
 
     if (userXP >= xpRequired) {
-        alert(`Planet ${planetNumber} is clicked`);
+        //alert(`Planet ${planetNumber} is clicked`);
     } else {
-        alert(`You need ${xpRequired - userXP} more XP to unlock Planet ${planetNumber}`);
+        //alert(`You need ${xpRequired - userXP} more XP to unlock Planet ${planetNumber}`);
     }
 }
 
@@ -59,10 +59,5 @@ document.getElementById('backToDashboard').addEventListener('click', function() 
     window.location.href = '/dashboard';
 });
 
-//POP up schließen Button
 
-document.querySelectorAll('.close-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        this.parentElement.parentElement.style.display = 'none';
-    });
-});
+
