@@ -1,0 +1,21 @@
+#backToMapButtonStory{
+    font-size: .9rem;
+    border: none;
+    border-radius: 15px;
+    color: transparent;
+    padding: 10px 20px;
+    margin-left: 15px;
+    margin-top: 20px;
+    top: 15px; /* Abstand von oben */
+    left: 1.5%; /* Ändern Sie "right" zu "left" */
+    position: fixed;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+
+    background-image: url('Map-BtnS.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
