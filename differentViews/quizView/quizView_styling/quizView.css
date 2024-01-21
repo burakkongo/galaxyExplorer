@@ -1,5 +1,4 @@
 :root {
-    --background-main: #342A67; /* Main background color matching the dashboard */
     --background-panel: rgba(255, 255, 255, 0.1); /* Panel background */
     --accent-color: #62D2A2; /* Accent color for buttons and links */
     --text-color: #ffffff; /* Main text color */
@@ -8,11 +7,10 @@
 }
 
 body, html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--background-main);
+
+    font-family: 'Montserrat', sans-serif;
+    background: #000 url("Hintergrund-Quiz.png") no-repeat center center/cover; /* Fallback-Farbe und Hintergrund-Definition */
+
     color: var(--text-color);
 }
 
@@ -22,12 +20,14 @@ body, html {
     align-items: center;
     justify-content: start;
     height: 100vh;
-    padding: 50px;
+    padding: 50px ;
     box-sizing: border-box;
 }
 
 h1, h2 {
     text-align: center;
+    font-family:'Montserrat', sans-serif;
+    font-size: 2rem;
 }
 
 #custom-quiz-generator {
@@ -67,16 +67,27 @@ h1, h2 {
 
 #exit-quiz {
     font-size: .9rem;
-    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     border: none;
     border-radius: 15px;
-    color: white;
+    color: transparent;
     padding: 10px 20px;
-    margin-left: 50px;
+
+    margin-left: 15px;
     margin-top: 20px;
+
+    background-image: url('DashboardIcon.png');
+    background-size: contain; /* Bedeckt den gesamten Button, kann je nach Bedarf angepasst werden */
+    background-position: center; /* Zentriert das Bild im Button */
+    background-repeat: no-repeat;
+    background-color: transparent;
+
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: inline-block;
+
+    top: 20px;
+    right:4.5%;
+    position: absolute;
 }
 
 #exit-quiz:hover {
@@ -84,7 +95,7 @@ h1, h2 {
 }
 
 #submitButton {
-    font-size: .9rem;
+    font-size: 1rem;
     background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     border: none;
     border-radius: 15px;
@@ -101,11 +112,22 @@ h1, h2 {
     background-color: var(--button-hover-color);
 }
 
+#submitButtonGenerate{
+    font-size: 1rem;
+    font-family:Montserrat, sans-serif;
+}
+
+#quiz-name{
+    font-size: 1rem;
+    font-family:Montserrat, sans-serif;
+}
+
 #categories-placeholder {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
+
 }
 
 #categories-placeholder label {
@@ -114,6 +136,9 @@ h1, h2 {
     border-radius: var(--border-radius);
     padding: 10px;
     transition: background-color 0.3s ease;
+    font-family: Montserrat, sans-serif;
+    margin-right: 5px; /* Fügt rechts von der Checkbox einen Abstand hinzu */
+
 }
 
 #categories-placeholder label:hover {

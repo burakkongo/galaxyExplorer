@@ -22,6 +22,16 @@ function activatePlanetsBasedOnXP(userXP) {
     }
 }
 
+function openPlanet(planetNumber) {
+    // Perform the action needed to "open" the planet
+    // This could involve showing a modal or redirecting the user
+    alert(`Planet ${planetNumber} is now open!`);
+    // Example: Show a modal or change the display style
+    // document.getElementById('modal-planet' + planetNumber).style.display = 'block';
+    // Or redirect the user to a new page
+    // window.location.href = '/planet' + planetNumber;
+}
+
 //click event
 function planetClickHandler(planetNumber) {
     let userXP = parseInt(document.getElementById('xpValueToDisplay').textContent);
@@ -29,6 +39,7 @@ function planetClickHandler(planetNumber) {
 
     if (userXP >= xpRequired) {
         //alert(`Planet ${planetNumber} is clicked`);
+        openPlanet(planetNumber);
     } else {
         //alert(`You need ${xpRequired - userXP} more XP to unlock Planet ${planetNumber}`);
     }

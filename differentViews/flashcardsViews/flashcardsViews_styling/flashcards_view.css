@@ -5,7 +5,10 @@
     font-family: "Poppins", sans-serif;
 }
 body {
+
     background-color: #f7f9fd;
+    background: #000 url("Hintergrund-Flashcards.png") no-repeat center center/cover; /* Fallback-Farbe und Hintergrund-Definition */
+
 }
 .container {
     width: 90vw;
@@ -126,7 +129,7 @@ textarea:focus {
 }
 .show-hide-btn {
     display: block;
-    background-color: #ff4d4d;;
+    background-color: #9B83BC;;
     color: #ffffff;
     text-decoration: none;
     text-align: center;
@@ -144,7 +147,7 @@ textarea:focus {
     font-size: 1.2em;
 }
 .edit {
-    color: #587ef4;
+    color: #6389D1;
 }
 .delete {
     color: #ff5353;
@@ -168,8 +171,8 @@ textarea:focus {
     }
 }
 #header {
-    padding: 20px;
-    color: black;
+    padding: 40px;
+    color: white;
     text-align: left;
 }
 
@@ -224,15 +227,15 @@ textarea:focus {
 
 .delete-all-flashcard-con button {
     position: absolute;
-    top: 20px;
-    right: 20%;
+    top: 120px;
+    right: 78.5%;
     font-size: 0.9rem;
     background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 15px;
-    margin-left: 15px;
+    margin-left: 10px;
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -241,15 +244,15 @@ textarea:focus {
 
 .add-flashcard-con button {
     position: absolute;
-    top: 20px;
-    right: 30%;
+    top: 120px;
+    right: 87%;
     font-size: 0.9rem;
     background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 15px;
-    margin-left: 15px;
+    margin-left: 10px;
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -257,20 +260,27 @@ textarea:focus {
 }
 
 #back-to-dashboard {
-    font-size: 0.9rem;
-    background-image: linear-gradient(to right, #ff4d4d, #8A33B5);
-    color: white;
-    padding: 10px 20px;
+    font-size: .9rem;
     border: none;
     border-radius: 15px;
+    color: transparent;
+    padding: 10px 20px;
     margin-left: 15px;
     margin-top: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: inline-block; /* To allow margin to work */
-    position: absolute;
     top: 20px;
     right:4.5%;
+    position: absolute;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+
+
+
+    background-image: url('DashboardIconF.png');
+    background-size: contain; /* Bedeckt den gesamten Button, kann je nach Bedarf angepasst werden */
+    background-position: center; /* Zentriert das Bild im Button */
+    background-repeat: no-repeat;
+    background-color: transparent;
 }
 
 .delete-btn{
@@ -281,7 +291,7 @@ textarea:focus {
     font-size: 1rem;
 }
 .edit-btn{
-    background: blue;
+    background: #6389D1;
     width: 35px;
     height: 35px;
     color: white;
@@ -289,14 +299,14 @@ textarea:focus {
 }
 
 #confirmDelete {
-    background: red;
+    background: #6389D1;
     width: 50px;
     height: 40px;
     color: white;
     font-size: 1.3rem;
 }
 #cancelDelete {
-    background: blue;
+    background: #ff5353;
     width: 50px;
     height: 40px;
     color: white;
@@ -304,7 +314,7 @@ textarea:focus {
 }
 
 #confirmDeleteAll {
-    background: red;
+    background: #6389D1;
     width: 60px;
     height: 40px;
     color: white;
@@ -320,12 +330,12 @@ textarea:focus {
 
 #deleteModal {
     font-size: 1.5rem;
-    color:red;
+    color:#ff5353;
     font-family: 'Montserrat', sans-serif;
 }
 
 #deleteAllModal {
     font-size: 1.5rem;
-    color:red;
+    color:#ff5353;
     font-family: 'Montserrat', sans-serif;
 }

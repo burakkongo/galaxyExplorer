@@ -7,10 +7,17 @@
 <body>
 <div id="backgroundContainer_Login">
     <form action="/login" method="post">
+
+        <h2 id="LogInTitle">Log in</h2>
+
+        <label for="username_Login" id="labelForUsernameL">Username</label>
         <label for="username_Login"></label><input id="username_Login" name="username" required type="text"><br>
+
+        <label for="password_Login" id="labelForPasswordL">Password</label>
         <label for="password_Login"></label><input id="password_Login" name="password" required type="password"><br><br>
+
         <input id="submit_Login" type="submit" value="Login">
-        <button id="goToRegister_Login" onclick="location.href='/registration'"> Register Now</button>
+        <button id="goToRegister_Login" onclick="location.href='/registration'">Don't have an account? Register Now</button>
     </form>
 </div>
 <script src="login_scripts/login.js"></script>

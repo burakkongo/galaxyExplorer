@@ -11,90 +11,103 @@ html, body {
     height: 100%;
 }
 
-#background-container-register{
+#background-container-register {
     position: relative;
     width: 100%;
     height: 100vh;
     background-image: url("registration.png");
     background-size: cover;
+    display: flex;
+    justify-content: flex-end; /* Ändern zu flex-end für rechte Ausrichtung */
+    align-items: center;
+    padding-right: 5%; /* Fügt rechts im Container etwas Platz hinzu */
 }
 
-#username_Register{
-    position: absolute;
-    background-color: transparent; /* Make the background transparent */
-    position: absolute;
-    border: none;  /* Remove the border */
-    outline: none;  /* Remove the outline to avoid highlighting on focus */
-    top: 38.5%;
-    left: 65.3%;
-    display: block;
-    min-width: 300px;
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Beibehalten der linken Ausrichtung der Elemente im Formular */
+    width: 420px; /* Definieren Sie eine feste Breite für das Formular */
+}
+
+#username_Register, #password_Register, #register_Register, #alreadyRegistered_Register {
+    margin-bottom: 20px; /* Anpassung der Abstände */
+    width: 100%; /* Breite auf 100% des Formularelements setzen */
     height: 48px;
-    color: black;
+    border-color: gray;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: white;
+    color: gray;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
     font-size: 20px;
-}
-
-#username_Register:focus {
-    outline: none;
-}
-
-#password_Register {
-    background-color: transparent;
-    border: none;
-    position: absolute;
-    top: 52%;
-    left: 65.3%;
-    display: block;
-    min-width: 300px;
-    height: 48px;
-    color: black;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-}
-
-#password_Register:focus {
-    outline: none;
 }
 
 #register_Register {
     background-image: linear-gradient(to right, #ff7e5f, #feb47b);
     border: none;
     border-radius: 15px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-size: 19px;
     color: white;
     cursor: pointer;
-    position: absolute;
-    top: 65.5%;
-    left: 64.7%;
-    min-width: 420px;
-    height: 45px;
-    display: block;
+    font-weight: 600;
 }
 
 #register_Register:hover {
     transform: scale(1.05);
 }
 
-#alreadyRegistered_Register{
+#alreadyRegistered_Register {
     background-color: transparent;
     color: violet;
-    position: absolute;
-    top: 80.2%;
-    left: 81.7%;
     border: none;
-    display: block;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 19px;
     cursor: pointer;
-
 }
 
 #alreadyRegistered_Register:hover {
     text-decoration: underline;
+}
+
+/* Media Queries für kleinere Bildschirme */
+@media (max-width: 480px) {
+    #username_Register, #password_Register, #register_Register, #alreadyRegistered_Register {
+        width: 300px; /* Anpassung der Breite für kleinere Bildschirme */
+    }
+}
+
+#createAccountTitle {
+    color: white; /* Setzt die Schriftfarbe auf Weiß */
+    margin-bottom: 20px; /* Fügt einen unteren Abstand hinzu */
+    font-family: "Poppins", sans-serif;
+    font-size: 53.5px;
+    font-weight: 540;
+    letter-spacing: 1px;
+    margin-bottom: 45px;
+}
+
+#labelForUsername, #labelForPassword {
+    color: white;
+    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+#username_Register, #password_Register {
+    /* Ihre bestehenden Stile ... */
+    margin-top: 5px; /* Optional, um den Abstand weiter zu verringern */
+    border: 1px solid gray;
+    box-shadow: none;
+    /* ... */
+}
+
+#password_Register {
+    /* Ihre bestehenden Stile ... */
+    margin-bottom: 6px; /* Reduzieren Sie den Abstand zum nächsten Element */
+    /* ... */
+}
+
+#register_Register {
+    /* Ihre bestehenden Stile ... */
+    margin-top: 0; /* Optional, um den Abstand weiter zu verringern */
+    /* ... */
 }

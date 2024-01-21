@@ -5,14 +5,23 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Explorer Homepage</title>
     <link href="registration_styling/registration.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap" rel="stylesheet">
+
 </head>
 <body>
 <div id="background-container-register">
     <form action="/registration" method="post">
+        <h2 id="createAccountTitle">Create Account</h2>
+
+        <label for="username_Register" id="labelForUsername">Username</label>
         <label for="username_Register"></label><input id="username_Register" name="username" required type="text"><br>
+
+        <label for="password_Register" id="labelForPassword">Password</label>
         <label for="password_Register"></label><input id="password_Register" name="password" required type="password"><br><br>
+
         <input id="register_Register" type="submit" value="Register">
-        <button id="alreadyRegistered_Register" onclick="location.href='/login'">Log in Now</button>
+        <button id="alreadyRegistered_Register" onclick="location.href='/login'">Have an account? Log in Now</button>
     </form>
 </div>
 <script src="registration_scripts/registration.js"></script>
