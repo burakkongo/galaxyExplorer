@@ -111,7 +111,6 @@ app.post('/registration', (req, res) => {
             return;
         }
         if (results.length > 0) {
-            //alert("User already registered.");
             res.send('User already registered');
         } else {
             // Hash the password
@@ -436,7 +435,7 @@ app.post('/updateUserXP', (req, res) => {
         if (results.length > 0) {
             let currentUserXP = results[0].userXP;
             // Increment XP by 1
-            let updatedUserXP = currentUserXP + 1;
+            let updatedUserXP = currentUserXP + 5;
 
             // Update the userXP with the new value
             const updateXPQuery = 'UPDATE users SET userXP = ? WHERE userID = ?';
